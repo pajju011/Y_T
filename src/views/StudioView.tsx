@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Upload,
   Scissors,
@@ -27,6 +27,7 @@ interface StudioViewProps {
   onImportYouTube: (url: string) => Promise<void>;
   onClipCreated: (clip: ClipRecord) => void;
   onDeleteVideo: (id: string) => Promise<void>;
+  initialIngestMode?: 'upload' | 'youtube';
 }
 
 export const StudioView: React.FC<StudioViewProps> = ({
@@ -35,12 +36,19 @@ export const StudioView: React.FC<StudioViewProps> = ({
   onImportYouTube,
   onClipCreated,
   onDeleteVideo,
+  initialIngestMode = 'upload',
 }) => {
   const [selectedVideoId, setSelectedVideoId] = useState<string>(videos[0]?.id || '');
   const [targetDuration, setTargetDuration] = useState<number>(30);
   const [framingMode, setFramingMode] = useState<FramingMode>('center');
   const [captionStyle, setCaptionStyle] = useState<'bold-yellow' | 'minimal-white' | 'karaoke-blue' | 'none'>('bold-yellow');
-  const [ingestMode, setIngestMode] = useState<'upload' | 'youtube'>('upload');
+  const [ingestMode, setIngestMode] = useState<'upload' | 'youtube'>(initialIngestMode);
+
+  useEffect(() => {
+    if (initialIngestMode) {
+      setIngestMode(initialIngestMode);
+    }
+  }, [initialIngestMode]);
   const [youtubeUrl, setYoutubeUrl] = useState<string>('');
   const [isDownloadingYt, setIsDownloadingYt] = useState<boolean>(false);
 

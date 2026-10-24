@@ -33,6 +33,7 @@ export function App() {
   const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null);
 
   const [activePreviewClip, setActivePreviewClip] = useState<ClipRecord | null>(null);
+  const [studioIngestMode, setStudioIngestMode] = useState<'upload' | 'youtube'>('upload');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isSetupWizardOpen, setIsSetupWizardOpen] = useState<boolean>(() => {
     try {
@@ -108,6 +109,7 @@ export function App() {
   };
 
   const handleOpenYouTubeImport = () => {
+    setStudioIngestMode('youtube');
     setActiveTab('studio');
   };
 
@@ -269,6 +271,7 @@ export function App() {
               onImportYouTube={handleImportYouTube}
               onClipCreated={handleClipCreated}
               onDeleteVideo={handleDeleteVideo}
+              initialIngestMode={studioIngestMode}
             />
           )}
 
