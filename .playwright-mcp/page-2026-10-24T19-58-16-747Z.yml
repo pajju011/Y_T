@@ -1,0 +1,127 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper" [ref=e22] [cursor=pointer]
+      - generic [ref=e27]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [ref=e28] [cursor=pointer]
+      - button "Live Trends Radar" [ref=e33] [cursor=pointer]
+      - generic [ref=e38]: Production & Publishing
+      - button "Review & Approvals" [ref=e39] [cursor=pointer]
+      - button "Publishing Calendar" [ref=e44] [cursor=pointer]
+      - button "Channel Integrations" [ref=e48] [cursor=pointer]
+      - generic [ref=e56]: Configuration & Trust
+      - button "Settings & Free Setup" [ref=e57] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e62] [cursor=pointer]
+    - generic [ref=e67]:
+      - generic [ref=e68]: "FFmpeg 8.1: Initializing"
+      - generic [ref=e71]: "Local Storage: 0.0 MB"
+      - generic [ref=e75]: "Cost: $0.00 (100% Free)"
+  - main [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e83]:
+        - heading "Workspace Dashboard" [level=1] [ref=e84]
+        - paragraph [ref=e85]: Production metrics, library overview, and active publishing pipeline.
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: Local Instance
+          - generic [ref=e92]: $0 Cost Model
+        - button "Quick Setup" [ref=e94] [cursor=pointer]
+        - button "Create Sample Video" [ref=e99] [cursor=pointer]
+        - button "Upload Video" [ref=e104] [cursor=pointer]
+    - generic [ref=e110]:
+      - generic [ref=e111]:
+        - generic [ref=e112]:
+          - generic [ref=e113]:
+            - heading "How ClipGenius Works — In 3 Simple Steps" [level=3] [ref=e114]
+            - paragraph [ref=e119]: Zero complicated editing. Turn any long recording or YouTube video into viral 9:16 vertical shorts.
+          - button "Quick Setup Wizard" [ref=e120] [cursor=pointer]
+        - generic [ref=e125]:
+          - generic [ref=e126] [cursor=pointer]:
+            - generic [ref=e127]:
+              - generic [ref=e128]: "1"
+              - strong [ref=e129]: Add Video
+            - paragraph [ref=e130]: Upload an MP4 or paste any YouTube URL in AI Studio (or try our 1-click Sample).
+          - generic [ref=e131] [cursor=pointer]:
+            - generic [ref=e132]:
+              - generic [ref=e133]: "2"
+              - strong [ref=e134]: 1-Click AI Detect
+            - paragraph [ref=e135]: Click "Detect Viral Highlights" to auto-find the top hook segments and punchy quotes.
+          - generic [ref=e136] [cursor=pointer]:
+            - generic [ref=e137]:
+              - generic [ref=e138]: "3"
+              - strong [ref=e139]: Save & Google Drive
+            - paragraph [ref=e140]: Render 9:16 with burned subtitles, sync directly to Google Drive or download MP4.
+      - region [ref=e141]:
+        - heading "Workspace Activity & Storage" [level=2] [ref=e142]
+        - generic [ref=e143]:
+          - generic [ref=e144]:
+            - generic [ref=e145]: Source Videos
+            - generic [ref=e150]: "0"
+            - generic [ref=e151]: Ingested into local library
+          - generic [ref=e152]:
+            - generic [ref=e153]: Generated Shorts
+            - generic [ref=e157]: "0"
+            - generic [ref=e158]: Rendered with local FFmpeg
+          - generic [ref=e159]:
+            - generic [ref=e160]: Approved & Scheduled
+            - generic [ref=e165]: "0"
+            - generic [ref=e166]: 0 queued on calendar
+          - generic [ref=e167]:
+            - generic [ref=e168]: Google Drive & Storage
+            - generic [ref=e172]: 0.0 MB
+            - generic [ref=e173]: Local uploads/ • Drive ready
+      - generic [ref=e174]:
+        - generic [ref=e175]:
+          - heading "Direct Production Controls" [level=3] [ref=e176]
+          - paragraph [ref=e177]: Turn long-form recordings into vertical 9:16 short clips, edit captions, and schedule posts.
+        - generic [ref=e178]:
+          - button "View Trend Radar" [ref=e179] [cursor=pointer]
+          - button "Publishing Calendar" [ref=e184] [cursor=pointer]
+          - button "Open Studio" [ref=e188] [cursor=pointer]
+      - region [ref=e193]:
+        - generic [ref=e194]:
+          - heading "Recent Clips" [level=2] [ref=e195]
+          - button "View All (0)" [ref=e196] [cursor=pointer]
+        - generic [ref=e197]:
+          - heading "No clips created yet" [level=3] [ref=e200]
+          - paragraph [ref=e201]: Upload a video or generate a quick test sample to start cutting high-retention short clips.
+          - generic [ref=e202]:
+            - button "Create Sample Video" [ref=e203] [cursor=pointer]
+            - button "Upload Video" [ref=e207] [cursor=pointer]
+  - dialog [ref=e212]:
+    - generic [ref=e213]:
+      - generic [ref=e214]:
+        - generic [ref=e220]:
+          - heading "ClipGenius Quick Setup" [level=2] [ref=e221]
+          - generic [ref=e222]: Step 1 of 4 • 100% Free Local Video Clipper
+        - generic [ref=e223]:
+          - button "Skip for Later" [ref=e224] [cursor=pointer]
+          - button "Close setup modal" [ref=e225] [cursor=pointer]
+      - generic [ref=e232]:
+        - generic [ref=e233]:
+          - heading "Welcome! Tell us about your content" [level=3] [ref=e234]
+          - paragraph [ref=e235]: ClipGenius AI analyzes long videos or YouTube URLs to automatically cut high-engagement 9:16 vertical clips with dynamic captions.
+        - generic [ref=e236]:
+          - text: Channel or Project Name
+          - textbox "e.g. Daily Tech Highlights or Personal Brand" [ref=e237]: My Viral Shorts
+        - generic [ref=e238]:
+          - text: Select Primary Content Niche
+          - generic [ref=e239]:
+            - button "Tech & AI" [ref=e240] [cursor=pointer]
+            - button "Finance & Business" [ref=e244] [cursor=pointer]
+            - button "Productivity" [ref=e246] [cursor=pointer]
+            - button "Creator Economy" [ref=e248] [cursor=pointer]
+            - button "Gaming & Entertainment" [ref=e250] [cursor=pointer]
+            - button "Health & Fitness" [ref=e252] [cursor=pointer]
+        - generic [ref=e258]:
+          - strong [ref=e259]: "Zero Subscription Required:"
+          - text: ClipGenius runs completely locally on your machine with FFmpeg.
+      - generic [ref=e260]:
+        - button "Skip for Later" [ref=e261] [cursor=pointer]
+        - button "Continue" [ref=e263] [cursor=pointer]

@@ -3,7 +3,8 @@ import {
   Share2,
   Key,
   Check,
-  Download
+  Download,
+  Cloud
 } from 'lucide-react';
 import type { IntegrationRecord } from '../api';
 
@@ -86,13 +87,19 @@ export const IntegrationsView: React.FC<IntegrationsViewProps> = ({
             <div key={item.platform} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                  <div style={{ width: '32px', height: '32px', borderRadius: 'var(--radius-sm)', backgroundColor: 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Share2 size={16} />
+                  <div style={{ width: '32px', height: '32px', borderRadius: 'var(--radius-sm)', backgroundColor: item.platform === 'google_drive' ? 'var(--success-subtle)' : 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {item.platform === 'google_drive' ? (
+                      <Cloud size={16} style={{ color: 'var(--success)' }} />
+                    ) : (
+                      <Share2 size={16} />
+                    )}
                   </div>
                   <div>
                     <h3 style={{ fontSize: '1rem', fontWeight: 600 }}>{item.name}</h3>
                     <small style={{ color: 'var(--text-muted)' }}>
-                      {item.channelHandle ? `@${item.channelHandle}` : 'Unconnected'}
+                      {item.platform === 'google_drive'
+                        ? (item.channelHandle || 'ClipGenius AI Vault')
+                        : (item.channelHandle ? `@${item.channelHandle}` : 'Unconnected')}
                     </small>
                   </div>
                 </div>
@@ -162,25 +169,33 @@ export const IntegrationsView: React.FC<IntegrationsViewProps> = ({
             </div>
 
             <div className="form-group">
-              <label className="form-label">Channel Handle or Account Name</label>
+              <label className="form-label">
+                {selectedPlatform.platform === 'google_drive' ? 'Target Google Drive Folder Name' : 'Channel Handle or Account Name'}
+              </label>
               <input
                 className="form-input"
-                placeholder="e.g. MyTechChannel"
+                placeholder={selectedPlatform.platform === 'google_drive' ? 'e.g. ClipGenius AI Vault' : 'e.g. MyTechChannel'}
                 value={channelHandle}
                 onChange={(e) => setChannelHandle(e.target.value)}
               />
             </div>
 
             <div className="form-group">
-              <label className="form-label">Developer API Key or Client Secret (Optional)</label>
+              <label className="form-label">
+                {selectedPlatform.platform === 'google_drive' ? 'Google Drive Folder Share Link or ID' : 'Developer API Key or Client Secret (Optional)'}
+              </label>
               <input
-                type="password"
+                type={selectedPlatform.platform === 'google_drive' ? 'url' : 'password'}
                 className="form-input"
-                placeholder="Paste API Key / Token"
+                placeholder={selectedPlatform.platform === 'google_drive' ? 'https://drive.google.com/drive/folders/...' : 'Paste API Key / Token'}
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
               />
-              <span className="form-hint">Leave blank if using manual MP4 export.</span>
+              <span className="form-hint">
+                {selectedPlatform.platform === 'google_drive'
+                  ? 'Paste any Google Drive folder share link to auto-save and view your rendered 9:16 clips.'
+                  : 'Leave blank if using manual MP4 export.'}
+              </span>
             </div>
 
             <div className="modal-footer">

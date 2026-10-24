@@ -8,7 +8,8 @@ import {
   Video,
   Share2,
   Loader2,
-  CheckCircle
+  CheckCircle,
+  Cloud
 } from 'lucide-react';
 import type { SettingsData, SystemInfo } from '../api';
 import { api } from '../api';
@@ -53,6 +54,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [webhookSecret, setWebhookSecret] = useState<string>('');
   const [webhookEnabled, setWebhookEnabled] = useState<boolean>(false);
 
+  // Storage & Google Drive State
+  const [storageProvider, setStorageProvider] = useState<'local' | 'google_drive' | 'both'>('both');
+  const [googleDriveFolderName, setGoogleDriveFolderName] = useState<string>('ClipGenius AI Vault');
+  const [googleDriveFolderUrl, setGoogleDriveFolderUrl] = useState<string>('');
+  const [googleDriveAutoSync, setGoogleDriveAutoSync] = useState<boolean>(true);
+  const [googleDriveConnected, setGoogleDriveConnected] = useState<boolean>(false);
+
   // General State
   const [customDomain, setCustomDomain] = useState<string>('');
   const [defaultAspect, setDefaultAspect] = useState<'9:16' | '1:1' | '16:9'>('9:16');
@@ -92,6 +100,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       setWebhookSecret(data.webhookSecret || '');
       setWebhookEnabled(data.webhookEnabled || false);
 
+      setStorageProvider(data.storageProvider || 'both');
+      setGoogleDriveFolderName(data.googleDriveFolderName || 'ClipGenius AI Vault');
+      setGoogleDriveFolderUrl(data.googleDriveFolderUrl || '');
+      setGoogleDriveAutoSync(data.googleDriveAutoSync !== undefined ? data.googleDriveAutoSync : true);
+      setGoogleDriveConnected(Boolean(data.googleDriveConnected || data.googleDriveFolderUrl));
+
       setCustomDomain(data.customDomain || '');
       setDefaultAspect(data.defaultAspectRatio || '9:16');
     } catch (e) {
@@ -129,8 +143,21 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         webhookSecret: webhookSecret.trim() ? webhookSecret : undefined,
         webhookEnabled,
 
+        storageProvider,
+        googleDriveFolderName,
+        googleDriveFolderUrl,
+        googleDriveAutoSync,
+        googleDriveConnected: storageProvider !== 'local' && (Boolean(googleDriveFolderUrl) || Boolean(googleDriveFolderName)),
+
         customDomain,
         defaultAspectRatio: defaultAspect
+      });
+      await api.updateGoogleDrive({
+        storageProvider,
+        folderName: googleDriveFolderName,
+        folderUrl: googleDriveFolderUrl,
+        autoSync: googleDriveAutoSync,
+        connected: storageProvider !== 'local' && (Boolean(googleDriveFolderUrl) || Boolean(googleDriveFolderName)),
       });
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 2500);
@@ -601,9 +628,76 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </div>
         </div>
 
-        {/* 5. Custom Domain & DNS */}
+        {/* 5. Google Drive & Video Storage */}
         <div className="settings-section">
-          <h3 className="settings-section-title">5. Custom Domain Readiness & DNS</h3>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+            <h3 className="settings-section-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Cloud size={18} style={{ color: 'var(--success)' }} />
+              <span>5. Google Drive & Video Storage Settings</span>
+            </h3>
+            <span className="badge" style={{ backgroundColor: storageProvider !== 'local' ? 'var(--success-subtle)' : 'var(--bg-elevated)', color: storageProvider !== 'local' ? '#6ee7b7' : 'var(--text-muted)', borderColor: storageProvider !== 'local' ? 'var(--success-border)' : 'var(--border-subtle)' }}>
+              {googleDriveConnected ? 'Google Drive Connected' : storageProvider !== 'local' ? 'Drive Sync Enabled' : 'Local Disk Only'}
+            </span>
+          </div>
+          <p className="settings-section-desc">
+            Store and back up all rendered 9:16 clips to your Google Drive folder with 15 GB of free cloud space.
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginTop: '0.75rem' }}>
+            <div className="form-group">
+              <label className="form-label">Storage Provider Mode</label>
+              <select
+                className="form-select"
+                value={storageProvider}
+                onChange={(e) => setStorageProvider(e.target.value as any)}
+              >
+                <option value="both">Google Drive Cloud + Local Disk (Recommended)</option>
+                <option value="local">Local Disk Only (Private uploads/)</option>
+                <option value="google_drive">Google Drive Cloud Primary</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Google Drive Target Folder Name</label>
+              <input
+                className="form-input"
+                placeholder="e.g. ClipGenius AI Vault"
+                value={googleDriveFolderName}
+                onChange={(e) => setGoogleDriveFolderName(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="form-group" style={{ marginTop: '0.75rem' }}>
+            <label className="form-label">Google Drive Folder Share Link or ID</label>
+            <input
+              type="url"
+              className="form-input"
+              placeholder="https://drive.google.com/drive/folders/your-folder-id"
+              value={googleDriveFolderUrl}
+              onChange={(e) => setGoogleDriveFolderUrl(e.target.value)}
+            />
+            <span className="form-hint">
+              Open Google Drive in your browser, create a folder, copy its link and paste it here. Clips will be organized under this folder.
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.75rem' }}>
+            <input
+              type="checkbox"
+              id="gdrive-autosync-toggle"
+              checked={googleDriveAutoSync}
+              onChange={(e) => setGoogleDriveAutoSync(e.target.checked)}
+            />
+            <label htmlFor="gdrive-autosync-toggle" style={{ fontSize: '0.85rem', cursor: 'pointer' }}>
+              Automatically sync every newly generated 9:16 clip to Google Drive upon completion
+            </label>
+          </div>
+        </div>
+
+        {/* 6. Custom Domain & DNS */}
+        <div className="settings-section">
+          <h3 className="settings-section-title">6. Custom Domain Readiness & DNS</h3>
           <p className="settings-section-desc">
             ClipGenius AI can be bound to any domain or subdomain (e.g., <code className="docs-code">clips.yourdomain.com</code>).
           </p>

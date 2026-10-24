@@ -42,6 +42,9 @@ export interface ClipRecord {
   approvedAt: string | null;
   publishedAt: string | null;
   trendSourceUrl?: string;
+  googleDriveFileUrl?: string;
+  googleDriveSynced?: boolean;
+  googleDriveSyncedAt?: string;
 }
 
 export interface TrendItem {
@@ -83,8 +86,10 @@ export interface ContentStrategy {
   lastAutoRun: string | null;
 }
 
+export type PlatformType = 'youtube' | 'tiktok' | 'instagram' | 'linkedin' | 'google_drive';
+
 export interface IntegrationRecord {
-  platform: 'youtube' | 'tiktok' | 'instagram' | 'linkedin';
+  platform: PlatformType;
   name: string;
   status: 'connected' | 'disconnected' | 'not_configured' | 'action_required';
   channelHandle: string | null;
@@ -180,6 +185,14 @@ export interface SettingsData {
   webhookUrl: string;
   webhookSecret: string;
   webhookEnabled: boolean;
+
+  // Storage & Google Drive
+  storageProvider?: 'local' | 'google_drive' | 'both';
+  googleDriveFolderName?: string;
+  googleDriveFolderUrl?: string;
+  googleDriveFolderId?: string;
+  googleDriveAutoSync?: boolean;
+  googleDriveConnected?: boolean;
 
   // General
   customDomain: string;
@@ -466,6 +479,59 @@ export const api = {
 
   async testWebhook(): Promise<{ success: boolean; message?: string; error?: string }> {
     const res = await fetch(`${API_BASE}/settings/test-webhook`, { method: 'POST' });
+    return res.json();
+  },
+
+  async getStorageStatus(): Promise<{
+    config: {
+      storageProvider: 'local' | 'google_drive' | 'both';
+      folderName: string;
+      folderUrl: string;
+      folderId: string;
+      autoSync: boolean;
+      connected: boolean;
+    };
+    totalLocalBytes: number;
+    localFormatted: string;
+    totalClips: number;
+    syncedClipsCount: number;
+    allSynced: boolean;
+    folderUrl: string;
+  }> {
+    const res = await fetch(`${API_BASE}/storage/status`);
+    if (!res.ok) throw new Error('Failed to fetch storage status');
+    return res.json();
+  },
+
+  async updateGoogleDrive(data: {
+    storageProvider?: 'local' | 'google_drive' | 'both';
+    folderName?: string;
+    folderUrl?: string;
+    autoSync?: boolean;
+    connected?: boolean;
+  }): Promise<{ success: boolean; config: any }> {
+    const res = await fetch(`${API_BASE}/storage/google-drive`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to update Google Drive configuration');
+    return res.json();
+  },
+
+  async syncClipToGoogleDrive(clipId: string): Promise<{ success: boolean; clip: ClipRecord; driveUrl: string }> {
+    const res = await fetch(`${API_BASE}/clips/${clipId}/sync-gdrive`, { method: 'POST' });
+    if (!res.ok) throw new Error('Failed to sync clip to Google Drive');
+    return res.json();
+  },
+
+  async syncAllClipsToGoogleDrive(clipIds?: string[]): Promise<{ syncedCount: number; clips: ClipRecord[]; folderUrl: string }> {
+    const res = await fetch(`${API_BASE}/clips/sync-gdrive-batch`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ clipIds }),
+    });
+    if (!res.ok) throw new Error('Failed to batch sync to Google Drive');
     return res.json();
   },
 };

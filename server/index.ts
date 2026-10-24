@@ -14,6 +14,7 @@ import { automationEngine } from './automation.js';
 import { ttsService } from './tts.js';
 import { stockMediaService } from './stockMedia.js';
 import { webhookService } from './webhooks.js';
+import { googleDriveService } from './googleDrive.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -134,6 +135,13 @@ app.post('/api/trends/:id/generate-video', async (req, res) => {
 
     const strategy = db.getStrategy();
     const clip = await trendVideoGenerator.generateTrendVideo(trend, strategy, req.body.framework);
+
+    // Auto-sync to Google Drive if configured
+    const s = db.getSettings();
+    if (s.googleDriveAutoSync && (s.googleDriveConnected || s.googleDriveFolderUrl)) {
+      googleDriveService.syncClip(clip.id).catch(e => console.error('Auto-sync to Google Drive failed:', e));
+    }
+
     res.json(clip);
   } catch (err: any) {
     console.error('Trend video generation failed:', err);
@@ -394,6 +402,13 @@ app.post('/api/videos/:id/cut-clip', async (req, res) => {
     };
 
     db.addClip(newClip);
+
+    // Auto-sync to Google Drive if configured
+    const s = db.getSettings();
+    if (s.googleDriveAutoSync && (s.googleDriveConnected || s.googleDriveFolderUrl)) {
+      googleDriveService.syncClip(newClip.id).catch(e => console.error('Auto-sync to Google Drive failed:', e));
+    }
+
     res.json(newClip);
   } catch (err: any) {
     console.error('Failed to cut clip:', err);
@@ -452,6 +467,39 @@ app.get('/api/clips/export-zip', (req, res) => {
   } catch (err: any) {
     console.error('ZIP export failed:', err);
     res.status(500).json({ error: 'ZIP export failed: ' + err.message });
+  }
+});
+
+// Storage & Google Drive Status
+app.get('/api/storage/status', (req, res) => {
+  res.json(googleDriveService.getStorageStatus());
+});
+
+app.post('/api/storage/google-drive', (req, res) => {
+  const updated = googleDriveService.updateConfig(req.body);
+  res.json({ success: true, config: updated });
+});
+
+// Sync Single Clip to Google Drive
+app.post('/api/clips/:id/sync-gdrive', async (req, res) => {
+  try {
+    const result = await googleDriveService.syncClip(req.params.id);
+    res.json(result);
+  } catch (err: any) {
+    console.error('Google Drive clip sync error:', err);
+    res.status(500).json({ error: err.message || 'Failed to sync clip to Google Drive' });
+  }
+});
+
+// Sync All Approved Clips to Google Drive (Batch)
+app.post('/api/clips/sync-gdrive-batch', async (req, res) => {
+  try {
+    const { clipIds } = req.body;
+    const result = await googleDriveService.syncBatch(clipIds);
+    res.json(result);
+  } catch (err: any) {
+    console.error('Google Drive batch sync error:', err);
+    res.status(500).json({ error: err.message || 'Batch sync to Google Drive failed' });
   }
 });
 
@@ -614,6 +662,18 @@ app.post('/api/settings', (req, res) => {
   if (req.body.webhookUrl !== undefined) updates.webhookUrl = req.body.webhookUrl;
   if (req.body.webhookEnabled !== undefined) updates.webhookEnabled = req.body.webhookEnabled;
   if (isRealKey(req.body.webhookSecret)) updates.webhookSecret = req.body.webhookSecret.trim();
+
+  // Storage & Google Drive fields
+  if (req.body.storageProvider !== undefined) updates.storageProvider = req.body.storageProvider;
+  if (req.body.googleDriveFolderName !== undefined) updates.googleDriveFolderName = req.body.googleDriveFolderName;
+  if (req.body.googleDriveFolderUrl !== undefined) {
+    updates.googleDriveFolderUrl = req.body.googleDriveFolderUrl;
+    const match = req.body.googleDriveFolderUrl.match(/folders\/([a-zA-Z0-9_-]+)/);
+    if (match) updates.googleDriveFolderId = match[1];
+  }
+  if (req.body.googleDriveFolderId !== undefined) updates.googleDriveFolderId = req.body.googleDriveFolderId;
+  if (req.body.googleDriveAutoSync !== undefined) updates.googleDriveAutoSync = req.body.googleDriveAutoSync;
+  if (req.body.googleDriveConnected !== undefined) updates.googleDriveConnected = req.body.googleDriveConnected;
 
   // General fields
   if (req.body.customDomain !== undefined) updates.customDomain = req.body.customDomain;

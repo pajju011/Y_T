@@ -1,0 +1,308 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper 3" [ref=e212] [cursor=pointer]:
+        - generic [ref=e26]: Long-to-Shorts Clipper
+        - generic [ref=e213]: "3"
+      - generic [ref=e27]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [ref=e28] [cursor=pointer]
+      - button "Live Trends Radar 50" [ref=e214] [cursor=pointer]:
+        - generic [ref=e37]: Live Trends Radar
+        - generic [ref=e215]: "50"
+      - generic [ref=e38]: Production & Publishing
+      - button "Review & Approvals 7" [ref=e216] [cursor=pointer]:
+        - generic [ref=e43]: Review & Approvals
+        - generic [ref=e217]: "7"
+      - button "Publishing Calendar" [ref=e44] [cursor=pointer]
+      - button "Channel Integrations" [ref=e48] [cursor=pointer]
+      - generic [ref=e56]: Configuration & Trust
+      - button "Settings & Free Setup" [ref=e57] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e62] [cursor=pointer]
+    - generic [ref=e67]:
+      - generic [ref=e68]: "FFmpeg 8.1: Ready (Local)"
+      - generic [ref=e71]: "Local Storage: 4.3 MB"
+      - generic [ref=e75]: "Cost: $0.00 (100% Free)"
+  - main [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e83]:
+        - heading "Review & Approvals Pipeline" [level=1] [ref=e558]
+        - paragraph [ref=e85]: Review auto-detected hooks, edit captions, and approve clips before publishing.
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: Local Instance
+          - generic [ref=e551]: Google Drive
+          - generic [ref=e92]: 100% Free AI
+        - button "Quick Setup" [ref=e94] [cursor=pointer]
+        - button "Create Sample Video" [ref=e99] [cursor=pointer]
+        - button "Upload Video" [ref=e104] [cursor=pointer]
+    - generic [ref=e559]:
+      - generic [ref=e560]:
+        - generic [ref=e561]:
+          - heading "Review & Approval Pipeline" [level=2] [ref=e562]
+          - paragraph [ref=e563]: Approve captions, fine-tune titles, push to calendar, or bulk-export as ZIP.
+        - generic [ref=e564]:
+          - button "Sync All to Google Drive" [ref=e565] [cursor=pointer]
+          - link "Export 1 Approved (ZIP)" [ref=e569] [cursor=pointer]:
+            - /url: /api/clips/export-zip
+          - generic [ref=e574]:
+            - button "All Clips (9)" [ref=e575] [cursor=pointer]:
+              - text: All Clips
+              - generic [ref=e576]: (9)
+            - button "in review (7)" [ref=e577] [cursor=pointer]:
+              - text: in review
+              - generic [ref=e578]: (7)
+            - button "approved (1)" [ref=e579] [cursor=pointer]:
+              - text: approved
+              - generic [ref=e580]: (1)
+            - button "scheduled (0)" [ref=e581] [cursor=pointer]:
+              - text: scheduled
+              - generic [ref=e582]: (0)
+            - button "published (1)" [ref=e583] [cursor=pointer]:
+              - text: published
+              - generic [ref=e584]: (1)
+      - generic [ref=e585]:
+        - generic [ref=e586]:
+          - generic [ref=e587]:
+            - generic [ref=e588]:
+              - generic [ref=e589]: in review
+              - link "Drive" [ref=e1063] [cursor=pointer]:
+                - /url: https://drive.google.com/drive/search?q=PHP2Shell__AI_uncovers_critical_RCE___What_It_Means
+            - generic [ref=e590]: "Virality: 92/100"
+          - generic [ref=e591]:
+            - 'heading "PHP2Shell: AI uncovers critical RCE : What It Means" [level=3] [ref=e592]'
+            - generic [ref=e593]: "Duration: 30s • Format: 9:16 • Source: AI Trend: Tech & AI"
+          - generic [ref=e594]:
+            - generic [ref=e595]: "HOOK LINE:"
+            - paragraph [ref=e596]: "\"Nobody expected this update, but it changes everything for Tech & AI.\""
+            - generic [ref=e597]: "CAPTION:"
+            - paragraph [ref=e598]: "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update"
+          - generic [ref=e599]:
+            - button "Preview" [ref=e600] [cursor=pointer]
+            - button "Edit" [ref=e605] [cursor=pointer]
+            - link "Download MP4" [ref=e609] [cursor=pointer]:
+              - /url: /uploads/clips/trend-trend-vid-1792870883635.mp4
+            - button "Synced to Google Drive (Click to re-sync)" [ref=e1067] [cursor=pointer]
+            - button "Approve" [ref=e616] [cursor=pointer]
+            - button "Schedule" [ref=e620] [cursor=pointer]
+            - button "Publish Short" [ref=e624] [cursor=pointer]
+            - button "Delete clip" [ref=e628] [cursor=pointer]
+        - generic [ref=e632]:
+          - generic [ref=e633]:
+            - generic [ref=e634]: in review
+            - generic [ref=e636]: "Virality: 92/100"
+          - generic [ref=e637]:
+            - 'heading "Breaking Tech Announcement: What It Means" [level=3] [ref=e638]'
+            - generic [ref=e639]: "Duration: 30s • Format: 9:16 • Source: AI Trend: Tech & AI"
+          - generic [ref=e640]:
+            - generic [ref=e641]: "HOOK LINE:"
+            - paragraph [ref=e642]: "\"Nobody expected this update, but it changes everything for Tech & AI.\""
+            - generic [ref=e643]: "CAPTION:"
+            - paragraph [ref=e644]: "Breaking analysis on Breaking Tech Announcement. What are your thoughts on this? #Tech&AI #trends #shorts #update"
+          - generic [ref=e645]:
+            - button "Preview" [ref=e646] [cursor=pointer]
+            - button "Edit" [ref=e651] [cursor=pointer]
+            - link "Download MP4" [ref=e655] [cursor=pointer]:
+              - /url: /uploads/clips/trend-trend-vid-1792865677067.mp4
+            - button "Save to Google Drive" [ref=e659] [cursor=pointer]
+            - button "Approve" [ref=e662] [cursor=pointer]
+            - button "Schedule" [ref=e666] [cursor=pointer]
+            - button "Publish Short" [ref=e670] [cursor=pointer]
+            - button "Delete clip" [ref=e674] [cursor=pointer]
+        - generic [ref=e678]:
+          - generic [ref=e679]:
+            - generic [ref=e680]: in review
+            - generic [ref=e682]: "Virality: 92/100"
+          - generic [ref=e683]:
+            - 'heading "PHP2Shell: AI uncovers critical RCE : What It Means" [level=3] [ref=e684]'
+            - generic [ref=e685]: "Duration: 30s • Format: 9:16 • Source: AI Trend: Tech & AI"
+          - generic [ref=e686]:
+            - generic [ref=e687]: "HOOK LINE:"
+            - paragraph [ref=e688]: "\"Nobody expected this update, but it changes everything for Tech & AI.\""
+            - generic [ref=e689]: "CAPTION:"
+            - paragraph [ref=e690]: "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update"
+          - generic [ref=e691]:
+            - button "Preview" [ref=e692] [cursor=pointer]
+            - button "Edit" [ref=e697] [cursor=pointer]
+            - link "Download MP4" [ref=e701] [cursor=pointer]:
+              - /url: /uploads/clips/trend-trend-vid-1792864888017.mp4
+            - button "Save to Google Drive" [ref=e705] [cursor=pointer]
+            - button "Approve" [ref=e708] [cursor=pointer]
+            - button "Schedule" [ref=e712] [cursor=pointer]
+            - button "Publish Short" [ref=e716] [cursor=pointer]
+            - button "Delete clip" [ref=e720] [cursor=pointer]
+        - generic [ref=e724]:
+          - generic [ref=e725]:
+            - generic [ref=e726]: in review
+            - generic [ref=e728]: "Virality: 92/100"
+          - generic [ref=e729]:
+            - 'heading "China''s MiniMax completes export reg: What It Means" [level=3] [ref=e730]'
+            - generic [ref=e731]: "Duration: 30s • Format: 9:16 • Source: AI Trend: DeepSeek"
+          - generic [ref=e732]:
+            - generic [ref=e733]: "HOOK LINE:"
+            - paragraph [ref=e734]: "\"Stop doing what everyone else is doing in Tech & AI.\""
+            - generic [ref=e735]: "CAPTION:"
+            - paragraph [ref=e736]: "Breaking analysis on China's MiniMax completes export registration for open-source, overseas AI model licensing. What are your thoughts on this? #Tech&AI #trends #shorts #update"
+          - generic [ref=e737]:
+            - button "Preview" [ref=e738] [cursor=pointer]
+            - button "Edit" [ref=e743] [cursor=pointer]
+            - link "Download MP4" [ref=e747] [cursor=pointer]:
+              - /url: /uploads/clips/trend-trend-vid-1792864885396.mp4
+            - button "Save to Google Drive" [ref=e751] [cursor=pointer]
+            - button "Approve" [ref=e754] [cursor=pointer]
+            - button "Schedule" [ref=e758] [cursor=pointer]
+            - button "Publish Short" [ref=e762] [cursor=pointer]
+            - button "Delete clip" [ref=e766] [cursor=pointer]
+        - generic [ref=e770]:
+          - generic [ref=e771]:
+            - generic [ref=e772]: in review
+            - generic [ref=e774]: "Virality: 91/100"
+          - generic [ref=e775]:
+            - 'heading "No Signs of AI Payoff Outside the Te: What It Means" [level=3] [ref=e776]'
+            - generic [ref=e777]: "Duration: 30s • Format: 9:16 • Source: AI Trend: Tech & AI"
+          - generic [ref=e778]:
+            - generic [ref=e779]: "HOOK LINE:"
+            - paragraph [ref=e780]: "\"Nobody expected this update, but it changes everything for Tech & AI.\""
+            - generic [ref=e781]: "CAPTION:"
+            - paragraph [ref=e782]: "Breaking analysis on No Signs of AI Payoff Outside the Tech Sector. What are your thoughts on this? #Tech&AI #trends #shorts #update"
+          - generic [ref=e783]:
+            - button "Preview" [ref=e784] [cursor=pointer]
+            - button "Edit" [ref=e789] [cursor=pointer]
+            - link "Download MP4" [ref=e793] [cursor=pointer]:
+              - /url: /uploads/clips/trend-trend-vid-1792864579651.mp4
+            - button "Save to Google Drive" [ref=e797] [cursor=pointer]
+            - button "Approve" [ref=e800] [cursor=pointer]
+            - button "Schedule" [ref=e804] [cursor=pointer]
+            - button "Publish Short" [ref=e808] [cursor=pointer]
+            - button "Delete clip" [ref=e812] [cursor=pointer]
+        - generic [ref=e816]:
+          - generic [ref=e817]:
+            - generic [ref=e818]: in review
+            - generic [ref=e820]: "Virality: 91/100"
+          - generic [ref=e821]:
+            - 'heading "PHP2Shell: AI uncovers critical RCE : What It Means" [level=3] [ref=e822]'
+            - generic [ref=e823]: "Duration: 30s • Format: 9:16 • Source: AI Trend: Tech & AI"
+          - generic [ref=e824]:
+            - generic [ref=e825]: "HOOK LINE:"
+            - paragraph [ref=e826]: "\"Nobody expected this update, but it changes everything for Tech & AI.\""
+            - generic [ref=e827]: "CAPTION:"
+            - paragraph [ref=e828]: "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update"
+          - generic [ref=e829]:
+            - button "Preview" [ref=e830] [cursor=pointer]
+            - button "Edit" [ref=e835] [cursor=pointer]
+            - link "Download MP4" [ref=e839] [cursor=pointer]:
+              - /url: /uploads/clips/trend-trend-vid-1792864207572.mp4
+            - button "Save to Google Drive" [ref=e843] [cursor=pointer]
+            - button "Approve" [ref=e846] [cursor=pointer]
+            - button "Schedule" [ref=e850] [cursor=pointer]
+            - button "Publish Short" [ref=e854] [cursor=pointer]
+            - button "Delete clip" [ref=e858] [cursor=pointer]
+        - generic [ref=e862]:
+          - generic [ref=e863]:
+            - generic [ref=e864]:
+              - generic [ref=e865]: approved
+              - link "Drive" [ref=e1002] [cursor=pointer]:
+                - /url: https://drive.google.com/drive/search?q=Hormozi_Style_Animated_Short
+            - generic [ref=e866]: "Virality: 95/100"
+          - generic [ref=e867]:
+            - heading "Hormozi Style Animated Short" [level=3] [ref=e868]
+            - generic [ref=e869]: "Duration: 15s • Format: 9:16 • Source: Sample Product Tour & Feature Walkthrough"
+          - generic [ref=e870]:
+            - generic [ref=e871]: "HOOK LINE:"
+            - paragraph [ref=e872]: "\"Nobody is talking about this simple workflow shift.\""
+            - generic [ref=e873]: "CAPTION:"
+            - paragraph [ref=e874]: "Workflow shift that saves hours #shorts"
+          - generic [ref=e875]:
+            - button "Preview" [ref=e876] [cursor=pointer]
+            - button "Edit" [ref=e881] [cursor=pointer]
+            - link "Download MP4" [ref=e885] [cursor=pointer]:
+              - /url: /uploads/clips/clip-clip-1792863699132.mp4
+            - button "Synced to Google Drive (Click to re-sync)" [ref=e1006] [cursor=pointer]
+            - button "Schedule" [ref=e892] [cursor=pointer]
+            - button "Publish Short" [ref=e896] [cursor=pointer]
+            - button "Delete clip" [ref=e900] [cursor=pointer]
+        - generic [ref=e904]:
+          - generic [ref=e905]:
+            - generic [ref=e906]: in review
+            - generic [ref=e908]: "Virality: 92/100"
+          - generic [ref=e909]:
+            - 'heading "Sample Product Tour & Feature Wa: Core Insight" [level=3] [ref=e910]'
+            - generic [ref=e911]: "Duration: 15s • Format: 9:16 • Source: Sample Product Tour & Feature Walkthrough"
+          - generic [ref=e912]:
+            - generic [ref=e913]: "HOOK LINE:"
+            - paragraph [ref=e914]: "\"If you only take away one lesson from this entire breakdown, start here.\""
+            - generic [ref=e915]: "CAPTION:"
+            - paragraph [ref=e916]: "Key takeaway from Sample Product Tour & Feature Walkthrough. What do you think about this approach? #learning #tips #insights"
+          - generic [ref=e917]:
+            - button "Preview" [ref=e918] [cursor=pointer]
+            - button "Edit" [ref=e923] [cursor=pointer]
+            - link "Download MP4" [ref=e927] [cursor=pointer]:
+              - /url: /uploads/clips/clip-clip-1792862606892.mp4
+            - button "Save to Google Drive" [ref=e931] [cursor=pointer]
+            - button "Approve" [ref=e934] [cursor=pointer]
+            - button "Schedule" [ref=e938] [cursor=pointer]
+            - button "Publish Short" [ref=e942] [cursor=pointer]
+            - button "Delete clip" [ref=e946] [cursor=pointer]
+        - generic [ref=e950]:
+          - generic [ref=e951]:
+            - generic [ref=e952]: published
+            - generic [ref=e954]: "Virality: 92/100"
+          - generic [ref=e955]:
+            - 'heading "Sample Product Tour & Feature Wa: Core Insight" [level=3] [ref=e956]'
+            - generic [ref=e957]: "Duration: 30s • Format: 9:16 • Source: Sample Product Tour & Feature Walkthrough"
+          - generic [ref=e958]:
+            - generic [ref=e959]: "HOOK LINE:"
+            - paragraph [ref=e960]: "\"If you only take away one lesson from this entire breakdown, start here.\""
+            - generic [ref=e961]: "CAPTION:"
+            - paragraph [ref=e962]: "Key takeaway from Sample Product Tour & Feature Walkthrough. What do you think about this approach? #learning #tips #insights"
+          - generic [ref=e963]: Scheduled for 2026-10-24 at 22:58
+          - generic [ref=e968]:
+            - button "Preview" [ref=e969] [cursor=pointer]
+            - button "Edit" [ref=e974] [cursor=pointer]
+            - link "Download MP4" [ref=e978] [cursor=pointer]:
+              - /url: /uploads/clips/clip-clip-1792862484617.mp4
+            - button "Save to Google Drive" [ref=e982] [cursor=pointer]
+            - button "Delete clip" [ref=e985] [cursor=pointer]
+  - dialog [ref=e1010]:
+    - generic [ref=e1011]:
+      - generic [ref=e1012]:
+        - generic [ref=e1013]:
+          - 'heading "PHP2Shell: AI uncovers critical RCE : What It Means" [level=2] [ref=e1014]'
+          - paragraph [ref=e1015]: "Source: AI Trend: Tech & AI • Duration: 30s • Aspect: 9:16"
+        - button "Close modal" [ref=e1016] [cursor=pointer]
+      - generic [ref=e1020]:
+        - generic [ref=e1021]: Nobody expected this update, but it changes everything for Tech & AI.
+        - generic [ref=e1023]:
+          - generic [ref=e1024]:
+            - generic [ref=e1025]:
+              - generic [ref=e1026]: VIRALITY ANALYSIS
+              - generic [ref=e1027]: "Score: 92/100"
+            - paragraph [ref=e1028]: Engineered using Problem-Agitate-Solve framework with Ambient Audio Bed narration for Software engineers and AI enthusiasts.
+          - generic [ref=e1029]:
+            - generic [ref=e1030]: On-Screen Caption Styling
+            - generic [ref=e1034]:
+              - button "Bold Yellow" [ref=e1035] [cursor=pointer]
+              - button "Minimal White" [ref=e1036] [cursor=pointer]
+              - button "Karaoke Blue" [ref=e1037] [cursor=pointer]
+              - button "None" [ref=e1038] [cursor=pointer]
+          - generic [ref=e1039]:
+            - text: First 3-Second Spoken Hook
+            - paragraph [ref=e1040]: "\"Nobody expected this update, but it changes everything for Tech & AI.\""
+          - generic [ref=e1041]:
+            - text: Suggested Caption & Hashtags
+            - textbox [ref=e1042]: "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update"
+          - generic [ref=e1043]:
+            - generic [ref=e1044]:
+              - link "Download MP4" [ref=e1045] [cursor=pointer]:
+                - /url: /uploads/clips/trend-trend-vid-1792870883635.mp4
+              - button "Save to Google Drive" [ref=e1050] [cursor=pointer]
+            - generic [ref=e1054]:
+              - button "Approve Clip" [ref=e1055] [cursor=pointer]
+              - button "Send to Schedule" [ref=e1059] [cursor=pointer]
+  - status [ref=e1070]:
+    - generic [ref=e1071]: Clip synced to Google Drive!

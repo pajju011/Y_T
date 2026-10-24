@@ -45,6 +45,9 @@ export interface ClipRecord {
   approvedAt: string | null;
   publishedAt: string | null;
   trendSourceUrl?: string;
+  googleDriveFileUrl?: string;
+  googleDriveSynced?: boolean;
+  googleDriveSyncedAt?: string;
 }
 
 export interface TrendItem {
@@ -86,8 +89,10 @@ export interface ContentStrategy {
   lastAutoRun: string | null;
 }
 
+export type PlatformType = 'youtube' | 'tiktok' | 'instagram' | 'linkedin' | 'google_drive';
+
 export interface IntegrationRecord {
-  platform: 'youtube' | 'tiktok' | 'instagram' | 'linkedin';
+  platform: PlatformType;
   name: string;
   status: 'connected' | 'disconnected' | 'not_configured' | 'action_required';
   channelHandle: string | null;
@@ -132,6 +137,15 @@ export interface SettingsRecord {
   webhookUrl: string;
   webhookSecret: string;
   webhookEnabled: boolean;
+
+  // Storage & Google Drive
+  storageProvider: 'local' | 'google_drive' | 'both';
+  googleDriveFolderId: string;
+  googleDriveFolderName: string;
+  googleDriveFolderUrl: string;
+  googleDriveAutoSync: boolean;
+  googleDriveConnected: boolean;
+  googleDriveApiKey?: string;
 
   // General & Hosting
   customDomain: string;
@@ -277,6 +291,18 @@ const INITIAL_INTEGRATIONS: IntegrationRecord[] = [
     instructions: 'Configure LinkedIn Developer App with Member Data Portability / Share on LinkedIn permissions.',
     freeTierNotes: 'Free LinkedIn Developer portal access with standard organic sharing scopes.',
     lastSync: null
+  },
+  {
+    platform: 'google_drive',
+    name: 'Google Drive Storage',
+    status: 'not_configured',
+    channelHandle: 'ClipGenius AI Vault',
+    quotaUnitsUsed: 0,
+    dailyLimit: '15 GB Free Storage (Google Drive)',
+    requiresKey: false,
+    instructions: 'Save rendered 9:16 vertical clips and raw videos directly into a Google Drive folder. Paste your Google Drive Folder link or ID to auto-sync.',
+    freeTierNotes: '15 GB free storage with any standard Google account. Never lose your clips and share them with your team in seconds.',
+    lastSync: null
   }
 ];
 
@@ -308,6 +334,13 @@ const INITIAL_SETTINGS: SettingsRecord = {
   webhookSecret: '',
   webhookEnabled: false,
 
+  storageProvider: 'both',
+  googleDriveFolderId: '',
+  googleDriveFolderName: 'ClipGenius AI Vault',
+  googleDriveFolderUrl: '',
+  googleDriveAutoSync: true,
+  googleDriveConnected: false,
+
   customDomain: '',
   defaultAspectRatio: '9:16',
   autoApproveHighVirality: false,
@@ -326,13 +359,22 @@ export class Database {
       if (fs.existsSync(DB_FILE)) {
         const raw = fs.readFileSync(DB_FILE, 'utf-8');
         const parsed = JSON.parse(raw);
+
+        // Merge initial integrations if missing (e.g. google_drive)
+        const loadedIntegrations: IntegrationRecord[] = parsed.integrations || [];
+        INITIAL_INTEGRATIONS.forEach(init => {
+          if (!loadedIntegrations.some((existing: any) => existing.platform === init.platform)) {
+            loadedIntegrations.push(init);
+          }
+        });
+
         return {
           videos: parsed.videos || [],
           clips: parsed.clips || [],
           trends: parsed.trends && parsed.trends.length ? parsed.trends : INITIAL_TRENDS,
           liveTrends: parsed.liveTrends || [],
           strategy: parsed.strategy || INITIAL_STRATEGY,
-          integrations: parsed.integrations && parsed.integrations.length ? parsed.integrations : INITIAL_INTEGRATIONS,
+          integrations: loadedIntegrations,
           settings: { ...INITIAL_SETTINGS, ...(parsed.settings || {}) },
           auditLogs: parsed.auditLogs || []
         };

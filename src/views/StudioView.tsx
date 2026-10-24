@@ -10,7 +10,8 @@ import {
   Trash2,
   Loader2,
   Tv,
-  Type
+  Type,
+  Cloud
 } from 'lucide-react';
 import type { VideoRecord, HighlightCandidate, ClipRecord, FramingMode } from '../api';
 import { api } from '../api';
@@ -128,6 +129,25 @@ export const StudioView: React.FC<StudioViewProps> = ({
           <span>{errorMsg}</span>
         </div>
       )}
+
+      {/* Quick Visual Instructions Bar */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1.25rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', flexWrap: 'wrap', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <span className="badge" style={{ backgroundColor: 'var(--accent-subtle)', color: '#93c5fd', borderColor: 'var(--accent-border)' }}>
+            Studio Guide
+          </span>
+          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            1. Select video below &rarr; 2. Click <strong>Detect Viral Highlights</strong> &rarr; 3. Render 9:16 vertical short.
+          </span>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span className="badge" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#6ee7b7', borderColor: 'var(--success-border)' }}>
+            <Cloud size={12} />
+            <span>Google Drive Sync Ready</span>
+          </span>
+        </div>
+      </div>
 
       {/* Top Workspace Grid */}
       <div className="studio-grid">

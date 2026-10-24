@@ -1,0 +1,216 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper 3" [ref=e212] [cursor=pointer]:
+        - generic [ref=e26]: Long-to-Shorts Clipper
+        - generic [ref=e213]: "3"
+      - generic [ref=e27]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [ref=e28] [cursor=pointer]
+      - button "Live Trends Radar 50" [ref=e214] [cursor=pointer]:
+        - generic [ref=e37]: Live Trends Radar
+        - generic [ref=e215]: "50"
+      - generic [ref=e38]: Production & Publishing
+      - button "Review & Approvals 7" [ref=e216] [cursor=pointer]:
+        - generic [ref=e43]: Review & Approvals
+        - generic [ref=e217]: "7"
+      - button "Publishing Calendar" [ref=e44] [cursor=pointer]
+      - button "Channel Integrations" [ref=e48] [cursor=pointer]
+      - generic [ref=e56]: Configuration & Trust
+      - button "Settings & Free Setup" [ref=e57] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e62] [cursor=pointer]
+    - generic [ref=e67]:
+      - generic [ref=e68]: "FFmpeg 8.1: Ready (Local)"
+      - generic [ref=e71]: "Local Storage: 4.3 MB"
+      - generic [ref=e75]: "Cost: $0.00 (100% Free)"
+  - main [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e83]:
+        - heading "Workspace Dashboard" [level=1] [ref=e84]
+        - paragraph [ref=e85]: Production metrics, library overview, and active publishing pipeline.
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: Local Instance
+          - generic [ref=e92]: 100% Free AI
+        - button "Quick Setup" [ref=e94] [cursor=pointer]
+        - button "Create Sample Video" [ref=e99] [cursor=pointer]
+        - button "Upload Video" [ref=e104] [cursor=pointer]
+    - generic [ref=e110]:
+      - generic [ref=e111]:
+        - generic [ref=e112]:
+          - generic [ref=e113]:
+            - heading "How ClipGenius Works — In 3 Simple Steps" [level=3] [ref=e114]
+            - paragraph [ref=e119]: Zero complicated editing. Turn any long recording or YouTube video into viral 9:16 vertical shorts.
+          - button "Quick Setup Wizard" [ref=e120] [cursor=pointer]
+        - generic [ref=e125]:
+          - generic [ref=e126] [cursor=pointer]:
+            - generic [ref=e127]:
+              - generic [ref=e128]: "1"
+              - strong [ref=e129]: Add Video
+            - paragraph [ref=e130]: Upload an MP4 or paste any YouTube URL in AI Studio (or try our 1-click Sample).
+          - generic [ref=e131] [cursor=pointer]:
+            - generic [ref=e132]:
+              - generic [ref=e133]: "2"
+              - strong [ref=e134]: 1-Click AI Detect
+            - paragraph [ref=e135]: Click "Detect Viral Highlights" to auto-find the top hook segments and punchy quotes.
+          - generic [ref=e136] [cursor=pointer]:
+            - generic [ref=e137]:
+              - generic [ref=e138]: "3"
+              - strong [ref=e139]: Save & Google Drive
+            - paragraph [ref=e140]: Render 9:16 with burned subtitles, sync directly to Google Drive or download MP4.
+      - region [ref=e141]:
+        - heading "Workspace Activity & Storage" [level=2] [ref=e142]
+        - generic [ref=e143]:
+          - generic [ref=e144]:
+            - generic [ref=e145]: Source Videos
+            - generic [ref=e150]: "3"
+            - generic [ref=e151]: Ingested into local library
+          - generic [ref=e152]:
+            - generic [ref=e153]: Generated Shorts
+            - generic [ref=e157]: "9"
+            - generic [ref=e158]: Rendered with local FFmpeg
+          - generic [ref=e159]:
+            - generic [ref=e160]: Approved & Scheduled
+            - generic [ref=e165]: "2"
+            - generic [ref=e166]: 0 queued on calendar
+          - generic [ref=e167]:
+            - generic [ref=e168]: Google Drive & Storage
+            - generic [ref=e172]: 4.3 MB
+            - generic [ref=e173]: Local uploads/ • Drive ready
+      - generic [ref=e174]:
+        - generic [ref=e175]:
+          - heading "Direct Production Controls" [level=3] [ref=e176]
+          - paragraph [ref=e177]: Turn long-form recordings into vertical 9:16 short clips, edit captions, and schedule posts.
+        - generic [ref=e178]:
+          - button "View Trend Radar" [ref=e179] [cursor=pointer]
+          - button "Publishing Calendar" [ref=e184] [cursor=pointer]
+          - button "Open Studio" [ref=e188] [cursor=pointer]
+      - region [ref=e193]:
+        - generic [ref=e194]:
+          - heading "Recent Clips" [level=2] [ref=e195]
+          - button "View All (9)" [ref=e218] [cursor=pointer]
+        - table [ref=e219]:
+          - rowgroup [ref=e220]:
+            - row [ref=e221]:
+              - columnheader "Clip Title" [ref=e222]
+              - columnheader "Source" [ref=e223]
+              - columnheader "Duration" [ref=e224]
+              - columnheader "Virality Score" [ref=e225]
+              - columnheader "Status" [ref=e226]
+              - columnheader "Platforms" [ref=e227]
+              - columnheader "Actions" [ref=e228]
+          - rowgroup [ref=e229]:
+            - row [ref=e230]:
+              - 'cell "PHP2Shell: AI uncovers critical RCE : What It Means" [ref=e231]'
+              - 'cell "AI Trend: Tech & AI" [ref=e233]'
+              - cell "30s" [ref=e234]
+              - cell "92/100" [ref=e235]
+              - cell "in review" [ref=e237]
+              - cell "youtube, tiktok, instagram" [ref=e239]
+              - cell [ref=e240]:
+                - generic [ref=e241]:
+                  - button "Preview" [ref=e242] [cursor=pointer]
+                  - link "Download MP4 file" [ref=e247] [cursor=pointer]:
+                    - /url: /uploads/clips/trend-trend-vid-1792870883635.mp4
+            - row [ref=e251]:
+              - 'cell "Breaking Tech Announcement: What It Means" [ref=e252]'
+              - 'cell "AI Trend: Tech & AI" [ref=e254]'
+              - cell "30s" [ref=e255]
+              - cell "92/100" [ref=e256]
+              - cell "in review" [ref=e258]
+              - cell "youtube, tiktok, instagram" [ref=e260]
+              - cell [ref=e261]:
+                - generic [ref=e262]:
+                  - button "Preview" [ref=e263] [cursor=pointer]
+                  - link "Download MP4 file" [ref=e268] [cursor=pointer]:
+                    - /url: /uploads/clips/trend-trend-vid-1792865677067.mp4
+            - row [ref=e272]:
+              - 'cell "PHP2Shell: AI uncovers critical RCE : What It Means" [ref=e273]'
+              - 'cell "AI Trend: Tech & AI" [ref=e275]'
+              - cell "30s" [ref=e276]
+              - cell "92/100" [ref=e277]
+              - cell "in review" [ref=e279]
+              - cell "youtube, tiktok, instagram" [ref=e281]
+              - cell [ref=e282]:
+                - generic [ref=e283]:
+                  - button "Preview" [ref=e284] [cursor=pointer]
+                  - link "Download MP4 file" [ref=e289] [cursor=pointer]:
+                    - /url: /uploads/clips/trend-trend-vid-1792864888017.mp4
+            - row [ref=e293]:
+              - 'cell "China''s MiniMax completes export reg: What It Means" [ref=e294]'
+              - 'cell "AI Trend: DeepSeek" [ref=e296]'
+              - cell "30s" [ref=e297]
+              - cell "92/100" [ref=e298]
+              - cell "in review" [ref=e300]
+              - cell "youtube, tiktok, instagram" [ref=e302]
+              - cell [ref=e303]:
+                - generic [ref=e304]:
+                  - button "Preview" [ref=e305] [cursor=pointer]
+                  - link "Download MP4 file" [ref=e310] [cursor=pointer]:
+                    - /url: /uploads/clips/trend-trend-vid-1792864885396.mp4
+            - row [ref=e314]:
+              - 'cell "No Signs of AI Payoff Outside the Te: What It Means" [ref=e315]'
+              - 'cell "AI Trend: Tech & AI" [ref=e317]'
+              - cell "30s" [ref=e318]
+              - cell "91/100" [ref=e319]
+              - cell "in review" [ref=e321]
+              - cell "youtube, tiktok, instagram" [ref=e323]
+              - cell [ref=e324]:
+                - generic [ref=e325]:
+                  - button "Preview" [ref=e326] [cursor=pointer]
+                  - link "Download MP4 file" [ref=e331] [cursor=pointer]:
+                    - /url: /uploads/clips/trend-trend-vid-1792864579651.mp4
+            - row [ref=e335]:
+              - 'cell "PHP2Shell: AI uncovers critical RCE : What It Means" [ref=e336]'
+              - 'cell "AI Trend: Tech & AI" [ref=e338]'
+              - cell "30s" [ref=e339]
+              - cell "91/100" [ref=e340]
+              - cell "in review" [ref=e342]
+              - cell "youtube, tiktok, instagram" [ref=e344]
+              - cell [ref=e345]:
+                - generic [ref=e346]:
+                  - button "Preview" [ref=e347] [cursor=pointer]
+                  - link "Download MP4 file" [ref=e352] [cursor=pointer]:
+                    - /url: /uploads/clips/trend-trend-vid-1792864207572.mp4
+  - dialog [ref=e411]:
+    - generic [ref=e412]:
+      - generic [ref=e413]:
+        - generic [ref=e419]:
+          - heading "ClipGenius Quick Setup" [level=2] [ref=e420]
+          - generic [ref=e421]: Step 3 of 4 • 100% Free Local Video Clipper
+        - generic [ref=e422]:
+          - button "Skip for Later" [ref=e423] [cursor=pointer]
+          - button "Close setup modal" [ref=e424] [cursor=pointer]
+      - generic [ref=e476]:
+        - generic [ref=e477]:
+          - heading "Style & AI Engine Preferences" [level=3] [ref=e478]
+          - paragraph [ref=e479]: Choose your default burnt-in subtitle look and your highlight detection provider.
+        - generic [ref=e480]:
+          - generic [ref=e481]: Default Dynamic Subtitle Style
+          - generic [ref=e485]:
+            - button "Bold Yellow MrBeast high-retention style" [ref=e486] [cursor=pointer]:
+              - strong [ref=e487]: Bold Yellow
+              - generic [ref=e488]: MrBeast high-retention style
+            - button "Minimal White Clean, elegant documentary" [ref=e489] [cursor=pointer]:
+              - strong [ref=e490]: Minimal White
+              - generic [ref=e491]: Clean, elegant documentary
+            - button "Karaoke Blue Modern glowing tech accent" [ref=e492] [cursor=pointer]:
+              - strong [ref=e493]: Karaoke Blue
+              - generic [ref=e494]: Modern glowing tech accent
+        - generic [ref=e495]:
+          - text: AI Highlight Engine
+          - generic [ref=e496]:
+            - generic [ref=e498] [cursor=pointer]:
+              - strong [ref=e499]: 100% Free Built-in Pattern Engine (Default)
+              - paragraph [ref=e500]: Zero API keys required. Detects hooks and energetic segments using local algorithms.
+            - generic [ref=e504] [cursor=pointer]:
+              - strong [ref=e505]: Google Gemini 2.0 Flash (Free API Key)
+              - paragraph [ref=e506]: Deep viral reasoning, semantic hook ranking, and tailored punchy captions.
+      - generic [ref=e466]:
+        - button "Back" [ref=e467] [cursor=pointer]
+        - button "Continue" [active] [ref=e472] [cursor=pointer]

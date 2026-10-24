@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { X, Download, Check, Calendar, Type } from 'lucide-react';
+import { X, Download, Check, Calendar, Type, Cloud, ExternalLink, Loader2 } from 'lucide-react';
 import type { ClipRecord } from '../api';
+import { api } from '../api';
 
 interface VideoPlayerModalProps {
   clip: ClipRecord;
   onClose: () => void;
   onUpdateStatus?: (id: string, status: ClipRecord['status']) => void;
   onUpdateCaptionStyle?: (id: string, style: ClipRecord['captionStyle']) => void;
+  onSyncGoogleDrive?: (id: string) => Promise<void>;
 }
 
 export const VideoPlayerModal: React.FC<VideoPlayerModalProps> = ({
@@ -14,13 +16,32 @@ export const VideoPlayerModal: React.FC<VideoPlayerModalProps> = ({
   onClose,
   onUpdateStatus,
   onUpdateCaptionStyle,
+  onSyncGoogleDrive,
 }) => {
   const [captionStyle, setCaptionStyle] = useState<ClipRecord['captionStyle']>(clip.captionStyle || 'bold-yellow');
+  const [isSyncingDrive, setIsSyncingDrive] = useState<boolean>(false);
+  const [driveSuccessUrl, setDriveSuccessUrl] = useState<string | null>(clip.googleDriveFileUrl || null);
 
   const handleStyleChange = (style: ClipRecord['captionStyle']) => {
     setCaptionStyle(style);
     if (onUpdateCaptionStyle) {
       onUpdateCaptionStyle(clip.id, style);
+    }
+  };
+
+  const handleSyncDrive = async () => {
+    setIsSyncingDrive(true);
+    try {
+      if (onSyncGoogleDrive) {
+        await onSyncGoogleDrive(clip.id);
+      } else {
+        const res = await api.syncClipToGoogleDrive(clip.id);
+        setDriveSuccessUrl(res.driveUrl);
+      }
+    } catch (e: any) {
+      alert(`Google Drive sync error: ${e.message}`);
+    } finally {
+      setIsSyncingDrive(false);
     }
   };
 
@@ -124,38 +145,71 @@ export const VideoPlayerModal: React.FC<VideoPlayerModalProps> = ({
               />
             </div>
 
-            <div style={{ display: 'flex', gap: '0.75rem', marginTop: 'auto', paddingTop: '0.5rem' }}>
-              <a
-                href={clip.urlPath}
-                download={`${clip.title.replace(/[^a-zA-Z0-9_-]/g, '_')}.mp4`}
-                className="btn btn-outline btn-sm"
-                style={{ flex: 1 }}
-              >
-                <Download size={14} />
-                <span>Download MP4</span>
-              </a>
-
-              {clip.status !== 'approved' && onUpdateStatus && (
-                <button
-                  className="btn btn-success btn-sm"
-                  style={{ flex: 1 }}
-                  onClick={() => onUpdateStatus(clip.id, 'approved')}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: 'auto', paddingTop: '0.5rem' }}>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <a
+                  href={clip.urlPath}
+                  download={`${clip.title.replace(/[^a-zA-Z0-9_-]/g, '_')}.mp4`}
+                  className="btn btn-outline btn-sm"
+                  style={{ flex: 1, justifyContent: 'center' }}
                 >
-                  <Check size={14} />
-                  <span>Approve Clip</span>
-                </button>
-              )}
+                  <Download size={14} />
+                  <span>Download MP4</span>
+                </a>
 
-              {clip.status !== 'scheduled' && onUpdateStatus && (
-                <button
-                  className="btn btn-primary btn-sm"
-                  style={{ flex: 1 }}
-                  onClick={() => onUpdateStatus(clip.id, 'scheduled')}
-                >
-                  <Calendar size={14} />
-                  <span>Send to Schedule</span>
-                </button>
-              )}
+                {clip.googleDriveSynced || driveSuccessUrl ? (
+                  <a
+                    href={driveSuccessUrl || clip.googleDriveFileUrl || 'https://drive.google.com'}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-outline btn-sm"
+                    style={{ flex: 1, justifyContent: 'center', borderColor: 'var(--success-border)', color: '#6ee7b7' }}
+                    title="View synced video on Google Drive"
+                  >
+                    <Cloud size={14} />
+                    <span>In Google Drive</span>
+                    <ExternalLink size={12} />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn btn-secondary btn-sm"
+                    style={{ flex: 1, justifyContent: 'center' }}
+                    onClick={handleSyncDrive}
+                    disabled={isSyncingDrive}
+                    title="Upload & sync this clip to your configured Google Drive folder"
+                  >
+                    {isSyncingDrive ? <Loader2 size={14} className="spin" /> : <Cloud size={14} />}
+                    <span>{isSyncingDrive ? 'Syncing...' : 'Save to Google Drive'}</span>
+                  </button>
+                )}
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                {clip.status !== 'approved' && onUpdateStatus && (
+                  <button
+                    type="button"
+                    className="btn btn-success btn-sm"
+                    style={{ flex: 1, justifyContent: 'center' }}
+                    onClick={() => onUpdateStatus(clip.id, 'approved')}
+                  >
+                    <Check size={14} />
+                    <span>Approve Clip</span>
+                  </button>
+                )}
+
+                {clip.status !== 'scheduled' && onUpdateStatus && (
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    style={{ flex: 1, justifyContent: 'center' }}
+                    onClick={() => onUpdateStatus(clip.id, 'scheduled')}
+                  >
+                    <Calendar size={14} />
+                    <span>Send to Schedule</span>
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>

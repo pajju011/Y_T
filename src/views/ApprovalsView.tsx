@@ -12,7 +12,8 @@ import {
   X,
   Archive,
   Loader2,
-  ExternalLink
+  ExternalLink,
+  Cloud
 } from 'lucide-react';
 import type { ClipRecord } from '../api';
 import { api } from '../api';
@@ -46,6 +47,35 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
 
   const [publishingClipId, setPublishingClipId] = useState<string | null>(null);
   const [publishSuccessUrl, setPublishSuccessUrl] = useState<string | null>(null);
+  const [isSyncingDriveBatch, setIsSyncingDriveBatch] = useState<boolean>(false);
+  const [syncStatusMsg, setSyncStatusMsg] = useState<string | null>(null);
+
+  const handleSyncAllGoogleDrive = async () => {
+    setIsSyncingDriveBatch(true);
+    setSyncStatusMsg(null);
+    try {
+      const res = await api.syncAllClipsToGoogleDrive();
+      setSyncStatusMsg(`Successfully synced ${res.syncedCount} clips to Google Drive!`);
+      // Trigger update on clips
+      for (const c of res.clips) {
+        await onUpdateClip(c.id, { googleDriveSynced: true, googleDriveFileUrl: c.googleDriveFileUrl });
+      }
+      setTimeout(() => setSyncStatusMsg(null), 4000);
+    } catch (err: any) {
+      alert(`Google Drive batch sync failed: ${err.message}`);
+    } finally {
+      setIsSyncingDriveBatch(false);
+    }
+  };
+
+  const handleSyncSingleClip = async (clipId: string) => {
+    try {
+      const res = await api.syncClipToGoogleDrive(clipId);
+      await onUpdateClip(clipId, { googleDriveSynced: true, googleDriveFileUrl: res.driveUrl });
+    } catch (err: any) {
+      alert(`Google Drive sync failed: ${err.message}`);
+    }
+  };
 
   const filteredClips = filterStatus === 'all'
     ? clips
@@ -111,6 +141,21 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
         </div>
 
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          {/* Batch Google Drive Sync Button */}
+          {clips.length > 0 && (
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={handleSyncAllGoogleDrive}
+              disabled={isSyncingDriveBatch}
+              style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: 'var(--success-border)', color: '#6ee7b7' }}
+              title="Sync all clips to your configured Google Drive folder"
+            >
+              {isSyncingDriveBatch ? <Loader2 size={14} className="spin" /> : <Cloud size={14} />}
+              <span>{isSyncingDriveBatch ? 'Syncing Drive...' : 'Sync All to Google Drive'}</span>
+            </button>
+          )}
+
           {/* Batch 1-Click ZIP Export Button */}
           {approvedClipsCount > 0 && (
             <a
@@ -141,6 +186,19 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
           </div>
         </div>
       </div>
+
+      {syncStatusMsg && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.85rem 1.25rem', backgroundColor: 'var(--success-subtle)', border: '1px solid var(--success-border)', borderRadius: 'var(--radius-sm)', color: '#6ee7b7' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Check size={16} />
+            <span>{syncStatusMsg}</span>
+          </div>
+          <a href="https://drive.google.com" target="_blank" rel="noreferrer" className="btn btn-outline btn-sm" style={{ color: '#ffffff' }}>
+            <span>Open Google Drive</span>
+            <ExternalLink size={12} />
+          </a>
+        </div>
+      )}
 
       {publishSuccessUrl && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.85rem 1.25rem', backgroundColor: 'var(--success-subtle)', border: '1px solid var(--success-border)', borderRadius: 'var(--radius-sm)', color: '#6ee7b7' }}>
@@ -174,9 +232,24 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
               <div key={clip.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                 {/* Header */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span className={`badge badge-${clip.status}`}>
-                    {clip.status.replace('_', ' ')}
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <span className={`badge badge-${clip.status}`}>
+                      {clip.status.replace('_', ' ')}
+                    </span>
+                    {clip.googleDriveSynced && (
+                      <a
+                        href={clip.googleDriveFileUrl || 'https://drive.google.com'}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="badge"
+                        style={{ backgroundColor: 'rgba(16, 185, 129, 0.12)', color: '#6ee7b7', borderColor: 'var(--success-border)', textDecoration: 'none' }}
+                        title="Synced to Google Drive"
+                      >
+                        <Cloud size={11} />
+                        <span>Drive</span>
+                      </a>
+                    )}
+                  </div>
                   <span className="badge" style={{ backgroundColor: 'rgba(37, 99, 235, 0.1)', color: '#93c5fd', borderColor: 'var(--accent-border)' }}>
                     Virality: {clip.viralityScore}/100
                   </span>
@@ -265,6 +338,16 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
                       >
                         <Download size={13} />
                       </a>
+
+                      <button
+                        type="button"
+                        className="btn btn-outline btn-sm"
+                        onClick={() => handleSyncSingleClip(clip.id)}
+                        title={clip.googleDriveSynced ? "Synced to Google Drive (Click to re-sync)" : "Save to Google Drive"}
+                        style={clip.googleDriveSynced ? { color: '#6ee7b7', borderColor: 'var(--success-border)' } : {}}
+                      >
+                        <Cloud size={13} />
+                      </button>
 
                       {clip.status === 'in_review' && (
                         <button

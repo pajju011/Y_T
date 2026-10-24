@@ -1,6 +1,19 @@
 {
   "videos": [
     {
+      "id": "vid-demo-1792871923204",
+      "title": "Sample Product Tour & Feature Walkthrough",
+      "originalName": "demo-sample-video.mp4",
+      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\videos\\demo-1792871923204.mp4",
+      "urlPath": "/uploads/videos/demo-1792871923204.mp4",
+      "fileSize": 1506828,
+      "duration": 45,
+      "width": 1920,
+      "height": 1080,
+      "uploadedAt": "2026-10-24T19:58:51.318Z",
+      "status": "ready"
+    },
+    {
       "id": "vid-demo-1792862616207",
       "title": "Sample Product Tour & Feature Walkthrough",
       "originalName": "demo-sample-video.mp4",
@@ -58,7 +71,10 @@
       "createdAt": "2026-10-24T19:41:25.920Z",
       "approvedAt": null,
       "publishedAt": null,
-      "trendSourceUrl": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBfU2lySGdfMVprRm5nUmxNVVEzYjFPQTRhWV9VNzlJNlVZbWFmMVN4UE1uOFFqbVE4UFBvaWwydHUzT2VhRTVaSWVDeVhGbVpHQnEw?oc=5"
+      "trendSourceUrl": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBfU2lySGdfMVprRm5nUmxNVVEzYjFPQTRhWV9VNzlJNlVZbWFmMVN4UE1uOFFqbVE4UFBvaWwydHUzT2VhRTVaSWVDeVhGbVpHQnEw?oc=5",
+      "googleDriveSynced": true,
+      "googleDriveSyncedAt": "2026-10-24T20:02:49.567Z",
+      "googleDriveFileUrl": "https://drive.google.com/drive/search?q=PHP2Shell__AI_uncovers_critical_RCE___What_It_Means"
     },
     {
       "id": "trend-vid-1792865677067",
@@ -247,7 +263,10 @@
       ],
       "createdAt": "2026-10-24T17:41:41.579Z",
       "approvedAt": "2026-10-24T17:41:41.595Z",
-      "publishedAt": null
+      "publishedAt": null,
+      "googleDriveSynced": true,
+      "googleDriveSyncedAt": "2026-10-24T20:02:20.560Z",
+      "googleDriveFileUrl": "https://drive.google.com/drive/search?q=Hormozi_Style_Animated_Short"
     },
     {
       "id": "clip-1792862606892",
@@ -938,7 +957,7 @@
     }
   ],
   "strategy": {
-    "channelName": "Verified AI Shorts",
+    "channelName": "My Viral Shorts",
     "niche": "Tech & AI",
     "keywords": [
       "Artificial Intelligence",
@@ -1009,6 +1028,18 @@
       "instructions": "Configure LinkedIn Developer App with Member Data Portability / Share on LinkedIn permissions.",
       "freeTierNotes": "Free LinkedIn Developer portal access with standard organic sharing scopes.",
       "lastSync": null
+    },
+    {
+      "platform": "google_drive",
+      "name": "Google Drive Storage",
+      "status": "connected",
+      "channelHandle": "ClipGenius AI Vault",
+      "quotaUnitsUsed": 2,
+      "dailyLimit": "15 GB Free Storage (Google Drive)",
+      "requiresKey": false,
+      "instructions": "Save rendered 9:16 vertical clips and raw videos directly into a Google Drive folder. Paste your Google Drive Folder link or ID to auto-sync.",
+      "freeTierNotes": "15 GB free storage with any standard Google account. Never lose your clips and share them with your team in seconds.",
+      "lastSync": "2026-10-24T20:02:49.569Z"
     }
   ],
   "settings": {
@@ -1021,7 +1052,7 @@
     "customLlmEndpoint": "",
     "customLlmKey": "",
     "customLlmModel": "gpt-4o-mini",
-    "preferredLlmProvider": "gemini",
+    "preferredLlmProvider": "heuristic",
     "elevenLabsApiKey": "",
     "elevenLabsVoiceId": "21m00Tcm4TlvDq8ikWAM",
     "openaiTtsVoice": "alloy",
@@ -1034,12 +1065,66 @@
     "webhookUrl": "",
     "webhookSecret": "",
     "webhookEnabled": false,
+    "storageProvider": "both",
+    "googleDriveFolderId": "",
+    "googleDriveFolderName": "ClipGenius AI Vault",
+    "googleDriveFolderUrl": "",
+    "googleDriveAutoSync": true,
+    "googleDriveConnected": true,
     "customDomain": "",
     "defaultAspectRatio": "9:16",
     "autoApproveHighVirality": false,
     "storageQuotaMb": 10240
   },
   "auditLogs": [
+    {
+      "id": "log-1792872169570",
+      "timestamp": "2026-10-24T20:02:49.571Z",
+      "action": "gdrive_sync",
+      "details": "Clip \"PHP2Shell: AI uncovers critical RCE : What It Means\" saved to Google Drive (ClipGenius AI Vault)"
+    },
+    {
+      "id": "log-1792872169567",
+      "timestamp": "2026-10-24T20:02:49.567Z",
+      "action": "clip_updated",
+      "details": "Clip \"trend-vid-1792870883635\" updated: googleDriveSynced, googleDriveSyncedAt, googleDriveFileUrl"
+    },
+    {
+      "id": "log-1792872140591",
+      "timestamp": "2026-10-24T20:02:20.591Z",
+      "action": "clip_updated",
+      "details": "Clip \"clip-1792863699132\" updated: googleDriveSynced, googleDriveFileUrl"
+    },
+    {
+      "id": "log-1792872140563",
+      "timestamp": "2026-10-24T20:02:20.563Z",
+      "action": "gdrive_sync",
+      "details": "Clip \"Hormozi Style Animated Short\" saved to Google Drive (ClipGenius AI Vault)"
+    },
+    {
+      "id": "log-1792872140560",
+      "timestamp": "2026-10-24T20:02:20.560Z",
+      "action": "clip_updated",
+      "details": "Clip \"clip-1792863699132\" updated: googleDriveSynced, googleDriveSyncedAt, googleDriveFileUrl"
+    },
+    {
+      "id": "log-1792872097813",
+      "timestamp": "2026-10-24T20:01:37.813Z",
+      "action": "settings_updated",
+      "details": "Updated API configuration and credentials."
+    },
+    {
+      "id": "log-1792872097804",
+      "timestamp": "2026-10-24T20:01:37.804Z",
+      "action": "gdrive_config_updated",
+      "details": "Google Drive settings updated: Folder \"ClipGenius AI Vault\", AutoSync: true"
+    },
+    {
+      "id": "log-1792872097789",
+      "timestamp": "2026-10-24T20:01:37.789Z",
+      "action": "strategy_updated",
+      "details": "Strategy updated for niche \"Tech & AI\""
+    },
     {
       "id": "log-1792870885924",
       "timestamp": "2026-10-24T19:41:25.924Z",

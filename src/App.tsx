@@ -3,6 +3,7 @@ import { Sidebar } from './components/Sidebar';
 import type { ActiveTab } from './components/Sidebar';
 import { Header } from './components/Header';
 import { VideoPlayerModal } from './components/VideoPlayerModal';
+import { SetupWizardModal } from './components/SetupWizardModal';
 import { DashboardView } from './views/DashboardView';
 import { StudioView } from './views/StudioView';
 import { StrategyView } from './views/StrategyView';
@@ -36,6 +37,13 @@ export function App() {
   const [activePreviewClip, setActivePreviewClip] = useState<ClipRecord | null>(null);
   const [isGeneratingDemo, setIsGeneratingDemo] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isSetupWizardOpen, setIsSetupWizardOpen] = useState<boolean>(() => {
+    try {
+      return !localStorage.getItem('clipgenius_setup_status');
+    } catch {
+      return true;
+    }
+  });
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -226,6 +234,7 @@ export function App() {
   };
 
   const pageInfo = getPageInfo();
+  const googleDriveConnected = integrations.find(i => i.platform === 'google_drive')?.status === 'connected';
 
   return (
     <div className="app-container">
@@ -249,8 +258,10 @@ export function App() {
           title={pageInfo.title}
           description={pageInfo.description}
           systemInfo={systemInfo}
+          googleDriveConnected={googleDriveConnected}
           onUploadClick={() => fileInputRef.current?.click()}
           onDemoClick={handleCreateDemoVideo}
+          onOpenSetupWizard={() => setIsSetupWizardOpen(true)}
           isGeneratingDemo={isGeneratingDemo}
         />
 
@@ -264,6 +275,7 @@ export function App() {
               onPreviewClip={(clip) => setActivePreviewClip(clip)}
               onDemoClick={handleCreateDemoVideo}
               onUploadClick={() => fileInputRef.current?.click()}
+              onOpenSetupWizard={() => setIsSetupWizardOpen(true)}
             />
           )}
 
@@ -337,8 +349,30 @@ export function App() {
           onClose={() => setActivePreviewClip(null)}
           onUpdateStatus={(id, status) => handleUpdateClip(id, { status })}
           onUpdateCaptionStyle={(id, captionStyle) => handleUpdateClip(id, { captionStyle })}
+          onSyncGoogleDrive={async (id) => {
+            await api.syncClipToGoogleDrive(id);
+            await refreshData();
+            showToast('Clip synced to Google Drive!');
+          }}
         />
       )}
+
+      {/* First-Time Setup Wizard Modal */}
+      <SetupWizardModal
+        isOpen={isSetupWizardOpen}
+        onClose={(skipped) => {
+          setIsSetupWizardOpen(false);
+          if (skipped) {
+            showToast('Setup skipped for now. Click "Quick Setup" in the header to finish anytime.');
+          }
+        }}
+        onComplete={async () => {
+          await refreshData();
+          showToast('Setup completed! Google Drive & studio preferences are saved.');
+        }}
+        onDemoClick={handleCreateDemoVideo}
+        onUploadClick={() => fileInputRef.current?.click()}
+      />
 
       {/* Toast Notification */}
       {toastMessage && (
