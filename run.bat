@@ -19,12 +19,12 @@ if %ERRORLEVEL% NEQ 0 (
 
 :: 2. Auto-kill any stuck orphan processes on ports 3001 or 5173
 for /f "tokens=5" %%a in ('netstat -aon ^| findstr :3001 ^| findstr LISTENING 2^>nul') do (
-    echo [INFO] Freeing port 3001 (PID %%a)...
+    echo [INFO] Freeing port 3001 [PID %%a]...
     taskkill /F /PID %%a >nul 2>nul
 )
 
 for /f "tokens=5" %%a in ('netstat -aon ^| findstr :5173 ^| findstr LISTENING 2^>nul') do (
-    echo [INFO] Freeing port 5173 (PID %%a)...
+    echo [INFO] Freeing port 5173 [PID %%a]...
     taskkill /F /PID %%a >nul 2>nul
 )
 
@@ -43,7 +43,7 @@ if not exist "node_modules\" (
 start "" cmd /c "timeout /t 3 /nobreak >nul & start http://localhost:5173"
 
 echo [INFO] Starting Fullstack System:
-echo   - Backend Engine & FFmpeg on http://localhost:3001
+echo   - Backend Engine ^& FFmpeg on http://localhost:3001
 echo   - Web Studio UI on http://localhost:5173
 echo.
 echo [INFO] Features Loaded:
