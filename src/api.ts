@@ -534,4 +534,16 @@ export const api = {
     if (!res.ok) throw new Error('Failed to batch sync to Google Drive');
     return res.json();
   },
+
+  async purgeDemoData(): Promise<{ success: boolean; removedVideos: number; removedClips: number }> {
+    const res = await fetch(`${API_BASE}/workspace/purge-demo`, { method: 'POST' });
+    if (!res.ok) throw new Error('Failed to purge demo data');
+    return res.json();
+  },
+
+  async resetWorkspace(): Promise<{ success: boolean; message: string }> {
+    const res = await fetch(`${API_BASE}/workspace/reset`, { method: 'POST' });
+    if (!res.ok) throw new Error('Failed to reset workspace');
+    return res.json();
+  },
 };

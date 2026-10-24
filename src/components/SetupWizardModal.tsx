@@ -7,7 +7,6 @@ import {
   ArrowRight,
   ArrowLeft,
   X,
-  PlayCircle,
   Upload,
   Folder,
   ShieldCheck,
@@ -19,7 +18,6 @@ interface SetupWizardModalProps {
   isOpen: boolean;
   onClose: (skipped?: boolean) => void;
   onComplete: () => void;
-  onDemoClick: () => void;
   onUploadClick: () => void;
 }
 
@@ -27,7 +25,6 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
   isOpen,
   onClose,
   onComplete,
-  onDemoClick,
   onUploadClick,
 }) => {
   const [step, setStep] = useState<number>(1);
@@ -56,7 +53,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
     onClose(true);
   };
 
-  const handleSaveAndFinish = async (nextAction?: 'studio' | 'demo' | 'upload') => {
+  const handleSaveAndFinish = async (nextAction?: 'studio' | 'upload') => {
     setIsSaving(true);
     try {
       // 1. Save Strategy
@@ -85,9 +82,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
       } catch {}
       onComplete();
 
-      if (nextAction === 'demo') {
-        onDemoClick();
-      } else if (nextAction === 'upload') {
+      if (nextAction === 'upload') {
         onUploadClick();
       }
     } catch (err) {
@@ -597,37 +592,24 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={() => handleSaveAndFinish('demo')}
+                  onClick={() => handleSaveAndFinish('upload')}
                   disabled={isSaving}
                   style={{ justifyContent: 'center', padding: '0.75rem' }}
                 >
-                  <PlayCircle size={16} />
-                  <span>Test with Instant Sample Video (Zero Uploads)</span>
+                  <Upload size={16} />
+                  <span>Upload Your First Video (MP4, MOV, WebM)</span>
                 </button>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-                  <button
-                    type="button"
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => handleSaveAndFinish('upload')}
-                    disabled={isSaving}
-                    style={{ justifyContent: 'center' }}
-                  >
-                    <Upload size={14} />
-                    <span>Upload MP4 File</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="btn btn-outline btn-sm"
-                    onClick={() => handleSaveAndFinish('studio')}
-                    disabled={isSaving}
-                    style={{ justifyContent: 'center' }}
-                  >
-                    <span>Go to AI Studio</span>
-                    <ArrowRight size={14} />
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => handleSaveAndFinish('studio')}
+                  disabled={isSaving}
+                  style={{ justifyContent: 'center' }}
+                >
+                  <Sparkles size={14} />
+                  <span>Go to AI Studio & YouTube Ingest</span>
+                </button>
               </div>
             </div>
           )}

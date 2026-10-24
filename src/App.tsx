@@ -18,7 +18,6 @@ import type {
   MetricsData,
   VideoRecord,
   ClipRecord,
-  TrendItem,
   IntegrationRecord,
   SystemInfo
 } from './api';
@@ -30,12 +29,10 @@ export function App() {
   const [metrics, setMetrics] = useState<MetricsData | null>(null);
   const [videos, setVideos] = useState<VideoRecord[]>([]);
   const [clips, setClips] = useState<ClipRecord[]>([]);
-  const [trends, setTrends] = useState<TrendItem[]>([]);
   const [integrations, setIntegrations] = useState<IntegrationRecord[]>([]);
   const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null);
 
   const [activePreviewClip, setActivePreviewClip] = useState<ClipRecord | null>(null);
-  const [isGeneratingDemo, setIsGeneratingDemo] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isSetupWizardOpen, setIsSetupWizardOpen] = useState<boolean>(() => {
     try {
@@ -56,11 +53,10 @@ export function App() {
 
   const refreshData = async () => {
     try {
-      const [m, v, c, t, i, s] = await Promise.all([
+      const [m, v, c, i, s] = await Promise.all([
         api.getMetrics().catch(() => null),
         api.getVideos().catch(() => []),
         api.getClips().catch(() => []),
-        api.getTrends().catch(() => []),
         api.getIntegrations().catch(() => []),
         api.getSystemInfo().catch(() => null),
       ]);
@@ -68,7 +64,6 @@ export function App() {
       if (m) setMetrics(m);
       setVideos(v);
       setClips(c);
-      setTrends(t);
       setIntegrations(i);
       if (s) setSystemInfo(s);
     } catch (err) {
@@ -112,19 +107,8 @@ export function App() {
     }
   };
 
-  const handleCreateDemoVideo = async () => {
-    setIsGeneratingDemo(true);
-    showToast('Generating synthetic test video with local FFmpeg...');
-    try {
-      const demo = await api.createDemoVideo();
-      await refreshData();
-      showToast(`Created sample video: "${demo.title}"`);
-      setActiveTab('studio');
-    } catch (err: any) {
-      showToast(`Failed: ${err.message}`);
-    } finally {
-      setIsGeneratingDemo(false);
-    }
+  const handleOpenYouTubeImport = () => {
+    setActiveTab('studio');
   };
 
   const handleDeleteVideo = async (id: string) => {
@@ -260,9 +244,8 @@ export function App() {
           systemInfo={systemInfo}
           googleDriveConnected={googleDriveConnected}
           onUploadClick={() => fileInputRef.current?.click()}
-          onDemoClick={handleCreateDemoVideo}
+          onYouTubeClick={handleOpenYouTubeImport}
           onOpenSetupWizard={() => setIsSetupWizardOpen(true)}
-          isGeneratingDemo={isGeneratingDemo}
         />
 
         <div className="app-content">
@@ -273,8 +256,8 @@ export function App() {
               videos={videos}
               setActiveTab={setActiveTab}
               onPreviewClip={(clip) => setActivePreviewClip(clip)}
-              onDemoClick={handleCreateDemoVideo}
               onUploadClick={() => fileInputRef.current?.click()}
+              onYouTubeClick={handleOpenYouTubeImport}
               onOpenSetupWizard={() => setIsSetupWizardOpen(true)}
             />
           )}
@@ -284,8 +267,6 @@ export function App() {
               videos={videos}
               onUploadVideo={handleUploadVideo}
               onImportYouTube={handleImportYouTube}
-              onDemoClick={handleCreateDemoVideo}
-              isGeneratingDemo={isGeneratingDemo}
               onClipCreated={handleClipCreated}
               onDeleteVideo={handleDeleteVideo}
             />
@@ -300,7 +281,6 @@ export function App() {
 
           {activeTab === 'trends' && (
             <TrendsView
-              trends={trends}
               setActiveTab={setActiveTab}
               onRefreshAll={refreshData}
             />
@@ -333,6 +313,7 @@ export function App() {
             <SettingsView
               systemInfo={systemInfo}
               onRefreshSystem={refreshData}
+              onRefreshAll={refreshData}
             />
           )}
 
@@ -370,7 +351,6 @@ export function App() {
           await refreshData();
           showToast('Setup completed! Google Drive & studio preferences are saved.');
         }}
-        onDemoClick={handleCreateDemoVideo}
         onUploadClick={() => fileInputRef.current?.click()}
       />
 

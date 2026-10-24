@@ -103,6 +103,81 @@ export class FFmpegService {
     return this.getVideoMetadata(filePath);
   }
 
+  /**
+   * Detects active speech intervals and natural sentence pauses via FFmpeg silencedetect
+   */
+  public async detectSpeechIntervals(filePath: string, videoDuration: number): Promise<{ start: number; end: number }[]> {
+    return new Promise((resolve) => {
+      const cmd = `${this.ffmpegBin} -i "${filePath}" -af "silencedetect=noise=-30dB:d=0.4" -f null -`;
+      exec(cmd, { maxBuffer: 10 * 1024 * 1024 }, (err, stdout, stderr) => {
+        const output = (stderr || '') + (stdout || '');
+        const silences: { start: number; end: number }[] = [];
+
+        const startRegex = /silence_start:\s*([\d.]+)/g;
+        const endRegex = /silence_end:\s*([\d.]+)/g;
+
+        let startMatch;
+        const starts: number[] = [];
+        while ((startMatch = startRegex.exec(output)) !== null) {
+          starts.push(parseFloat(startMatch[1]));
+        }
+
+        let endMatch;
+        const ends: number[] = [];
+        while ((endMatch = endRegex.exec(output)) !== null) {
+          ends.push(parseFloat(endMatch[1]));
+        }
+
+        const count = Math.min(starts.length, ends.length);
+        for (let i = 0; i < count; i++) {
+          silences.push({ start: starts[i], end: ends[i] });
+        }
+
+        if (silences.length === 0) {
+          return resolve([{ start: 0, end: videoDuration }]);
+        }
+
+        const speechSegments: { start: number; end: number }[] = [];
+        let cur = 0;
+        for (const s of silences) {
+          if (s.start > cur + 1) {
+            speechSegments.push({ start: cur, end: s.start });
+          }
+          cur = s.end;
+        }
+        if (cur < videoDuration - 1) {
+          speechSegments.push({ start: cur, end: videoDuration });
+        }
+
+        resolve(speechSegments.length > 0 ? speechSegments : [{ start: 0, end: videoDuration }]);
+      });
+    });
+  }
+
+  /**
+   * Reads embedded video chapter markers if present (YouTube / MP4 / MKV)
+   */
+  public async getChapters(filePath: string): Promise<{ title: string; start: number; end: number }[]> {
+    return new Promise((resolve) => {
+      const cmd = `${this.ffprobeBin} -v error -print_format json -show_chapters "${filePath}"`;
+      exec(cmd, (err, stdout) => {
+        if (err || !stdout) return resolve([]);
+        try {
+          const parsed = JSON.parse(stdout);
+          const chapters = parsed.chapters || [];
+          const results = chapters.map((ch: any) => ({
+            title: ch.tags?.title || `Chapter ${ch.id + 1}`,
+            start: parseFloat(ch.start_time || '0'),
+            end: parseFloat(ch.end_time || '0')
+          })).filter((c: any) => c.end > c.start);
+          resolve(results);
+        } catch {
+          resolve([]);
+        }
+      });
+    });
+  }
+
   public async extractThumbnail(videoPath: string, outputPath: string, timestampSeconds: number = 1): Promise<string> {
     return new Promise((resolve, reject) => {
       const targetDir = path.dirname(outputPath);

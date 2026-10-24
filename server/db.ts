@@ -174,70 +174,19 @@ export interface DatabaseSchema {
 
 const DB_FILE = path.resolve(process.cwd(), 'data', 'db.json');
 
-const INITIAL_TRENDS: TrendItem[] = [
-  {
-    id: 'trend-1',
-    title: 'The "Nobody is talking about this" Framework',
-    category: 'Tech & AI',
-    description: 'High-retention curiosity hook that highlights an underappreciated workflow or software release.',
-    hookTemplate: 'Nobody is talking about this tool, but it saves me 4 hours every single day...',
-    targetDuration: '30-45s',
-    engagementVelocity: 'Very High',
-    sampleTags: ['#tech', '#productivity', '#automation', '#tools']
-  },
-  {
-    id: 'trend-2',
-    title: 'Myth vs. Reality Rapid Debunking',
-    category: 'Finance & Business',
-    description: 'Contrast a common assumption against verified data in the first 3 seconds.',
-    hookTemplate: 'Most people think [X] is true. Here is what actually happens when you test it...',
-    targetDuration: '45-60s',
-    engagementVelocity: 'High',
-    sampleTags: ['#finance', '#businessgrowth', '#casestudy', '#facts']
-  },
-  {
-    id: 'trend-3',
-    title: 'The 3-Step Execution Breakdown',
-    category: 'Productivity',
-    description: 'Concise step-by-step tutorial format with on-screen numbering for high completion rates.',
-    hookTemplate: 'Here are the exact 3 steps to [achieve outcome] without [pain point]...',
-    targetDuration: '35-50s',
-    engagementVelocity: 'High',
-    sampleTags: ['#productivitytips', '#workflow', '#howto', '#systems']
-  },
-  {
-    id: 'trend-4',
-    title: 'The Painful Mistake Framework',
-    category: 'Creator Economy',
-    description: 'Relatable vulnerability hook focusing on a costly or embarrassing mistake and its fix.',
-    hookTemplate: 'I wasted 6 months doing this the wrong way before I figured out this simple shift...',
-    targetDuration: '40-55s',
-    engagementVelocity: 'Very High',
-    sampleTags: ['#contentcreator', '#growth', '#strategy', '#learnfrommistakes']
-  },
-  {
-    id: 'trend-5',
-    title: 'Direct Comparison Shootout',
-    category: 'Tech & AI',
-    description: 'Side-by-side analysis of two popular approaches or products with clear decision criteria.',
-    hookTemplate: 'Which one is actually better: [Option A] or [Option B]? Let’s look at the numbers...',
-    targetDuration: '45-60s',
-    engagementVelocity: 'Steady',
-    sampleTags: ['#comparison', '#review', '#techtips', '#buyersguide']
-  }
-];
+const INITIAL_TRENDS: TrendItem[] = [];
 
 const INITIAL_STRATEGY: ContentStrategy = {
-  channelName: 'ClipGenius Trends',
+  channelName: '',
   niche: 'Tech & AI',
-  keywords: ['Artificial Intelligence', 'Software', 'Productivity Tools', 'Future Tech'],
-  targetAudience: 'Tech professionals, founders, and curious creators',
+  keywords: [],
+  targetAudience: '',
   targetRegion: 'Global / US',
   language: 'English',
   tone: 'Informed, concise, analytical, engaging',
   durationSec: 30,
   dailyVideoLimit: 1,
-  autoPrepareDaily: true,
+  autoPrepareDaily: false,
   preferredPlatforms: ['youtube', 'tiktok', 'instagram'],
   visualMode: 'motion_text',
   lastAutoRun: null
@@ -371,7 +320,7 @@ export class Database {
         return {
           videos: parsed.videos || [],
           clips: parsed.clips || [],
-          trends: parsed.trends && parsed.trends.length ? parsed.trends : INITIAL_TRENDS,
+          trends: parsed.trends || [],
           liveTrends: parsed.liveTrends || [],
           strategy: parsed.strategy || INITIAL_STRATEGY,
           integrations: loadedIntegrations,
@@ -580,6 +529,67 @@ export class Database {
       connectedIntegrationsCount: this.data.integrations.filter(i => i.status === 'connected').length,
       liveTrendsCount: (this.data.liveTrends || []).length
     };
+  }
+
+  // Purge any synthetic demo/sample records and their files from workspace
+  public purgeDemoData(): { removedVideos: number; removedClips: number } {
+    const isDemoVideo = (v: VideoRecord) =>
+      v.id.startsWith('vid-demo-') ||
+      (v.originalName && v.originalName.toLowerCase().includes('demo')) ||
+      (v.title && v.title.toLowerCase().includes('sample product tour'));
+
+    const isDemoClip = (c: ClipRecord) =>
+      c.id.startsWith('trend-vid-') ||
+      c.videoId.startsWith('vid-demo-') ||
+      (c.videoTitle && c.videoTitle.includes('AI Trend:'));
+
+    const demoVideos = this.data.videos.filter(isDemoVideo);
+    const demoClips = this.data.clips.filter(isDemoClip);
+
+    for (const v of demoVideos) {
+      if (v.filePath && fs.existsSync(v.filePath)) {
+        try { fs.unlinkSync(v.filePath); } catch {}
+      }
+    }
+
+    for (const c of demoClips) {
+      if (c.filePath && fs.existsSync(c.filePath)) {
+        try { fs.unlinkSync(c.filePath); } catch {}
+      }
+      if (c.thumbnailUrl) {
+        const thumbPath = path.resolve(process.cwd(), c.thumbnailUrl.replace(/^\//, ''));
+        if (fs.existsSync(thumbPath)) {
+          try { fs.unlinkSync(thumbPath); } catch {}
+        }
+      }
+    }
+
+    this.data.videos = this.data.videos.filter(v => !isDemoVideo(v));
+    this.data.clips = this.data.clips.filter(c => !isDemoClip(c));
+    this.data.trends = [];
+    this.addAuditLog('demo_purged', `Cleaned workspace: removed ${demoVideos.length} demo videos and ${demoClips.length} test clips.`);
+    this.save();
+
+    return { removedVideos: demoVideos.length, removedClips: demoClips.length };
+  }
+
+  // Reset entire workspace to pristine clean state
+  public resetWorkspace() {
+    for (const v of this.data.videos) {
+      if (v.filePath && fs.existsSync(v.filePath)) {
+        try { fs.unlinkSync(v.filePath); } catch {}
+      }
+    }
+    for (const c of this.data.clips) {
+      if (c.filePath && fs.existsSync(c.filePath)) {
+        try { fs.unlinkSync(c.filePath); } catch {}
+      }
+    }
+    this.data.videos = [];
+    this.data.clips = [];
+    this.data.trends = [];
+    this.addAuditLog('workspace_reset', 'Workspace reset to clean state with 0 videos and 0 clips.');
+    this.save();
   }
 }
 

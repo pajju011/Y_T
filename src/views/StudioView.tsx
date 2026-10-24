@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Upload,
-  Play,
   Scissors,
   AlertCircle,
   Clock,
@@ -26,8 +25,6 @@ interface StudioViewProps {
   videos: VideoRecord[];
   onUploadVideo: (file: File) => Promise<void>;
   onImportYouTube: (url: string) => Promise<void>;
-  onDemoClick: () => void;
-  isGeneratingDemo: boolean;
   onClipCreated: (clip: ClipRecord) => void;
   onDeleteVideo: (id: string) => Promise<void>;
 }
@@ -36,8 +33,6 @@ export const StudioView: React.FC<StudioViewProps> = ({
   videos,
   onUploadVideo,
   onImportYouTube,
-  onDemoClick,
-  isGeneratingDemo,
   onClipCreated,
   onDeleteVideo,
 }) => {
@@ -162,20 +157,28 @@ export const StudioView: React.FC<StudioViewProps> = ({
             </div>
 
             {videos.length === 0 ? (
-              <div className="empty-state" style={{ padding: '2rem 1rem' }}>
+              <div className="empty-state" style={{ padding: '2.5rem 1rem' }}>
                 <Layers className="empty-icon" />
                 <h3 className="empty-title">No videos ingested yet</h3>
                 <p className="empty-desc">
-                  Upload an MP4, paste a YouTube link, or generate an instant test video using local FFmpeg.
+                  Upload your video file (MP4, MOV, WebM) or paste a YouTube URL using the panel on the right.
                 </p>
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={onDemoClick}
-                  disabled={isGeneratingDemo}
-                >
-                  <Play size={14} />
-                  <span>{isGeneratingDemo ? 'Generating Demo...' : 'Create Sample Video'}</span>
-                </button>
+                <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => setIngestMode('upload')}
+                  >
+                    <Upload size={14} />
+                    <span>Upload Local File</span>
+                  </button>
+                  <button
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => setIngestMode('youtube')}
+                  >
+                    <YoutubeIcon size={14} style={{ color: '#f87171' }} />
+                    <span>YouTube Import</span>
+                  </button>
+                </div>
               </div>
             ) : (
               <div>

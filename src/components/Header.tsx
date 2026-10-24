@@ -1,6 +1,12 @@
 import React from 'react';
-import { Upload, PlayCircle, HardDrive, Sparkles, Cloud } from 'lucide-react';
+import { Upload, HardDrive, Sparkles, Cloud } from 'lucide-react';
 import type { SystemInfo } from '../api';
+
+const YoutubeIcon: React.FC<{ size?: number; style?: React.CSSProperties }> = ({ size = 14, style }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={style}>
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+  </svg>
+);
 
 interface HeaderProps {
   title: string;
@@ -8,9 +14,8 @@ interface HeaderProps {
   systemInfo: SystemInfo | null;
   googleDriveConnected?: boolean;
   onUploadClick: () => void;
-  onDemoClick: () => void;
+  onYouTubeClick: () => void;
   onOpenSetupWizard: () => void;
-  isGeneratingDemo: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -19,9 +24,8 @@ export const Header: React.FC<HeaderProps> = ({
   systemInfo,
   googleDriveConnected,
   onUploadClick,
-  onDemoClick,
+  onYouTubeClick,
   onOpenSetupWizard,
-  isGeneratingDemo,
 }) => {
   return (
     <header className="app-topbar">
@@ -63,17 +67,18 @@ export const Header: React.FC<HeaderProps> = ({
 
         <button
           className="btn btn-secondary btn-sm"
-          onClick={onDemoClick}
-          disabled={isGeneratingDemo}
-          title="Generates a 45s test video using local FFmpeg in ~2 seconds"
+          onClick={onYouTubeClick}
+          title="Import any public YouTube video via yt-dlp"
+          style={{ gap: '0.4rem' }}
         >
-          <PlayCircle size={15} />
-          <span>{isGeneratingDemo ? 'Generating Demo...' : 'Create Sample Video'}</span>
+          <YoutubeIcon size={14} style={{ color: '#f87171' }} />
+          <span>Import YouTube</span>
         </button>
 
         <button
           className="btn btn-primary btn-sm"
           onClick={onUploadClick}
+          title="Upload MP4, MOV, or WebM video file"
         >
           <Upload size={15} />
           <span>Upload Video</span>

@@ -9,7 +9,8 @@ import {
   Share2,
   Loader2,
   CheckCircle,
-  Cloud
+  Cloud,
+  Trash2
 } from 'lucide-react';
 import type { SettingsData, SystemInfo } from '../api';
 import { api } from '../api';
@@ -17,11 +18,13 @@ import { api } from '../api';
 interface SettingsViewProps {
   systemInfo: SystemInfo | null;
   onRefreshSystem: () => void;
+  onRefreshAll?: () => Promise<void>;
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({
   systemInfo,
   onRefreshSystem,
+  onRefreshAll,
 }) => {
   const [settings, setSettings] = useState<SettingsData | null>(null);
 
@@ -66,6 +69,38 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [defaultAspect, setDefaultAspect] = useState<'9:16' | '1:1' | '16:9'>('9:16');
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
+  const [isPurging, setIsPurging] = useState<boolean>(false);
+  const [isResetting, setIsResetting] = useState<boolean>(false);
+  const [dataActionMsg, setDataActionMsg] = useState<string | null>(null);
+
+  const handlePurgeDemoData = async () => {
+    setIsPurging(true);
+    try {
+      const res = await api.purgeDemoData();
+      setDataActionMsg(`Cleaned ${res.removedVideos} demo videos and ${res.removedClips} test clips.`);
+      if (onRefreshAll) await onRefreshAll();
+      setTimeout(() => setDataActionMsg(null), 3500);
+    } catch (err: any) {
+      alert(`Purge failed: ${err.message}`);
+    } finally {
+      setIsPurging(false);
+    }
+  };
+
+  const handleResetWorkspace = async () => {
+    if (!window.confirm('Reset workspace? This will remove all local videos and clips.')) return;
+    setIsResetting(true);
+    try {
+      await api.resetWorkspace();
+      setDataActionMsg('Workspace reset to clean state (0 videos, 0 clips).');
+      if (onRefreshAll) await onRefreshAll();
+      setTimeout(() => setDataActionMsg(null), 3500);
+    } catch (err: any) {
+      alert(`Reset failed: ${err.message}`);
+    } finally {
+      setIsResetting(false);
+    }
+  };
 
   // Testing States
   const [isTestingLlm, setIsTestingLlm] = useState<boolean>(false);
@@ -737,6 +772,53 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        {/* Section 7: Workspace Clean Slate & Reset */}
+        <div className="card">
+          <div className="card-header">
+            <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Trash2 size={18} style={{ color: '#f87171' }} />
+              <span>Workspace Data & Clean Slate</span>
+            </h3>
+            <span className="badge" style={{ backgroundColor: 'var(--bg-elevated)', color: 'var(--text-secondary)' }}>
+              Maintenance
+            </span>
+          </div>
+
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
+            Manage local library records. Ensure your workspace is clean, realistic, and contains zero synthetic demo data.
+          </p>
+
+          {dataActionMsg && (
+            <div style={{ padding: '0.75rem 1rem', marginBottom: '1rem', backgroundColor: 'var(--accent-subtle)', border: '1px solid var(--accent-border)', borderRadius: 'var(--radius-sm)', color: '#93c5fd', fontSize: '0.85rem' }}>
+              {dataActionMsg}
+            </div>
+          )}
+
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={handlePurgeDemoData}
+              disabled={isPurging}
+              style={{ gap: '0.4rem' }}
+            >
+              <Trash2 size={14} />
+              <span>{isPurging ? 'Cleaning...' : 'Clean Demo & Test Files'}</span>
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-outline btn-sm"
+              onClick={handleResetWorkspace}
+              disabled={isResetting}
+              style={{ gap: '0.4rem', color: '#fca5a5', borderColor: 'var(--danger-border)' }}
+            >
+              <Trash2 size={14} />
+              <span>{isResetting ? 'Resetting...' : 'Reset Workspace (Pristine Slate)'}</span>
+            </button>
           </div>
         </div>
 

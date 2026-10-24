@@ -1,409 +1,7 @@
 {
-  "videos": [
-    {
-      "id": "vid-demo-1792871923204",
-      "title": "Sample Product Tour & Feature Walkthrough",
-      "originalName": "demo-sample-video.mp4",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\videos\\demo-1792871923204.mp4",
-      "urlPath": "/uploads/videos/demo-1792871923204.mp4",
-      "fileSize": 1506828,
-      "duration": 45,
-      "width": 1920,
-      "height": 1080,
-      "uploadedAt": "2026-10-24T19:58:51.318Z",
-      "status": "ready"
-    },
-    {
-      "id": "vid-demo-1792862616207",
-      "title": "Sample Product Tour & Feature Walkthrough",
-      "originalName": "demo-sample-video.mp4",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\videos\\demo-1792862616207.mp4",
-      "urlPath": "/uploads/videos/demo-1792862616207.mp4",
-      "fileSize": 1506828,
-      "duration": 45,
-      "width": 1920,
-      "height": 1080,
-      "uploadedAt": "2026-10-24T17:23:43.386Z",
-      "status": "ready"
-    },
-    {
-      "id": "vid-demo-1792862476930",
-      "title": "Sample Product Tour & Feature Walkthrough",
-      "originalName": "demo-sample-video.mp4",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\videos\\demo-1792862476930.mp4",
-      "urlPath": "/uploads/videos/demo-1792862476930.mp4",
-      "fileSize": 1506828,
-      "duration": 45,
-      "width": 1920,
-      "height": 1080,
-      "uploadedAt": "2026-10-24T17:21:24.585Z",
-      "status": "ready"
-    }
-  ],
-  "clips": [
-    {
-      "id": "trend-vid-1792870883635",
-      "videoId": "trend-origin",
-      "videoTitle": "AI Trend: Tech & AI",
-      "title": "PHP2Shell: AI uncovers critical RCE : What It Means",
-      "hook": "Nobody expected this update, but it changes everything for Tech & AI.",
-      "transcript": "Nobody expected this update, but it changes everything for Tech & AI. Here is the critical news that just broke today. Most people haven't connected how this disrupts traditional workflows. Here is the one move you need to make right now.",
-      "suggestedCaption": "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update",
-      "startTime": 0,
-      "endTime": 30,
-      "duration": 30,
-      "viralityScore": 92,
-      "viralityReason": "Engineered using Problem-Agitate-Solve framework with Ambient Audio Bed narration for Software engineers and AI enthusiasts.",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\trend-trend-vid-1792870883635.mp4",
-      "urlPath": "/uploads/clips/trend-trend-vid-1792870883635.mp4",
-      "thumbnailUrl": "/uploads/thumbnails/thumb-trend-vid-1792870883635.jpg",
-      "aspectRatio": "9:16",
-      "framingMode": "center",
-      "captionStyle": "bold-yellow",
-      "status": "in_review",
-      "scheduledDate": null,
-      "scheduledTime": null,
-      "platforms": [
-        "youtube",
-        "tiktok",
-        "instagram"
-      ],
-      "createdAt": "2026-10-24T19:41:25.920Z",
-      "approvedAt": null,
-      "publishedAt": null,
-      "trendSourceUrl": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBfU2lySGdfMVprRm5nUmxNVVEzYjFPQTRhWV9VNzlJNlVZbWFmMVN4UE1uOFFqbVE4UFBvaWwydHUzT2VhRTVaSWVDeVhGbVpHQnEw?oc=5",
-      "googleDriveSynced": true,
-      "googleDriveSyncedAt": "2026-10-24T20:02:49.567Z",
-      "googleDriveFileUrl": "https://drive.google.com/drive/search?q=PHP2Shell__AI_uncovers_critical_RCE___What_It_Means"
-    },
-    {
-      "id": "trend-vid-1792865677067",
-      "videoId": "trend-origin",
-      "videoTitle": "AI Trend: Tech & AI",
-      "title": "Breaking Tech Announcement: What It Means",
-      "hook": "Nobody expected this update, but it changes everything for Tech & AI.",
-      "transcript": "Nobody expected this update, but it changes everything for Tech & AI. Here is the critical news that just broke today. Most people haven't connected how this disrupts traditional workflows. Here is the one move you need to make right now.",
-      "suggestedCaption": "Breaking analysis on Breaking Tech Announcement. What are your thoughts on this? #Tech&AI #trends #shorts #update",
-      "startTime": 0,
-      "endTime": 30,
-      "duration": 30,
-      "viralityScore": 92,
-      "viralityReason": "Engineered using Problem-Agitate-Solve framework with Ambient Audio Bed narration for Software engineers and AI enthusiasts.",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\trend-trend-vid-1792865677067.mp4",
-      "urlPath": "/uploads/clips/trend-trend-vid-1792865677067.mp4",
-      "thumbnailUrl": "/uploads/thumbnails/thumb-trend-vid-1792865677067.jpg",
-      "aspectRatio": "9:16",
-      "framingMode": "center",
-      "captionStyle": "bold-yellow",
-      "status": "in_review",
-      "scheduledDate": null,
-      "scheduledTime": null,
-      "platforms": [
-        "youtube",
-        "tiktok",
-        "instagram"
-      ],
-      "createdAt": "2026-10-24T18:14:39.528Z",
-      "approvedAt": null,
-      "publishedAt": null,
-      "trendSourceUrl": "https://google.com"
-    },
-    {
-      "id": "trend-vid-1792864888017",
-      "videoId": "trend-origin",
-      "videoTitle": "AI Trend: Tech & AI",
-      "title": "PHP2Shell: AI uncovers critical RCE : What It Means",
-      "hook": "Nobody expected this update, but it changes everything for Tech & AI.",
-      "transcript": "Nobody expected this update, but it changes everything for Tech & AI. Here is the critical news that just broke today. Most people haven't connected how this disrupts traditional workflows. Here is the one move you need to make right now.",
-      "suggestedCaption": "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update",
-      "startTime": 0,
-      "endTime": 30,
-      "duration": 30,
-      "viralityScore": 92,
-      "viralityReason": "Engineered using Problem-Agitate-Solve framework for Software engineers and AI enthusiasts around trend from wiz.io.",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\trend-trend-vid-1792864888017.mp4",
-      "urlPath": "/uploads/clips/trend-trend-vid-1792864888017.mp4",
-      "thumbnailUrl": "/uploads/thumbnails/thumb-trend-vid-1792864888017.jpg",
-      "aspectRatio": "9:16",
-      "framingMode": "center",
-      "captionStyle": "bold-yellow",
-      "status": "in_review",
-      "scheduledDate": null,
-      "scheduledTime": null,
-      "platforms": [
-        "youtube",
-        "tiktok",
-        "instagram"
-      ],
-      "createdAt": "2026-10-24T18:01:30.078Z",
-      "approvedAt": null,
-      "publishedAt": null,
-      "trendSourceUrl": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBfU2lySGdfMVprRm5nUmxNVVEzYjFPQTRhWV9VNzlJNlVZbWFmMVN4UE1uOFFqbVE4UFBvaWwydHUzT2VhRTVaSWVDeVhGbVpHQnEw?oc=5"
-    },
-    {
-      "id": "trend-vid-1792864885396",
-      "videoId": "trend-origin",
-      "videoTitle": "AI Trend: DeepSeek",
-      "title": "China's MiniMax completes export reg: What It Means",
-      "hook": "Stop doing what everyone else is doing in Tech & AI.",
-      "transcript": "Stop doing what everyone else is doing in Tech & AI. The conventional wisdom just got completely overturned. The top 1% are shifting their approach entirely. Do this instead if you want to stay ahead of the curve.",
-      "suggestedCaption": "Breaking analysis on China's MiniMax completes export registration for open-source, overseas AI model licensing. What are your thoughts on this? #Tech&AI #trends #shorts #update",
-      "startTime": 0,
-      "endTime": 30,
-      "duration": 30,
-      "viralityScore": 92,
-      "viralityReason": "Engineered using The Contrarian Truth framework for Software engineers and AI enthusiasts around trend from Reuters.",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\trend-trend-vid-1792864885396.mp4",
-      "urlPath": "/uploads/clips/trend-trend-vid-1792864885396.mp4",
-      "thumbnailUrl": "/uploads/thumbnails/thumb-trend-vid-1792864885396.jpg",
-      "aspectRatio": "9:16",
-      "framingMode": "center",
-      "captionStyle": "bold-yellow",
-      "status": "in_review",
-      "scheduledDate": null,
-      "scheduledTime": null,
-      "platforms": [
-        "youtube",
-        "tiktok",
-        "instagram"
-      ],
-      "createdAt": "2026-10-24T18:01:27.460Z",
-      "approvedAt": null,
-      "publishedAt": null,
-      "trendSourceUrl": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOUDVGa0hCU3ppVlo3amtaT1l4T18zcHNWWlFkV3Nveks4TDI5RGxkMzE1TFpEZjIxWFBZNl9ILU9SRVdzMEtCX2JKai1FbXlYTTFFX1Y0U3NfRGZuRGttQ0ZKYVhRS3NaUTlEWldxNzVIQUdzamNVMTE1cVg0N1VpLUlweVZlU3lpOGFRajJ6eHItM3NHTGlLVldsVWxnbTcwQncxekJITDJfWUxWUGt1OWx1Zm4zLXdEdm5ja0VPbXNlNmFxWWstT0lfVkZOQXNTNlRYcktB?oc=5"
-    },
-    {
-      "id": "trend-vid-1792864579651",
-      "videoId": "trend-origin",
-      "videoTitle": "AI Trend: Tech & AI",
-      "title": "No Signs of AI Payoff Outside the Te: What It Means",
-      "hook": "Nobody expected this update, but it changes everything for Tech & AI.",
-      "transcript": "Nobody expected this update, but it changes everything for Tech & AI. Here is the critical news that just broke today. Most people haven't connected how this disrupts traditional workflows. Here is the one move you need to make right now to stay ahead.",
-      "suggestedCaption": "Breaking analysis on No Signs of AI Payoff Outside the Tech Sector. What are your thoughts on this? #Tech&AI #trends #shorts #update",
-      "startTime": 0,
-      "endTime": 30,
-      "duration": 30,
-      "viralityScore": 91,
-      "viralityReason": "Engineered for Tech professionals, founders, and curious creators around live trend from Apollo Global Management.",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\trend-trend-vid-1792864579651.mp4",
-      "urlPath": "/uploads/clips/trend-trend-vid-1792864579651.mp4",
-      "thumbnailUrl": "/uploads/thumbnails/thumb-trend-vid-1792864579651.jpg",
-      "aspectRatio": "9:16",
-      "framingMode": "center",
-      "captionStyle": "bold-yellow",
-      "status": "in_review",
-      "scheduledDate": null,
-      "scheduledTime": null,
-      "platforms": [
-        "youtube",
-        "tiktok",
-        "instagram"
-      ],
-      "createdAt": "2026-10-24T17:56:22.861Z",
-      "approvedAt": null,
-      "publishedAt": null,
-      "trendSourceUrl": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNOHZjSE5HWVFmaFJNNVJMV09Sc1BWRGZVb0FhazlOQlFCY2hRV1VzSEtyNzh6WnhqWUhVSHV2NWpJanBrZm9rdGkwaW9MbS1FUnhTUkc4MDJ6SkI4T3YwWEdsY19HbW9LWG9ZNXRxOENPX2hrZWhCb2tVUEd0c29yNWxTdzRwMURoTVZaOXR1M0ptUEJEc1JpVFpJT0ZSZ29FYlA1LWRLTnNBNkVmVnNr?oc=5"
-    },
-    {
-      "id": "trend-vid-1792864207572",
-      "videoId": "trend-origin",
-      "videoTitle": "AI Trend: Tech & AI",
-      "title": "PHP2Shell: AI uncovers critical RCE : What It Means",
-      "hook": "Nobody expected this update, but it changes everything for Tech & AI.",
-      "transcript": "Nobody expected this update, but it changes everything for Tech & AI. Here is the critical news that just broke today. Most people haven't connected how this disrupts traditional workflows. Here is the one move you need to make right now to stay ahead.",
-      "suggestedCaption": "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update",
-      "startTime": 0,
-      "endTime": 30,
-      "duration": 30,
-      "viralityScore": 91,
-      "viralityReason": "Engineered for Tech professionals, founders, and curious creators around live trend from wiz.io.",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\trend-trend-vid-1792864207572.mp4",
-      "urlPath": "/uploads/clips/trend-trend-vid-1792864207572.mp4",
-      "thumbnailUrl": "/uploads/thumbnails/thumb-trend-vid-1792864207572.jpg",
-      "aspectRatio": "9:16",
-      "framingMode": "center",
-      "captionStyle": "bold-yellow",
-      "status": "in_review",
-      "scheduledDate": null,
-      "scheduledTime": null,
-      "platforms": [
-        "youtube",
-        "tiktok",
-        "instagram"
-      ],
-      "createdAt": "2026-10-24T17:50:09.820Z",
-      "approvedAt": null,
-      "publishedAt": null,
-      "trendSourceUrl": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBfU2lySGdfMVprRm5nUmxNVVEzYjFPQTRhWV9VNzlJNlVZbWFmMVN4UE1uOFFqbVE4UFBvaWwydHUzT2VhRTVaSWVDeVhGbVpHQnEw?oc=5"
-    },
-    {
-      "id": "clip-1792863699132",
-      "videoId": "vid-demo-1792862616207",
-      "videoTitle": "Sample Product Tour & Feature Walkthrough",
-      "title": "Hormozi Style Animated Short",
-      "hook": "Nobody is talking about this simple workflow shift.",
-      "transcript": "High-retention dialogue segment.",
-      "suggestedCaption": "Workflow shift that saves hours #shorts",
-      "startTime": 0,
-      "endTime": 15,
-      "duration": 15,
-      "viralityScore": 95,
-      "viralityReason": "Cinematic blurred padding with bold yellow burned subtitles",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\clip-clip-1792863699132.mp4",
-      "urlPath": "/uploads/clips/clip-clip-1792863699132.mp4",
-      "thumbnailUrl": "/uploads/thumbnails/thumb-clip-1792863699132.jpg",
-      "aspectRatio": "9:16",
-      "captionStyle": "bold-yellow",
-      "status": "approved",
-      "scheduledDate": null,
-      "scheduledTime": null,
-      "platforms": [
-        "youtube",
-        "tiktok"
-      ],
-      "createdAt": "2026-10-24T17:41:41.579Z",
-      "approvedAt": "2026-10-24T17:41:41.595Z",
-      "publishedAt": null,
-      "googleDriveSynced": true,
-      "googleDriveSyncedAt": "2026-10-24T20:02:20.560Z",
-      "googleDriveFileUrl": "https://drive.google.com/drive/search?q=Hormozi_Style_Animated_Short"
-    },
-    {
-      "id": "clip-1792862606892",
-      "videoId": "vid-demo-1792862476930",
-      "videoTitle": "Sample Product Tour & Feature Walkthrough",
-      "title": "Sample Product Tour & Feature Wa: Core Insight",
-      "hook": "If you only take away one lesson from this entire breakdown, start here.",
-      "transcript": "High-retention dialogue segment.",
-      "suggestedCaption": "Key takeaway from Sample Product Tour & Feature Walkthrough. What do you think about this approach? #learning #tips #insights",
-      "startTime": 0,
-      "endTime": 15,
-      "duration": 15,
-      "viralityScore": 92,
-      "viralityReason": "Immediate premise delivery within first 3 seconds, ideal for cold audience discovery.",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\clip-clip-1792862606892.mp4",
-      "urlPath": "/uploads/clips/clip-clip-1792862606892.mp4",
-      "thumbnailUrl": "/uploads/thumbnails/thumb-clip-1792862606892.jpg",
-      "aspectRatio": "9:16",
-      "captionStyle": "bold-yellow",
-      "status": "in_review",
-      "scheduledDate": null,
-      "scheduledTime": null,
-      "platforms": [
-        "youtube",
-        "tiktok"
-      ],
-      "createdAt": "2026-10-24T17:23:29.295Z",
-      "approvedAt": null,
-      "publishedAt": null
-    },
-    {
-      "id": "clip-1792862484617",
-      "videoId": "vid-demo-1792862476930",
-      "videoTitle": "Sample Product Tour & Feature Walkthrough",
-      "title": "Sample Product Tour & Feature Wa: Core Insight",
-      "hook": "If you only take away one lesson from this entire breakdown, start here.",
-      "transcript": "High-retention dialogue segment.",
-      "suggestedCaption": "Key takeaway from Sample Product Tour & Feature Walkthrough. What do you think about this approach? #learning #tips #insights",
-      "startTime": 0,
-      "endTime": 30,
-      "duration": 30,
-      "viralityScore": 92,
-      "viralityReason": "Immediate premise delivery within first 3 seconds, ideal for cold audience discovery.",
-      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\clip-clip-1792862484617.mp4",
-      "urlPath": "/uploads/clips/clip-clip-1792862484617.mp4",
-      "thumbnailUrl": "/uploads/thumbnails/thumb-clip-1792862484617.jpg",
-      "aspectRatio": "9:16",
-      "captionStyle": "karaoke-blue",
-      "status": "published",
-      "scheduledDate": "2026-10-24",
-      "scheduledTime": "22:58",
-      "platforms": [
-        "youtube",
-        "tiktok"
-      ],
-      "createdAt": "2026-10-24T17:21:29.201Z",
-      "approvedAt": "2026-10-24T17:27:15.165Z",
-      "publishedAt": "2026-10-24T17:28:07.786Z"
-    }
-  ],
-  "trends": [
-    {
-      "id": "trend-1",
-      "title": "The \"Nobody is talking about this\" Framework",
-      "category": "Tech & AI",
-      "description": "High-retention curiosity hook that highlights an underappreciated workflow or software release.",
-      "hookTemplate": "Nobody is talking about this tool, but it saves me 4 hours every single day...",
-      "targetDuration": "30-45s",
-      "engagementVelocity": "Very High",
-      "sampleTags": [
-        "#tech",
-        "#productivity",
-        "#automation",
-        "#tools"
-      ]
-    },
-    {
-      "id": "trend-2",
-      "title": "Myth vs. Reality Rapid Debunking",
-      "category": "Finance & Business",
-      "description": "Contrast a common assumption against verified data in the first 3 seconds.",
-      "hookTemplate": "Most people think [X] is true. Here is what actually happens when you test it...",
-      "targetDuration": "45-60s",
-      "engagementVelocity": "High",
-      "sampleTags": [
-        "#finance",
-        "#businessgrowth",
-        "#casestudy",
-        "#facts"
-      ]
-    },
-    {
-      "id": "trend-3",
-      "title": "The 3-Step Execution Breakdown",
-      "category": "Productivity",
-      "description": "Concise step-by-step tutorial format with on-screen numbering for high completion rates.",
-      "hookTemplate": "Here are the exact 3 steps to [achieve outcome] without [pain point]...",
-      "targetDuration": "35-50s",
-      "engagementVelocity": "High",
-      "sampleTags": [
-        "#productivitytips",
-        "#workflow",
-        "#howto",
-        "#systems"
-      ]
-    },
-    {
-      "id": "trend-4",
-      "title": "The Painful Mistake Framework",
-      "category": "Creator Economy",
-      "description": "Relatable vulnerability hook focusing on a costly or embarrassing mistake and its fix.",
-      "hookTemplate": "I wasted 6 months doing this the wrong way before I figured out this simple shift...",
-      "targetDuration": "40-55s",
-      "engagementVelocity": "Very High",
-      "sampleTags": [
-        "#contentcreator",
-        "#growth",
-        "#strategy",
-        "#learnfrommistakes"
-      ]
-    },
-    {
-      "id": "trend-5",
-      "title": "Direct Comparison Shootout",
-      "category": "Tech & AI",
-      "description": "Side-by-side analysis of two popular approaches or products with clear decision criteria.",
-      "hookTemplate": "Which one is actually better: [Option A] or [Option B]? Let’s look at the numbers...",
-      "targetDuration": "45-60s",
-      "engagementVelocity": "Steady",
-      "sampleTags": [
-        "#comparison",
-        "#review",
-        "#techtips",
-        "#buyersguide"
-      ]
-    }
-  ],
+  "videos": [],
+  "clips": [],
+  "trends": [],
   "liveTrends": [
     {
       "id": "trend-news-1792870883631-0",
@@ -1039,7 +637,7 @@
       "requiresKey": false,
       "instructions": "Save rendered 9:16 vertical clips and raw videos directly into a Google Drive folder. Paste your Google Drive Folder link or ID to auto-sync.",
       "freeTierNotes": "15 GB free storage with any standard Google account. Never lose your clips and share them with your team in seconds.",
-      "lastSync": "2026-10-24T20:02:49.569Z"
+      "lastSync": "2026-10-24T20:20:36.406Z"
     }
   ],
   "settings": {
@@ -1077,6 +675,36 @@
     "storageQuotaMb": 10240
   },
   "auditLogs": [
+    {
+      "id": "log-1792873236415",
+      "timestamp": "2026-10-24T20:20:36.415Z",
+      "action": "settings_updated",
+      "details": "Updated API configuration and credentials."
+    },
+    {
+      "id": "log-1792873236407",
+      "timestamp": "2026-10-24T20:20:36.407Z",
+      "action": "gdrive_config_updated",
+      "details": "Google Drive settings updated: Folder \"ClipGenius AI Vault\", AutoSync: true"
+    },
+    {
+      "id": "log-1792873236396",
+      "timestamp": "2026-10-24T20:20:36.396Z",
+      "action": "strategy_updated",
+      "details": "Strategy updated for niche \"Tech & AI\""
+    },
+    {
+      "id": "log-1792873115226",
+      "timestamp": "2026-10-24T20:18:35.226Z",
+      "action": "demo_purged",
+      "details": "Cleaned workspace: removed 0 demo videos and 0 test clips."
+    },
+    {
+      "id": "log-1792872741437",
+      "timestamp": "2026-10-24T20:12:21.437Z",
+      "action": "demo_purged",
+      "details": "Cleaned workspace: removed 3 demo videos and 9 test clips."
+    },
     {
       "id": "log-1792872169570",
       "timestamp": "2026-10-24T20:02:49.571Z",

@@ -5,7 +5,6 @@ import {
   CheckCircle2,
   Calendar,
   Upload,
-  Play,
   Download,
   Eye,
   TrendingUp,
@@ -21,8 +20,8 @@ interface DashboardViewProps {
   videos: VideoRecord[];
   setActiveTab: (tab: ActiveTab) => void;
   onPreviewClip: (clip: ClipRecord) => void;
-  onDemoClick: () => void;
   onUploadClick: () => void;
+  onYouTubeClick: () => void;
   onOpenSetupWizard?: () => void;
 }
 
@@ -32,8 +31,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   videos,
   setActiveTab,
   onPreviewClip,
-  onDemoClick,
   onUploadClick,
+  onYouTubeClick,
   onOpenSetupWizard,
 }) => {
   const recentClips = clips.slice(0, 6);
@@ -98,7 +97,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <strong style={{ fontSize: '0.9rem' }}>Add Video</strong>
             </div>
             <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', margin: 0 }}>
-              Upload an MP4 or paste any YouTube URL in AI Studio (or try our 1-click Sample).
+              Upload an MP4 or paste any YouTube URL in AI Studio to begin.
             </p>
           </div>
 
@@ -240,12 +239,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <Film className="empty-icon" />
             <h3 className="empty-title">No clips created yet</h3>
             <p className="empty-desc">
-              Upload a video or generate a quick test sample to start cutting high-retention short clips.
+              Upload an MP4/MOV recording or import any public YouTube URL to cut vertical shorts.
             </p>
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <button className="btn btn-secondary btn-sm" onClick={onDemoClick}>
-                <Play size={14} />
-                <span>Create Sample Video</span>
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <button className="btn btn-secondary btn-sm" onClick={onYouTubeClick}>
+                <span>Import YouTube</span>
               </button>
               <button className="btn btn-primary btn-sm" onClick={onUploadClick}>
                 <Upload size={14} />

@@ -1,4 +1,5 @@
 import { db, VideoRecord } from './db.js';
+import { ffmpegService } from './ffmpeg.js';
 
 export interface HighlightCandidate {
   title: string;
@@ -187,8 +188,29 @@ export class AIService {
   }
 
   public async analyzeVideo(video: VideoRecord, targetDurationSec: number = 30): Promise<HighlightCandidate[]> {
-    const prompt = `Analyze this video titled "${video.title}" with duration ${video.duration} seconds.
+    let speechIntervals: { start: number; end: number }[] = [];
+    let chapters: { title: string; start: number; end: number }[] = [];
+
+    try {
+      [speechIntervals, chapters] = await Promise.all([
+        ffmpegService.detectSpeechIntervals(video.filePath, video.duration).catch(() => []),
+        ffmpegService.getChapters(video.filePath).catch(() => [])
+      ]);
+    } catch (e) {
+      console.warn('[AI Analysis] Speech/chapter extraction notice:', e);
+    }
+
+    const chapterContext = chapters.length > 0
+      ? `\nVideo Chapters Detected:\n${chapters.map(c => `- "${c.title}" (${c.start.toFixed(1)}s - ${c.end.toFixed(1)}s)`).join('\n')}`
+      : '';
+
+    const speechContext = speechIntervals.length > 0
+      ? `\nActive Spoken Segments: ${speechIntervals.slice(0, 8).map(s => `[${s.start.toFixed(1)}s-${s.end.toFixed(1)}s]`).join(', ')}`
+      : '';
+
+    const prompt = `Analyze this video titled "${video.title}" with duration ${video.duration} seconds.${chapterContext}${speechContext}
 Suggest 3 high-retention short-form video clips (target duration: ~${targetDurationSec} seconds each) suitable for YouTube Shorts and TikTok.
+Align clip start and end times to the active spoken segments so cuts do not interrupt speech.
 Return ONLY valid JSON array with objects matching:
 [
   {
@@ -218,60 +240,105 @@ Return ONLY valid JSON array with objects matching:
           }));
         }
       } catch (e) {
-        console.warn('[AI] Failed to parse LLM highlights response, using heuristic fallback');
+        console.warn('[AI] Failed to parse LLM highlights response, using speech-aware detector');
       }
     }
 
-    // Heuristic Fallback
-    return this.generateHeuristicHighlights(video, targetDurationSec);
+    return this.generateSpeechAwareHighlights(video, targetDurationSec, speechIntervals, chapters);
   }
 
-  private generateHeuristicHighlights(video: VideoRecord, targetSec: number): HighlightCandidate[] {
-    const total = Math.floor(video.duration || 60);
-    const clipLength = Math.min(Math.max(15, targetSec), Math.floor(total * 0.7));
+  private generateSpeechAwareHighlights(
+    video: VideoRecord,
+    targetSec: number,
+    speechIntervals: { start: number; end: number }[],
+    chapters: { title: string; start: number; end: number }[]
+  ): HighlightCandidate[] {
+    const total = Math.max(10, Math.floor(video.duration || 60));
+    const target = Math.min(Math.max(15, targetSec), Math.floor(total * 0.9));
     const candidates: HighlightCandidate[] = [];
 
-    const end1 = Math.min(total, clipLength);
+    if (chapters.length >= 2) {
+      for (let i = 0; i < Math.min(3, chapters.length); i++) {
+        const ch = chapters[i];
+        const chDuration = ch.end - ch.start;
+        const dur = Math.min(target, Math.max(15, Math.round(chDuration)));
+        const start = Math.round(ch.start);
+        const end = Math.min(total, start + dur);
+
+        candidates.push({
+          title: ch.title,
+          hook: `Key insight from ${ch.title}: here is what matters most.`,
+          startTime: start,
+          endTime: end,
+          duration: end - start,
+          viralityScore: 90 - i * 3,
+          viralityReason: `Structured around original chapter segment "${ch.title}" with clear narrative bounds.`,
+          suggestedCaption: `Breakdown on ${ch.title} from ${video.title}. What are your thoughts? #shorts #breakdown #insights`,
+          transcriptSample: `Chapter section "${ch.title}" spoken discussion.`
+        });
+      }
+      return candidates;
+    }
+
+    const findSnappedSegment = (idealStart: number, idealDuration: number): { start: number; end: number } => {
+      let start = idealStart;
+      let end = Math.min(total, idealStart + idealDuration);
+
+      if (speechIntervals.length > 0) {
+        const closestStart = speechIntervals.find(s => Math.abs(s.start - idealStart) <= 6);
+        if (closestStart) start = Math.max(0, closestStart.start);
+
+        const targetEnd = start + idealDuration;
+        const closestEnd = speechIntervals.find(s => Math.abs(s.end - targetEnd) <= 6 && s.end > start + 10);
+        if (closestEnd) end = Math.min(total, closestEnd.end);
+        else end = Math.min(total, start + idealDuration);
+      }
+
+      return { start: Math.round(start * 10) / 10, end: Math.round(end * 10) / 10 };
+    };
+
+    const seg1 = findSnappedSegment(0, target);
     candidates.push({
-      title: `${video.title.slice(0, 32)}: Core Insight`,
-      hook: "If you only take away one lesson from this entire breakdown, start here.",
-      startTime: 0,
-      endTime: end1,
-      duration: end1,
-      viralityScore: 92,
-      viralityReason: "Immediate premise delivery within first 3 seconds, ideal for cold audience discovery.",
-      suggestedCaption: `Key takeaway from ${video.title}. What do you think about this approach? #learning #tips #insights`,
-      transcriptSample: `Opening introduction setting the stakes and defining the core problem statement.`
+      title: `${video.title.slice(0, 32)}: Core Takeaway`,
+      hook: `Here is the most important lesson from ${video.title}.`,
+      startTime: seg1.start,
+      endTime: seg1.end,
+      duration: Math.max(10, Math.round(seg1.end - seg1.start)),
+      viralityScore: 93,
+      viralityReason: "Immediate premise delivery snapped to speech start, ideal for cold discovery.",
+      suggestedCaption: `Key insight from ${video.title}. Did you know this? #insights #tips #guide`,
+      transcriptSample: `Opening spoken segment introducing the central topic.`
     });
 
-    if (total >= 40) {
-      const start2 = Math.min(Math.floor(total * 0.35), total - clipLength);
-      const end2 = Math.min(total, start2 + clipLength);
+    if (total >= 35) {
+      const midStart = Math.min(Math.floor(total * 0.35), total - target);
+      const seg2 = findSnappedSegment(midStart, target);
       candidates.push({
-        title: `The Critical Step Explained`,
-        hook: "Most people skip this step, and that is why their execution breaks down.",
-        startTime: start2,
-        endTime: end2,
-        duration: end2 - start2,
-        viralityScore: 86,
-        viralityReason: "High-density procedural explanation that encourages rewatching and saves.",
-        suggestedCaption: `The step most people overlook. Save this for later when setting up your own workflow. #workflow #productivity #howto`,
-        transcriptSample: `Step-by-step breakdown demonstrating the practical mechanics and nuances.`
+        title: `The Critical Technique Breakdown`,
+        hook: `Watch how this works in real practice.`,
+        startTime: seg2.start,
+        endTime: seg2.end,
+        duration: Math.max(10, Math.round(seg2.end - seg2.start)),
+        viralityScore: 88,
+        viralityReason: "High-density actionable demonstration that drives watch time and saves.",
+        suggestedCaption: `The practical method explained in ${video.title}. Save for reference! #tutorial #howto #productivity`,
+        transcriptSample: `In-depth operational discussion and step analysis.`
       });
     }
 
-    if (total >= 70) {
-      const start3 = Math.max(0, total - clipLength);
+    if (total >= 60) {
+      const lateStart = Math.max(0, total - target);
+      const seg3 = findSnappedSegment(lateStart, target);
       candidates.push({
-        title: `Final Conclusion & Actionable Advice`,
-        hook: "Here is the exact roadmap to put this into practice today.",
-        startTime: start3,
-        endTime: total,
-        duration: total - start3,
-        viralityScore: 84,
-        viralityReason: "Definitive closure and call-to-action driving comment debate and shares.",
-        suggestedCaption: `The conclusion to ${video.title}. Follow for more actionable guides. #strategy #success #guide`,
-        transcriptSample: `Summary synthesizing the earlier points into an immediate action item.`
+        title: `Actionable Next Step & Conclusion`,
+        hook: `If you want to apply this yourself, start with this one move.`,
+        startTime: seg3.start,
+        endTime: seg3.end,
+        duration: Math.max(10, Math.round(seg3.end - seg3.start)),
+        viralityScore: 85,
+        viralityReason: "Definitive takeaway driving comment engagement and shares.",
+        suggestedCaption: `Final summary from ${video.title}. Share your opinion in the comments! #summary #strategy #learn`,
+        transcriptSample: `Concluding remarks synthesizing the core points into actionable advice.`
       });
     }
 

@@ -575,6 +575,26 @@ app.delete('/api/clips/:id', (req, res) => {
   res.json({ success: true, id: req.params.id });
 });
 
+// Purge Demo Data
+app.post('/api/workspace/purge-demo', (req, res) => {
+  try {
+    const result = db.purgeDemoData();
+    res.json({ success: true, ...result });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Full Workspace Reset
+app.post('/api/workspace/reset', (req, res) => {
+  try {
+    db.resetWorkspace();
+    res.json({ success: true, message: 'Workspace reset to clean state.' });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Trends Templates
 app.get('/api/trends', (req, res) => {
   res.json(db.getTrends());

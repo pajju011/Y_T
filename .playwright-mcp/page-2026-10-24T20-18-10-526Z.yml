@@ -1,0 +1,420 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper" [ref=e22] [cursor=pointer]
+      - generic [ref=e27]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [ref=e28] [cursor=pointer]
+      - button "Live Trends Radar 50" [active] [ref=e209] [cursor=pointer]:
+        - generic [ref=e37]: Live Trends Radar
+        - generic [ref=e210]: "50"
+      - generic [ref=e38]: Production & Publishing
+      - button "Review & Approvals" [ref=e39] [cursor=pointer]
+      - button "Publishing Calendar" [ref=e44] [cursor=pointer]
+      - button "Channel Integrations" [ref=e48] [cursor=pointer]
+      - generic [ref=e56]: Configuration & Trust
+      - button "Settings & Free Setup" [ref=e57] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e62] [cursor=pointer]
+    - generic [ref=e67]:
+      - generic [ref=e68]: "FFmpeg 8.1: Ready (Local)"
+      - generic [ref=e71]: "Local Storage: 0.0 MB"
+      - generic [ref=e75]: "Cost: $0.00 (100% Free)"
+  - main [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e83]:
+        - heading "Live Trend Radar & Discovery" [level=1] [ref=e298]
+        - paragraph [ref=e85]: Scan live RSS feeds for breaking topics and generate 9:16 videos with zero uploads.
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: Local Instance
+          - generic [ref=e211]: Google Drive
+          - generic [ref=e92]: 100% Free AI
+        - button "Quick Setup" [ref=e94] [cursor=pointer]
+        - button "Import YouTube" [ref=e99] [cursor=pointer]
+        - button "Upload Video" [ref=e103] [cursor=pointer]
+    - generic [ref=e299]:
+      - generic [ref=e300]:
+        - generic [ref=e301]:
+          - generic [ref=e302]:
+            - heading "Live Trend Radar — Real-Time Stories & News" [level=2] [ref=e303]
+            - generic [ref=e304]: Live Feeds
+          - paragraph [ref=e305]: Real-time verified stories from Google Daily Trends and Google News RSS feeds. Generate vertical 9:16 shorts from breaking stories with 1-click.
+        - button "Refresh Live Trends" [ref=e306] [cursor=pointer]
+      - generic [ref=e313]:
+        - generic [ref=e314]:
+          - textbox "Search any live trend topic across Google News (e.g. OpenAI, Nvidia, Bitcoin, SpaceX, Fitness)..." [ref=e319]
+          - button "Search Live Topic" [ref=e320] [cursor=pointer]
+        - generic [ref=e322]:
+          - generic [ref=e323]:
+            - button "Tech & AI" [ref=e324] [cursor=pointer]
+            - button "🔥 Google Daily Trends" [ref=e325] [cursor=pointer]
+            - button "Finance & Business" [ref=e326] [cursor=pointer]
+            - button "Productivity" [ref=e327] [cursor=pointer]
+            - button "Creator Economy" [ref=e328] [cursor=pointer]
+            - button "Gaming" [ref=e329] [cursor=pointer]
+            - button "Science & Future" [ref=e330] [cursor=pointer]
+            - button "All Cached" [ref=e331] [cursor=pointer]
+          - generic [ref=e332]: Showing 21 live topics
+      - generic [ref=e334]:
+        - generic [ref=e335]:
+          - generic [ref=e336]:
+            - generic [ref=e337]: "Relevance: 78/100"
+            - generic [ref=e338]: "Source: wiz.io"
+          - generic [ref=e339]:
+            - 'heading "PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet" [level=3] [ref=e340]'
+            - paragraph [ref=e341]: "PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet wiz.io"
+          - link "Read Verified Article" [ref=e342] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMiU0FVX3lxTFBfU2lySGdfMVprRm5nUmxNVVEzYjFPQTRhWV9VNzlJNlVZbWFmMVN4UE1uOFFqbVE4UFBvaWwydHUzT2VhRTVaSWVDeVhGbVpHQnEw?oc=5
+          - generic [ref=e348]:
+            - generic [ref=e349]: "Viral Hook Framework:"
+            - combobox [ref=e356]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e357] [cursor=pointer]
+        - generic [ref=e362]:
+          - generic [ref=e363]:
+            - generic [ref=e364]: "Relevance: 78/100"
+            - generic [ref=e365]: "Source: The Hollywood Reporter"
+          - generic [ref=e366]:
+            - heading "IATSE’s First Tech Czar Wants Crew Members Involved in the Creation of AI Tools (Exclusive)" [level=3] [ref=e367]
+            - paragraph [ref=e368]: IATSE’s First Tech Czar Wants Crew Members Involved in the Creation of AI Tools (Exclusive) The Hollywood Reporter
+          - link "Read Verified Article" [ref=e369] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMirAFBVV95cUxNS2VUSnpGQWw5N2stVkVnM2FtZkNpak5UYTRNSk4wX2NOa3hWM1pmSzJ2NnQ5amNGOUU0a2xZMEU4Nkd3dGVBOFlQWS1oVXJOXzhfdHhTcHkyR2NJTE1IRFRyM1RBbHNheEVXcmF4UGNQMndsZ2ZMYXgxWTZqYXdMVHJ4LXB6Y1ZHU2xrTlNRSlJCRmc1U1puQzlqWXFyNmV1YngxUVdNbTNVRlI4?oc=5
+          - generic [ref=e375]:
+            - generic [ref=e376]: "Viral Hook Framework:"
+            - combobox [ref=e383]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e384] [cursor=pointer]
+        - generic [ref=e389]:
+          - generic [ref=e390]:
+            - generic [ref=e391]: "Relevance: 78/100"
+            - generic [ref=e392]: "Source: Los Angeles Times"
+          - generic [ref=e393]:
+            - 'heading "Letters to the Editor: Big Tech puts profits over discomfort when it comes to AI tools" [level=3] [ref=e394]'
+            - paragraph [ref=e395]: "Letters to the Editor: Big Tech puts profits over discomfort when it comes to AI tools Los Angeles Times"
+          - link "Read Verified Article" [ref=e396] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMimAFBVV95cUxPODBTZnM5WHMyejdfT3A0SENKTndCekR6cDNoNkJMMTNLVGxabEtqUTVDY2cxcjFtUHJiZlN5bTMzc0VYQmowdzRycGp6WE8tYXRKTU9PdVNoaWk5TDU5cjRicTFzR2dqNVdzc2loTzc5TkJlZ3ZvSkxVODEyWm95ZDZYUFRUbGdBTkRWTm1JVG92d19vYkF0MQ?oc=5
+          - generic [ref=e402]:
+            - generic [ref=e403]: "Viral Hook Framework:"
+            - combobox [ref=e410]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e411] [cursor=pointer]
+        - generic [ref=e416]:
+          - generic [ref=e417]:
+            - generic [ref=e418]: "Relevance: 80/100"
+            - generic [ref=e419]: "Source: MyNorthwest.com"
+          - generic [ref=e420]:
+            - 'heading "Tech Talk: AI safety concerns grow as autonomous systems raise questions about human control" [level=3] [ref=e421]'
+            - paragraph [ref=e422]: "Tech Talk: AI safety concerns grow as autonomous systems raise questions about human control MyNorthwest.com"
+          - link "Read Verified Article" [ref=e423] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMie0FVX3lxTFBpdDh6SFNMQ0xVQWRyS3F1ZWJuR2E0b1hucThPa2JaWk5JT0NrREhOYVN6dnJvNXZyelhicFRUWHlCNnJkTHd6bWZVM1NDVHYwZFlma1dvN2xmNFZTZ2twRGpRZTFzV3VoRHVGYUlzdC12RmtKcHZ4UDQ1bw?oc=5
+          - generic [ref=e429]:
+            - generic [ref=e430]: "Viral Hook Framework:"
+            - combobox [ref=e437]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e438] [cursor=pointer]
+        - generic [ref=e443]:
+          - generic [ref=e444]:
+            - generic [ref=e445]: "Relevance: 78/100"
+            - generic [ref=e446]: "Source: WSJ"
+          - generic [ref=e447]:
+            - heading "Exclusive | AI Just Found a Bug That Puts up to 70% of the World’s Websites at Risk" [level=3] [ref=e448]
+            - paragraph [ref=e449]: Exclusive | AI Just Found a Bug That Puts up to 70% of the World’s Websites at Risk WSJ
+          - link "Read Verified Article" [ref=e450] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMiuAFBVV95cUxPN2FJWTlyQXFoRWh5ZnlfTnVOeDlDb0J3ejVCOWhNc0xXSXFLS2lGUlZ5cVI1NGFuWHpvQ1ZiTnkwV2luSHRpYjNuR1NWSlVnTmxuTzFwYWJ3NUVPeWYxVDNNZkdVX2xGZVJja0Z2LUY3STh4X1dnMXJfTjVad3FIbDFUM3dqc1hBcDBBN0JHazhuWVR6NE41ZnZTaFp2QVZhWEpDa1pIZHZaSlZHbjBKU0FMUWRSRklK?oc=5
+          - generic [ref=e456]:
+            - generic [ref=e457]: "Viral Hook Framework:"
+            - combobox [ref=e464]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e465] [cursor=pointer]
+        - generic [ref=e470]:
+          - generic [ref=e471]:
+            - generic [ref=e472]: "Relevance: 78/100"
+            - generic [ref=e473]: "Source: Chalkbeat"
+          - generic [ref=e474]:
+            - heading "NYC barred 38 AI tools in schools. Some companies say their products shouldn't be on the list." [level=3] [ref=e475]
+            - paragraph [ref=e476]: NYC barred 38 AI tools in schools. Some companies say their products shouldn't be on the list. Chalkbeat
+          - link "Read Verified Article" [ref=e477] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMipAFBVV95cUxQS2x5bmtaY1hCLUw4ZzdnRjhqT3dadVRqZ3JlcG9QQWJiOE5Ld05SR2xTa0QtSktYcXo2TW5PZldGUEc3cEhRZ2JpYTBnWE90RnZVM0FYQTlWMGhRNHNYQlRsQzlpeWxwcmhUazFrVFJ6Y0JnT0ZPcUxnQi1QQ1FCWjlUd1pfUHhKR25fd0UzNWNCblY2ZzVUb2p4ZVFtcTZpVS1XZg?oc=5
+          - generic [ref=e483]:
+            - generic [ref=e484]: "Viral Hook Framework:"
+            - combobox [ref=e491]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e492] [cursor=pointer]
+        - generic [ref=e497]:
+          - generic [ref=e498]:
+            - generic [ref=e499]: "Relevance: 78/100"
+            - generic [ref=e500]: "Source: Reuters"
+          - generic [ref=e501]:
+            - heading "Government websites go dark after AI-discovered flaw sparks security scramble" [level=3] [ref=e502]
+            - paragraph [ref=e503]: Government websites go dark after AI-discovered flaw sparks security scramble Reuters
+          - link "Read Verified Article" [ref=e504] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMixAFBVV95cUxNemhoUnNZdUg4Sk9JMjJQU25mTUZSX2lHc1JTNTFpNGlTcWxRRDctcFNCcVZiTUhYQ211YnNjSnRvYTYyS29VNFFKcHE4VGFMcHMxTGNwa3NmVUFNamNnektGaU9BbURibzdIY2hHUlpMbEwtNWhrOG9BenJvYkllVnNfakVVRU5yRzRjdDBjQXc2OEwtS1RwZVZhaWhoRWtlalVmU0xOQm5SbmUyeGVGeGgzUkE2XzRtbFBKdTJnUTJoRWdV?oc=5
+          - generic [ref=e510]:
+            - generic [ref=e511]: "Viral Hook Framework:"
+            - combobox [ref=e518]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e519] [cursor=pointer]
+        - generic [ref=e524]:
+          - generic [ref=e525]:
+            - generic [ref=e526]: "Relevance: 78/100"
+            - generic [ref=e527]: "Source: The Guardian"
+          - generic [ref=e528]:
+            - 'heading "‘Black October’: cybersecurity experts sound the alarm over new era of AI-enabled hacking" [level=3] [ref=e529]'
+            - paragraph [ref=e530]: "‘Black October’: cybersecurity experts sound the alarm over new era of AI-enabled hacking The Guardian"
+          - link "Read Verified Article" [ref=e531] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMimAFBVV95cUxPTG5XNmRIZVQwZ0hvdmQydjE2elRuNlBscUNJRnhyTWpuUHh1SmlVeGxqRE1HQjJVT3RPTFpaUGZoWUQyOEhYS2JPdUdoeWt2d0pkeUVtbkpSRHpvOVJhMFdkQWdHTi12elp2aldCQTlYMUV4NHpNU0VtM3RoaG4xVkRPdW1YQjhNX2pXYXh0RzhzOWFZSkZPNA?oc=5
+          - generic [ref=e537]:
+            - generic [ref=e538]: "Viral Hook Framework:"
+            - combobox [ref=e545]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e546] [cursor=pointer]
+        - generic [ref=e551]:
+          - generic [ref=e552]:
+            - generic [ref=e553]: "Relevance: 78/100"
+            - generic [ref=e554]: "Source: SiliconANGLE"
+          - generic [ref=e555]:
+            - heading "Agentic AI Foundation adds four more open-source AI tools" [level=3] [ref=e556]
+            - paragraph [ref=e557]: Agentic AI Foundation adds four more open-source AI tools SiliconANGLE
+          - link "Read Verified Article" [ref=e558] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMimgFBVV95cUxPcjlkbFd1MmI4aHhWcFdISTJRajJIbWZReXA5NjJxRkNnYTFpTDVGdUE5eHd6dl9rZDl2b3NkLU45cVpkanFEckl3Rkhqcnh4ZU5WalpNV211Q0Q2WUU4Mk9XaEVoY3NBMTMxMVJpUTFMRzNnUi1weWdFT04zaktWdVgwQ3FFVTNvUU41SGJmR1ZrMV9ndUpwRUZn?oc=5
+          - generic [ref=e564]:
+            - generic [ref=e565]: "Viral Hook Framework:"
+            - combobox [ref=e572]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e573] [cursor=pointer]
+        - generic [ref=e578]:
+          - generic [ref=e579]:
+            - generic [ref=e580]: "Relevance: 78/100"
+            - generic [ref=e581]: "Source: Boston University"
+          - generic [ref=e582]:
+            - 'heading "From Senior Engineer to Tech Lead: Leading AI-Enabled Software Teams" [level=3] [ref=e583]'
+            - paragraph [ref=e584]: "From Senior Engineer to Tech Lead: Leading AI-Enabled Software Teams Boston University"
+          - link "Read Verified Article" [ref=e585] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMiqAFBVV95cUxNeml0bFhoVGlzSnM0OXQwVmVuRzVHaEhiXzkzZ0UyejVNU0pnbTVXRzNGcWZOOUFoekd0cFZ0Y2ZheUtEaTliWHpTRHhib01kYjJRTWMzQUJwSzlUNmhPaEI1MGhUc3dvYXo5a2x5UlR5TDE2QWVBQ1lSOHB3a0pqd0VwTmhLSXpocXlSSl9NR2ZMRGZpU09TTGd5ZjhMaWVXZ1BGekhFTHc?oc=5
+          - generic [ref=e591]:
+            - generic [ref=e592]: "Viral Hook Framework:"
+            - combobox [ref=e599]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e600] [cursor=pointer]
+        - generic [ref=e605]:
+          - generic [ref=e606]:
+            - generic [ref=e607]: "Relevance: 78/100"
+            - generic [ref=e608]: "Source: Fierce Healthcare"
+          - generic [ref=e609]:
+            - heading "Doximity adds UpToDate to Ask in push to become doctors’ go-to AI platform" [level=3] [ref=e610]
+            - paragraph [ref=e611]: Doximity adds UpToDate to Ask in push to become doctors’ go-to AI platform Fierce Healthcare
+          - link "Read Verified Article" [ref=e612] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMiugFBVV95cUxPbGgxN25tNmNoVUx3akg4dkZmU3p5Rk5FeGxqUVRWTkhXV0ZPWWFHT3JGRGFDNUw5NXduTVpxcmd3OEJHYXVOZF9nVFF4NUVTQzFaMzA2YVBXZklmbTFpMDM5N0FIU0l1Zk5PVWZVcWFaM1Z0WF94Y0hITHhvaGlKb0tVZkx2LUd4LVBUU0VDWlJ6aFNiOUVBNnNhVEMwMkJOMnY0N2hjSUhzVTNCbWxya296cWxFaEZhWnc?oc=5
+          - generic [ref=e618]:
+            - generic [ref=e619]: "Viral Hook Framework:"
+            - combobox [ref=e626]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e627] [cursor=pointer]
+        - generic [ref=e632]:
+          - generic [ref=e633]:
+            - generic [ref=e634]: "Relevance: 79/100"
+            - generic [ref=e635]: "Source: PYMNTS.com"
+          - generic [ref=e636]:
+            - heading "SpaceX Enlists 130 Tech Leaders to Help Businesses Deploy Grok AI" [level=3] [ref=e637]
+            - paragraph [ref=e638]: SpaceX Enlists 130 Tech Leaders to Help Businesses Deploy Grok AI PYMNTS.com
+          - link "Read Verified Article" [ref=e639] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMiwAFBVV95cUxOT1FmZnJzRDh1TURSRXZHVGM4VVpweUxiNlo5ZjhGRlNkM1NXNXl1TVlWWmh4ZkxQbTZuT0lhbUE5R1FUTUdvcnNmc0FOZE9FYjNUSmJ6RTNrdzJjRXdnR2hrWUFGamx3RlZieGt5aHNWaVZzb21QVi0zS19ERU9DbmhUREtrdXEyc1YzT1RHOEpyR2I1U0pqWnQ0Um1pWnNoY3JtQk84Y2ZwanZJYTRTWDV1NTdzNEVSazlGY1VYV0E?oc=5
+          - generic [ref=e645]:
+            - generic [ref=e646]: "Viral Hook Framework:"
+            - combobox [ref=e653]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e654] [cursor=pointer]
+        - generic [ref=e659]:
+          - generic [ref=e660]:
+            - generic [ref=e661]: "Relevance: 78/100"
+            - generic [ref=e662]: "Source: Law.com"
+          - generic [ref=e663]:
+            - heading "Legal Tech Providers Embrace Integrations in the Agentic AI Era" [level=3] [ref=e664]
+            - paragraph [ref=e665]: Legal Tech Providers Embrace Integrations in the Agentic AI Era Law.com
+          - link "Read Verified Article" [ref=e666] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMimwFBVV95cUxQRVRVeTdRMXZLTC1YZDFEUHlIYXc1Qkh2dkxQN2dGOEd6ZDhqOVhvNlhhWEd2ekx0UDBmcGNSamVnSkdPRjl5MThVNi1RakFndTVIQ0pDUnA3cW4wUzZnU1ItOUlZYkNtV0ViRTdHTDhIaEtsbkJjcEUtOHVmWUl4a2tmRGY0a3dwRGlQSk9udHNRYUpvM29DeWhubw?oc=5
+          - generic [ref=e672]:
+            - generic [ref=e673]: "Viral Hook Framework:"
+            - combobox [ref=e680]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e681] [cursor=pointer]
+        - generic [ref=e686]:
+          - generic [ref=e687]:
+            - generic [ref=e688]: "Relevance: 78/100"
+            - generic [ref=e689]: "Source: The New York Times"
+          - generic [ref=e690]:
+            - heading "A.I. Is Embedded in Your Election Experience. So Are Its Dangers." [level=3] [ref=e691]
+            - paragraph [ref=e692]: A.I. Is Embedded in Your Election Experience. So Are Its Dangers. The New York Times
+          - link "Read Verified Article" [ref=e693] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMijAFBVV95cUxPd1dkcFhzRDJhakxUNEd2MFg3amZxc3p2Wjd2VnRRRllFSGdDQWpjY21LQVpyZFhLdC0yOVVxVmFvMnZjNlNBTE1ZdDVvUUptNXI5bzh4M2Y1djVjNzdRNUd5WnNXVkdLc0VzZ2ZPbjdqdUU3YnMzUllqMm9jYUJxc1ptcVdhUTZwOGtyWg?oc=5
+          - generic [ref=e699]:
+            - generic [ref=e700]: "Viral Hook Framework:"
+            - combobox [ref=e707]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e708] [cursor=pointer]
+        - generic [ref=e713]:
+          - generic [ref=e714]:
+            - generic [ref=e715]: "Relevance: 94/100"
+            - generic [ref=e716]: "Source: TechBullion"
+          - generic [ref=e717]:
+            - heading "Minuttia Study Finds Vendors Write Up to Half of AI-Cited Best Tools Lists" [level=3] [ref=e718]
+            - paragraph [ref=e719]: Minuttia Study Finds Vendors Write Up to Half of AI-Cited Best Tools Lists TechBullion
+          - link "Read Verified Article" [ref=e720] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMioAFBVV95cUxOaDlVWUFIbHZHUE1ydGRhV3hjUkRvZmpxSnpkcmlaLU9GdU9pWndYbzZUYjE3RkdLWl9CamNCUmJfYWpacWd5YlpvWUp3OHExRXJCUE1LZ2FmakxPQTU4VXEwNE5kSV9vWVRCcXIyRmJjZjkwWjd6NEtNcDRWZHlTT09ndEp4LW1Jb3hTbFRYS0J1V0x3cDdrdG44WGEtejN6?oc=5
+          - generic [ref=e726]:
+            - generic [ref=e727]: "Viral Hook Framework:"
+            - combobox [ref=e734]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e735] [cursor=pointer]
+        - generic [ref=e740]:
+          - generic [ref=e741]:
+            - generic [ref=e742]: "Relevance: 78/100"
+            - generic [ref=e743]: "Source: The Atlantic"
+          - generic [ref=e744]:
+            - heading "The Tragedy of AI Coding" [level=3] [ref=e745]
+            - paragraph [ref=e746]: The Tragedy of AI Coding The Atlantic
+          - link "Read Verified Article" [ref=e747] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMijgFBVV95cUxNUWd3VG82akRreVcwdkNvRHluS200QW1wcFk2M0NHTEIyN3JUcm54aW00c1dsazd0YzFoVEdLTFp1UnRYczFNUi1JTXFmdVBXSE9HVHFHOTRNSkRlUHdKVy1FQlBreWp5T0t2VW9YMXlCYXRycnZka2tFSmh4ZEotbkVQQVVKOWRtdGxkcjNn?oc=5
+          - generic [ref=e753]:
+            - generic [ref=e754]: "Viral Hook Framework:"
+            - combobox [ref=e761]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e762] [cursor=pointer]
+        - generic [ref=e767]:
+          - generic [ref=e768]:
+            - generic [ref=e769]: "Relevance: 92/100"
+            - generic [ref=e770]: "Source: Apollo Global Management"
+          - generic [ref=e771]:
+            - heading "No Signs of AI Payoff Outside the Tech Sector" [level=3] [ref=e772]
+            - paragraph [ref=e773]: No Signs of AI Payoff Outside the Tech Sector&nbsp;&nbsp;Apollo Global Management
+          - link "Read Verified Article" [ref=e774] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMirwFBVV95cUxNOHZjSE5HWVFmaFJNNVJMV09Sc1BWRGZVb0FhazlOQlFCY2hRV1VzSEtyNzh6WnhqWUhVSHV2NWpJanBrZm9rdGkwaW9MbS1FUnhTUkc4MDJ6SkI4T3YwWEdsY19HbW9LWG9ZNXRxOENPX2hrZWhCb2tVUEd0c29yNWxTdzRwMURoTVZaOXR1M0ptUEJEc1JpVFpJT0ZSZ29FYlA1LWRLTnNBNkVmVnNr?oc=5
+          - generic [ref=e780]:
+            - generic [ref=e781]: "Viral Hook Framework:"
+            - combobox [ref=e788]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e789] [cursor=pointer]
+        - generic [ref=e794]:
+          - generic [ref=e795]:
+            - generic [ref=e796]: "Relevance: 94/100"
+            - generic [ref=e797]: "Source: Fast Company"
+          - generic [ref=e798]:
+            - 'heading "The AI infrastructure race: I’ve seen this movie before" [level=3] [ref=e799]'
+            - paragraph [ref=e800]: "The AI infrastructure race: I’ve seen this movie before&nbsp;&nbsp;Fast Company"
+          - link "Read Verified Article" [ref=e801] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMiuwFBVV95cUxOX1RhQU1JeUl3M19yaDF3UXZ2U3VFelBubkF0T1VMMm52YXlHc3pLdHh3NUpNVTFZaHpyaUVKMTdvSGdBSldIM3E5M2VrNVF1WF9BVnQ4OGdLR1cxckwwaDJtOEY1Zk93VEhXSEN5elFVVHhBLWlXZ2htTWlnWlhWS3VBc0QyTDR3YklGUVVhU05WV29lZWxDdktIcFI1NUZ3LUFBT2FyNHRyNElQM1E3dHVUcExxQ0VWU3M0?oc=5
+          - generic [ref=e807]:
+            - generic [ref=e808]: "Viral Hook Framework:"
+            - combobox [ref=e815]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e816] [cursor=pointer]
+        - generic [ref=e821]:
+          - generic [ref=e822]:
+            - generic [ref=e823]: "Relevance: 92/100"
+            - generic [ref=e824]: "Source: MarketWatch"
+          - generic [ref=e825]:
+            - heading "Do machines have feelings? AI has philosophers and tech leaders rethinking consciousness." [level=3] [ref=e826]
+            - paragraph [ref=e827]: Do machines have feelings? AI has philosophers and tech leaders rethinking consciousness.&nbsp;&nbsp;MarketWatch
+          - link "Read Verified Article" [ref=e828] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMiygFBVV95cUxOQ1hpcXdaSWd2eW1ERXpzSzFkbUVjLVZYTEd3LTRXYW55eVBWcFlTNDNwYk1LQnRsNkY5dVhwUFlTY0tVRHBxNDNIZV8xWXIxb2R6T3NRa2xCd2xJQmV2cW5JMjgxNlBjTDBSbnkyWlJOckd3aGk4VXV1SmxqVVhUMzNkOTk2U3V0RXNpYzQxVjV2VlpjNjFQSkJ5Vm1zNThaeXFPcUVpYnREUjN6S1lsTE0tT2VmZzZMaTFRc1FGUUxYZWZhRDBvVHhR?oc=5
+          - generic [ref=e834]:
+            - generic [ref=e835]: "Viral Hook Framework:"
+            - combobox [ref=e842]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e843] [cursor=pointer]
+        - generic [ref=e848]:
+          - generic [ref=e849]:
+            - generic [ref=e850]: "Relevance: 84/100"
+            - generic [ref=e851]: "Source: WSJ"
+          - generic [ref=e852]:
+            - heading "AI Hacks Are Coming Thick and Fast and Overwhelming the Internet" [level=3] [ref=e853]
+            - paragraph [ref=e854]: AI Hacks Are Coming Thick and Fast and Overwhelming the Internet&nbsp;&nbsp;WSJ
+          - link "Read Verified Article" [ref=e855] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMiowFBVV95cUxPTUNnR1RPd3VXa0hoTW1USmVib3RXRVNMbjI3R2NwNDhtYkV4YU10azF5U0VVUEZWQXFRdFdlaUg1eWFDRkZTZi04UUJ6MmtEem5YdUhra0lCX2trOEtSWGIydnpjQXotNDBZVHdXT2lOeWlKenNnWC1CS3NBNVhQOW9KNmJWZTNoTlZkUEd0c01XTWs1M3dTbkstZVpCNjVROE5r?oc=5
+          - generic [ref=e861]:
+            - generic [ref=e862]: "Viral Hook Framework:"
+            - combobox [ref=e869]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e870] [cursor=pointer]
+        - generic [ref=e875]:
+          - generic [ref=e876]:
+            - generic [ref=e877]: "Relevance: 91/100"
+            - generic [ref=e878]: "Source: Tech Xplore"
+          - generic [ref=e879]:
+            - heading "A timeline of developments in AI safety since the attack on Hugging Face" [level=3] [ref=e880]
+            - paragraph [ref=e881]: A timeline of developments in AI safety since the attack on Hugging Face&nbsp;&nbsp;Tech Xplore
+          - link "Read Verified Article" [ref=e882] [cursor=pointer]:
+            - /url: https://news.google.com/rss/articles/CBMibkFVX3lxTFBDMVcxbzNHMVQ3dEVCbGMzQzJ3bGFxUWNLU3g1MU5jZzN0UUh4OG9COTh6RkNNUnYzUjdPZjZoUzVjY3FfZjZjRjVBNjdBcllsdU53RU1JaVpDaUw0aVZET00wQlp4V0dSV2o2bzR3?oc=5
+          - generic [ref=e888]:
+            - generic [ref=e889]: "Viral Hook Framework:"
+            - combobox [ref=e896]:
+              - option "Problem-Agitate-Solve" [selected]
+              - option "The Contrarian Truth"
+              - option "Before-After-Bridge"
+              - option "3-Step Breakdown"
+          - button "Generate 9:16 Short Video" [ref=e897] [cursor=pointer]
