@@ -9,11 +9,12 @@ import {
   Settings,
   ShieldCheck,
   HardDrive,
-  Cpu
+  Cpu,
+  Sparkles
 } from 'lucide-react';
 import type { MetricsData, SystemInfo } from '../api';
 
-export type ActiveTab = 'dashboard' | 'studio' | 'approvals' | 'calendar' | 'trends' | 'integrations' | 'settings' | 'legal';
+export type ActiveTab = 'dashboard' | 'studio' | 'strategy' | 'trends' | 'approvals' | 'calendar' | 'integrations' | 'settings' | 'legal';
 
 interface SidebarProps {
   activeTab: ActiveTab;
@@ -48,26 +49,48 @@ export const Sidebar: React.FC<SidebarProps> = ({
           className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
           onClick={() => setActiveTab('dashboard')}
         >
-          <LayoutDashboard size={18} />
+          <LayoutDashboard size={17} />
           <span>Dashboard</span>
         </button>
 
+        <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Module A: AI Clip Maker</span>
         <button
           className={`nav-item ${activeTab === 'studio' ? 'active' : ''}`}
           onClick={() => setActiveTab('studio')}
         >
-          <Video size={18} />
-          <span>Studio & Ingest</span>
+          <Video size={17} />
+          <span>Long-to-Shorts Clipper</span>
           {metrics && metrics.totalVideos > 0 && (
             <span className="nav-item-count">{metrics.totalVideos}</span>
           )}
         </button>
 
+        <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Module B: AI Trend Studio</span>
+        <button
+          className={`nav-item ${activeTab === 'strategy' ? 'active' : ''}`}
+          onClick={() => setActiveTab('strategy')}
+        >
+          <Sparkles size={17} />
+          <span>Content Strategy</span>
+        </button>
+
+        <button
+          className={`nav-item ${activeTab === 'trends' ? 'active' : ''}`}
+          onClick={() => setActiveTab('trends')}
+        >
+          <TrendingUp size={17} />
+          <span>Live Trends Radar</span>
+          {metrics && metrics.liveTrendsCount && metrics.liveTrendsCount > 0 ? (
+            <span className="nav-item-count">{metrics.liveTrendsCount}</span>
+          ) : null}
+        </button>
+
+        <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Production & Publishing</span>
         <button
           className={`nav-item ${activeTab === 'approvals' ? 'active' : ''}`}
           onClick={() => setActiveTab('approvals')}
         >
-          <CheckSquare size={18} />
+          <CheckSquare size={17} />
           <span>Review & Approvals</span>
           {metrics && metrics.inReviewClips > 0 && (
             <span className="nav-item-count">{metrics.inReviewClips}</span>
@@ -78,7 +101,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           className={`nav-item ${activeTab === 'calendar' ? 'active' : ''}`}
           onClick={() => setActiveTab('calendar')}
         >
-          <Calendar size={18} />
+          <Calendar size={17} />
           <span>Publishing Calendar</span>
           {metrics && metrics.scheduledClips > 0 && (
             <span className="nav-item-count">{metrics.scheduledClips}</span>
@@ -86,27 +109,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </button>
 
         <button
-          className={`nav-item ${activeTab === 'trends' ? 'active' : ''}`}
-          onClick={() => setActiveTab('trends')}
-        >
-          <TrendingUp size={18} />
-          <span>Trend Radar</span>
-        </button>
-
-        <span className="nav-section-label" style={{ marginTop: '0.75rem' }}>Configuration & Trust</span>
-        <button
           className={`nav-item ${activeTab === 'integrations' ? 'active' : ''}`}
           onClick={() => setActiveTab('integrations')}
         >
-          <Share2 size={18} />
-          <span>Integrations</span>
+          <Share2 size={17} />
+          <span>Channel Integrations</span>
         </button>
 
+        <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Configuration & Trust</span>
         <button
           className={`nav-item ${activeTab === 'settings' ? 'active' : ''}`}
           onClick={() => setActiveTab('settings')}
         >
-          <Settings size={18} />
+          <Settings size={17} />
           <span>Settings & Free Setup</span>
         </button>
 
@@ -114,7 +129,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           className={`nav-item ${activeTab === 'legal' ? 'active' : ''}`}
           onClick={() => setActiveTab('legal')}
         >
-          <ShieldCheck size={18} />
+          <ShieldCheck size={17} />
           <span>Credibility & Policies</span>
         </button>
       </nav>

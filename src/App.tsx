@@ -5,6 +5,7 @@ import { Header } from './components/Header';
 import { VideoPlayerModal } from './components/VideoPlayerModal';
 import { DashboardView } from './views/DashboardView';
 import { StudioView } from './views/StudioView';
+import { StrategyView } from './views/StrategyView';
 import { ApprovalsView } from './views/ApprovalsView';
 import { CalendarView } from './views/CalendarView';
 import { TrendsView } from './views/TrendsView';
@@ -183,23 +184,28 @@ export function App() {
         };
       case 'studio':
         return {
-          title: 'Studio & Video Clipper',
+          title: 'Module A: AI Clip Maker',
           description: 'Ingest local or YouTube videos, detect viral moments, and render 9:16 vertical shorts.'
+        };
+      case 'strategy':
+        return {
+          title: 'Module B: AI Trend Studio — Content Strategy',
+          description: 'Configure your daily publishing strategy, target audience, and autonomous trend pipeline.'
+        };
+      case 'trends':
+        return {
+          title: 'Live Trend Radar & Discovery',
+          description: 'Scan live RSS feeds for breaking topics and generate 9:16 videos with zero uploads.'
         };
       case 'approvals':
         return {
-          title: 'Review & Approvals',
+          title: 'Review & Approvals Pipeline',
           description: 'Review auto-detected hooks, edit captions, and approve clips before publishing.'
         };
       case 'calendar':
         return {
           title: 'Publishing Calendar',
           description: 'View scheduled clips organized across publishing dates and channels.'
-        };
-      case 'trends':
-        return {
-          title: 'Trend Radar & Story Frameworks',
-          description: 'High-retention storytelling hooks and short-form pacing templates.'
         };
       case 'integrations':
         return {
@@ -273,6 +279,21 @@ export function App() {
             />
           )}
 
+          {activeTab === 'strategy' && (
+            <StrategyView
+              setActiveTab={setActiveTab}
+              onRefreshAll={refreshData}
+            />
+          )}
+
+          {activeTab === 'trends' && (
+            <TrendsView
+              trends={trends}
+              setActiveTab={setActiveTab}
+              onRefreshAll={refreshData}
+            />
+          )}
+
           {activeTab === 'approvals' && (
             <ApprovalsView
               clips={clips}
@@ -286,13 +307,6 @@ export function App() {
             <CalendarView
               clips={clips}
               onPreviewClip={(clip) => setActivePreviewClip(clip)}
-            />
-          )}
-
-          {activeTab === 'trends' && (
-            <TrendsView
-              trends={trends}
-              setActiveTab={setActiveTab}
             />
           )}
 

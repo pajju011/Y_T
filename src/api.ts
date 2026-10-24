@@ -41,6 +41,7 @@ export interface ClipRecord {
   createdAt: string;
   approvedAt: string | null;
   publishedAt: string | null;
+  trendSourceUrl?: string;
 }
 
 export interface TrendItem {
@@ -52,6 +53,34 @@ export interface TrendItem {
   targetDuration: string;
   engagementVelocity: 'Very High' | 'High' | 'Steady';
   sampleTags: string[];
+}
+
+export interface LiveTrend {
+  id: string;
+  title: string;
+  snippet: string;
+  source: string;
+  url: string;
+  niche: string;
+  discoveredAt: string;
+  relevanceScore: number;
+  generatedClipId: string | null;
+}
+
+export interface ContentStrategy {
+  channelName: string;
+  niche: string;
+  keywords: string[];
+  targetAudience: string;
+  targetRegion: string;
+  language: string;
+  tone: string;
+  durationSec: number;
+  dailyVideoLimit: number;
+  autoPrepareDaily: boolean;
+  preferredPlatforms: ('youtube' | 'tiktok' | 'instagram' | 'linkedin')[];
+  visualMode: 'motion_text' | 'template';
+  lastAutoRun: string | null;
 }
 
 export interface IntegrationRecord {
@@ -90,6 +119,13 @@ export interface SystemInfo {
   };
   activeAiProvider: string;
   customDomain: string;
+  automation?: {
+    autoPrepareDaily: boolean;
+    lastAutoRun: string | null;
+    niche: string;
+    dailyVideoLimit: number;
+    isRunning: boolean;
+  };
   timestamp: string;
 }
 
@@ -109,6 +145,7 @@ export interface MetricsData {
     linkedin: number;
   };
   connectedIntegrationsCount: number;
+  liveTrendsCount?: number;
 }
 
 export interface SettingsData {
@@ -123,6 +160,13 @@ export interface SettingsData {
   hasGroqKey: boolean;
 }
 
+export interface AuditLog {
+  id: string;
+  timestamp: string;
+  action: string;
+  details: string;
+}
+
 const API_BASE = '/api';
 
 export const api = {
@@ -135,6 +179,69 @@ export const api = {
   async getMetrics(): Promise<MetricsData> {
     const res = await fetch(`${API_BASE}/metrics`);
     if (!res.ok) throw new Error('Failed to fetch metrics');
+    return res.json();
+  },
+
+  async getStrategy(): Promise<ContentStrategy> {
+    const res = await fetch(`${API_BASE}/strategy`);
+    if (!res.ok) throw new Error('Failed to fetch content strategy');
+    return res.json();
+  },
+
+  async updateStrategy(data: Partial<ContentStrategy>): Promise<ContentStrategy> {
+    const res = await fetch(`${API_BASE}/strategy`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to update content strategy');
+    return res.json();
+  },
+
+  async getLiveTrends(): Promise<LiveTrend[]> {
+    const res = await fetch(`${API_BASE}/trends/live`);
+    if (!res.ok) throw new Error('Failed to fetch live trends');
+    return res.json();
+  },
+
+  async discoverTrends(niche?: string, keywords?: string[]): Promise<LiveTrend[]> {
+    const res = await fetch(`${API_BASE}/trends/discover`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ niche, keywords }),
+    });
+    if (!res.ok) throw new Error('Failed to discover live trends');
+    return res.json();
+  },
+
+  async searchTrends(topic: string): Promise<LiveTrend[]> {
+    const res = await fetch(`${API_BASE}/trends/search?q=${encodeURIComponent(topic)}`);
+    if (!res.ok) throw new Error('Failed to search trends');
+    return res.json();
+  },
+
+  async generateVideoFromTrend(trendId: string, trendData?: Partial<LiveTrend>, framework?: string): Promise<ClipRecord> {
+    const res = await fetch(`${API_BASE}/trends/${trendId}/generate-video`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...(trendData || {}), framework }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'Video generation failed' }));
+      throw new Error(err.error || 'Failed to generate trend video');
+    }
+    return res.json();
+  },
+
+  async runAutomationNow(): Promise<{ success: boolean; message: string }> {
+    const res = await fetch(`${API_BASE}/automation/run-now`, { method: 'POST' });
+    if (!res.ok) throw new Error('Failed to run automation pipeline');
+    return res.json();
+  },
+
+  async getAuditLogs(): Promise<AuditLog[]> {
+    const res = await fetch(`${API_BASE}/audit-logs`);
+    if (!res.ok) throw new Error('Failed to fetch audit logs');
     return res.json();
   },
 
@@ -260,10 +367,6 @@ export const api = {
       throw new Error(err.error || 'Failed to publish to YouTube Shorts');
     }
     return res.json();
-  },
-
-  getZipExportUrl(): string {
-    return `${API_BASE}/clips/export-zip`;
   },
 
   async getTrends(): Promise<TrendItem[]> {

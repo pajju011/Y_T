@@ -4,10 +4,13 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { ZipArchive } from 'archiver';
-import { db, VideoRecord, ClipRecord } from './db.js';
+import { db, VideoRecord, ClipRecord, ContentStrategy } from './db.js';
 import { ffmpegService, FramingMode, AspectRatio, CaptionStyle } from './ffmpeg.js';
 import { aiService } from './ai.js';
 import { youtubeService } from './youtube.js';
+import { trendDiscoveryService } from './trends.js';
+import { trendVideoGenerator } from './generator.js';
+import { automationEngine } from './automation.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,7 +40,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 500 * 1024 * 1024 }, // 500MB max
+  limits: { fileSize: 500 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowed = ['.mp4', '.mov', '.webm', '.mkv', '.avi'];
     const ext = path.extname(file.originalname).toLowerCase();
@@ -53,10 +56,12 @@ const upload = multer({
 app.get('/api/system', (req, res) => {
   const ffmpegStatus = ffmpegService.getStatus();
   const settings = db.getSettings();
+  const autoStatus = automationEngine.getStatus();
   res.json({
     ffmpeg: ffmpegStatus,
     activeAiProvider: settings.geminiApiKey ? 'Google Gemini 2.0 Flash' : 'Built-in Local Pattern Engine (100% Free)',
     customDomain: settings.customDomain || 'Not configured (runs locally on localhost:5173)',
+    automation: autoStatus,
     timestamp: new Date().toISOString()
   });
 });
@@ -65,6 +70,92 @@ app.get('/api/system', (req, res) => {
 app.get('/api/metrics', (req, res) => {
   const metrics = db.getMetrics();
   res.json(metrics);
+});
+
+// Content Strategy API
+app.get('/api/strategy', (req, res) => {
+  res.json(db.getStrategy());
+});
+
+app.post('/api/strategy', (req, res) => {
+  const updates: Partial<ContentStrategy> = req.body;
+  db.updateStrategy(updates);
+  res.json(db.getStrategy());
+});
+
+// Live Trend Discovery API (RSS / News)
+app.get('/api/trends/live', (req, res) => {
+  res.json(db.getLiveTrends());
+});
+
+app.post('/api/trends/discover', async (req, res) => {
+  try {
+    const strategy = db.getStrategy();
+    const niche = req.body.niche || strategy.niche;
+    const keywords = req.body.keywords || strategy.keywords;
+    const trends = await trendDiscoveryService.discoverTrends(niche, keywords);
+    res.json(trends);
+  } catch (err: any) {
+    res.status(500).json({ error: 'Failed to discover trends: ' + err.message });
+  }
+});
+
+app.get('/api/trends/search', async (req, res) => {
+  try {
+    const q = String(req.query.q || '').trim();
+    if (!q) {
+      return res.status(400).json({ error: 'Query parameter q is required' });
+    }
+    const results = await trendDiscoveryService.searchLiveTopic(q);
+    res.json(results);
+  } catch (err: any) {
+    res.status(500).json({ error: 'Failed to search trends: ' + err.message });
+  }
+});
+
+// Text-To-Video: Generate 9:16 Video from Trend Topic (0 Uploads Required!)
+app.post('/api/trends/:id/generate-video', async (req, res) => {
+  try {
+    const liveTrends = db.getLiveTrends();
+    const trend = liveTrends.find(t => t.id === req.params.id) || {
+      id: req.params.id,
+      title: req.body.title || 'Breaking Tech Announcement',
+      snippet: req.body.snippet || 'High impact trend breaking across social media.',
+      source: 'Direct Trend Input',
+      url: req.body.url || 'https://google.com',
+      niche: req.body.niche || 'Tech & AI',
+      discoveredAt: new Date().toISOString(),
+      relevanceScore: 94,
+      generatedClipId: null
+    };
+
+    const strategy = db.getStrategy();
+    const clip = await trendVideoGenerator.generateTrendVideo(trend, strategy, req.body.framework);
+    res.json(clip);
+  } catch (err: any) {
+    console.error('Trend video generation failed:', err);
+    res.status(500).json({ error: 'Video generation failed: ' + err.message });
+  }
+});
+
+// Daily Automation Trigger & Status
+app.get('/api/automation/status', (req, res) => {
+  res.json(automationEngine.getStatus());
+});
+
+app.post('/api/automation/run-now', async (req, res) => {
+  try {
+    console.log('[API] User triggered manual run of Daily Automation Pipeline...');
+    await automationEngine.runPipelineNow();
+    res.json({ success: true, message: 'Daily pipeline executed successfully.' });
+  } catch (err: any) {
+    res.status(500).json({ error: 'Automation run failed: ' + err.message });
+  }
+});
+
+// Audit Logs
+app.get('/api/audit-logs', (req, res) => {
+  res.json(db.getAuditLogs());
 });
 
 // List Videos
@@ -115,7 +206,7 @@ app.post('/api/videos/upload', upload.single('video'), async (req, res) => {
   }
 });
 
-// Import Video from YouTube URL (Upgrade A: yt-dlp)
+// Import Video from YouTube URL (yt-dlp)
 app.post('/api/videos/import-youtube', async (req, res) => {
   try {
     const { url } = req.body;
@@ -228,7 +319,7 @@ app.post('/api/videos/:id/analyze', async (req, res) => {
   }
 });
 
-// Cut Clip with FFmpeg (Upgrades B & C: Burned Subtitles & Smart Framing)
+// Cut Clip with FFmpeg
 app.post('/api/videos/:id/cut-clip', async (req, res) => {
   try {
     const video = db.getVideo(req.params.id);
@@ -256,7 +347,6 @@ app.post('/api/videos/:id/cut-clip', async (req, res) => {
     const outputPath = path.join(uploadsDir, 'clips', clipFilename);
     const urlPath = `/uploads/clips/${clipFilename}`;
 
-    // Execute advanced cut with Framing and permanently burned ASS subtitles
     await ffmpegService.cutVerticalClip(video.filePath, outputPath, {
       startTime: startSec,
       duration: clipDuration,
@@ -266,7 +356,6 @@ app.post('/api/videos/:id/cut-clip', async (req, res) => {
       hookText: hook || title
     });
 
-    // Extract thumbnail
     const thumbFilename = `thumb-${clipId}.jpg`;
     const thumbPath = path.join(uploadsDir, 'thumbnails', thumbFilename);
     const thumbnailUrl = `/uploads/thumbnails/${thumbFilename}`;
@@ -324,7 +413,7 @@ app.get('/api/clips', (req, res) => {
   res.json(clips);
 });
 
-// Batch ZIP Export (Upgrade D: 1-Click ZIP of all approved clips)
+// Batch ZIP Export
 app.get('/api/clips/export-zip', (req, res) => {
   try {
     const clips = db.getClips().filter(c => c.status === 'approved' || c.status === 'scheduled');
@@ -380,7 +469,7 @@ app.patch('/api/clips/:id', (req, res) => {
   res.json(db.getClip(req.params.id));
 });
 
-// Direct YouTube Shorts Publishing (Upgrade E: 1-Click OAuth Upload)
+// Direct YouTube Shorts Publishing
 app.post('/api/clips/:id/publish-youtube', async (req, res) => {
   try {
     const clip = db.getClip(req.params.id);
@@ -435,7 +524,7 @@ app.delete('/api/clips/:id', (req, res) => {
   res.json({ success: true, id: req.params.id });
 });
 
-// Trends
+// Trends Templates
 app.get('/api/trends', (req, res) => {
   res.json(db.getTrends());
 });

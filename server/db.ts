@@ -16,6 +16,8 @@ export interface VideoRecord {
   errorMessage?: string;
 }
 
+export type FramingMode = 'center' | 'left' | 'right' | 'blur_fit';
+
 export interface ClipRecord {
   id: string;
   videoId: string;
@@ -33,6 +35,7 @@ export interface ClipRecord {
   urlPath: string;
   thumbnailUrl: string;
   aspectRatio: '9:16' | '1:1' | '16:9';
+  framingMode?: FramingMode;
   captionStyle: 'bold-yellow' | 'minimal-white' | 'karaoke-blue' | 'none';
   status: 'draft' | 'in_review' | 'approved' | 'scheduled' | 'published';
   scheduledDate: string | null;
@@ -41,6 +44,7 @@ export interface ClipRecord {
   createdAt: string;
   approvedAt: string | null;
   publishedAt: string | null;
+  trendSourceUrl?: string;
 }
 
 export interface TrendItem {
@@ -54,6 +58,34 @@ export interface TrendItem {
   sampleTags: string[];
 }
 
+export interface LiveTrend {
+  id: string;
+  title: string;
+  snippet: string;
+  source: string;
+  url: string;
+  niche: string;
+  discoveredAt: string;
+  relevanceScore: number;
+  generatedClipId: string | null;
+}
+
+export interface ContentStrategy {
+  channelName: string;
+  niche: string;
+  keywords: string[];
+  targetAudience: string;
+  targetRegion: string;
+  language: string;
+  tone: string;
+  durationSec: number;
+  dailyVideoLimit: number;
+  autoPrepareDaily: boolean;
+  preferredPlatforms: ('youtube' | 'tiktok' | 'instagram' | 'linkedin')[];
+  visualMode: 'motion_text' | 'template';
+  lastAutoRun: string | null;
+}
+
 export interface IntegrationRecord {
   platform: 'youtube' | 'tiktok' | 'instagram' | 'linkedin';
   name: string;
@@ -65,6 +97,7 @@ export interface IntegrationRecord {
   instructions: string;
   freeTierNotes: string;
   lastSync: string | null;
+  accessToken?: string;
 }
 
 export interface SettingsRecord {
@@ -77,12 +110,22 @@ export interface SettingsRecord {
   storageQuotaMb: number;
 }
 
+export interface AuditLog {
+  id: string;
+  timestamp: string;
+  action: string;
+  details: string;
+}
+
 export interface DatabaseSchema {
   videos: VideoRecord[];
   clips: ClipRecord[];
   trends: TrendItem[];
+  liveTrends: LiveTrend[];
+  strategy: ContentStrategy;
   integrations: IntegrationRecord[];
   settings: SettingsRecord;
+  auditLogs: AuditLog[];
 }
 
 const DB_FILE = path.resolve(process.cwd(), 'data', 'db.json');
@@ -139,6 +182,22 @@ const INITIAL_TRENDS: TrendItem[] = [
     sampleTags: ['#comparison', '#review', '#techtips', '#buyersguide']
   }
 ];
+
+const INITIAL_STRATEGY: ContentStrategy = {
+  channelName: 'ClipGenius Trends',
+  niche: 'Tech & AI',
+  keywords: ['Artificial Intelligence', 'Software', 'Productivity Tools', 'Future Tech'],
+  targetAudience: 'Tech professionals, founders, and curious creators',
+  targetRegion: 'Global / US',
+  language: 'English',
+  tone: 'Informed, concise, analytical, engaging',
+  durationSec: 30,
+  dailyVideoLimit: 1,
+  autoPrepareDaily: true,
+  preferredPlatforms: ['youtube', 'tiktok', 'instagram'],
+  visualMode: 'motion_text',
+  lastAutoRun: null
+};
 
 const INITIAL_INTEGRATIONS: IntegrationRecord[] = [
   {
@@ -198,7 +257,7 @@ const INITIAL_SETTINGS: SettingsRecord = {
   customDomain: '',
   defaultAspectRatio: '9:16',
   autoApproveHighVirality: false,
-  storageQuotaMb: 10240 // 10 GB default local allocation
+  storageQuotaMb: 10240
 };
 
 export class Database {
@@ -217,8 +276,11 @@ export class Database {
           videos: parsed.videos || [],
           clips: parsed.clips || [],
           trends: parsed.trends && parsed.trends.length ? parsed.trends : INITIAL_TRENDS,
+          liveTrends: parsed.liveTrends || [],
+          strategy: parsed.strategy || INITIAL_STRATEGY,
           integrations: parsed.integrations && parsed.integrations.length ? parsed.integrations : INITIAL_INTEGRATIONS,
-          settings: { ...INITIAL_SETTINGS, ...(parsed.settings || {}) }
+          settings: { ...INITIAL_SETTINGS, ...(parsed.settings || {}) },
+          auditLogs: parsed.auditLogs || []
         };
       }
     } catch (err) {
@@ -229,8 +291,11 @@ export class Database {
       videos: [],
       clips: [],
       trends: INITIAL_TRENDS,
+      liveTrends: [],
+      strategy: INITIAL_STRATEGY,
       integrations: INITIAL_INTEGRATIONS,
-      settings: INITIAL_SETTINGS
+      settings: INITIAL_SETTINGS,
+      auditLogs: []
     };
     this.saveData(fresh);
     return fresh;
@@ -276,7 +341,6 @@ export class Database {
 
   public deleteVideo(id: string) {
     this.data.videos = this.data.videos.filter(v => v.id !== id);
-    // Also remove associated clips
     this.data.clips = this.data.clips.filter(c => c.videoId !== id);
     this.save();
   }
@@ -292,6 +356,7 @@ export class Database {
 
   public addClip(clip: ClipRecord) {
     this.data.clips.unshift(clip);
+    this.addAuditLog('clip_created', `Clip "${clip.title}" created with status ${clip.status}`);
     this.save();
   }
 
@@ -299,16 +364,48 @@ export class Database {
     const idx = this.data.clips.findIndex(c => c.id === id);
     if (idx !== -1) {
       this.data.clips[idx] = { ...this.data.clips[idx], ...updates };
+      this.addAuditLog('clip_updated', `Clip "${id}" updated: ${Object.keys(updates).join(', ')}`);
       this.save();
     }
   }
 
   public deleteClip(id: string) {
     this.data.clips = this.data.clips.filter(c => c.id !== id);
+    this.addAuditLog('clip_deleted', `Clip "${id}" deleted.`);
     this.save();
   }
 
-  // Trends
+  // Live Trends
+  public getLiveTrends(): LiveTrend[] {
+    return this.data.liveTrends;
+  }
+
+  public setLiveTrends(trends: LiveTrend[]) {
+    this.data.liveTrends = trends;
+    this.save();
+  }
+
+  public addLiveTrends(newTrends: LiveTrend[]) {
+    const existingUrls = new Set(this.data.liveTrends.map(t => t.url));
+    const toAdd = newTrends.filter(t => !existingUrls.has(t.url));
+    if (toAdd.length > 0) {
+      this.data.liveTrends = [...toAdd, ...this.data.liveTrends].slice(0, 50); // Keep latest 50
+      this.save();
+    }
+  }
+
+  // Strategy
+  public getStrategy(): ContentStrategy {
+    return this.data.strategy || INITIAL_STRATEGY;
+  }
+
+  public updateStrategy(updates: Partial<ContentStrategy>) {
+    this.data.strategy = { ...this.getStrategy(), ...updates };
+    this.addAuditLog('strategy_updated', `Strategy updated for niche "${this.data.strategy.niche}"`);
+    this.save();
+  }
+
+  // Trends Templates
   public getTrends(): TrendItem[] {
     return this.data.trends;
   }
@@ -336,7 +433,24 @@ export class Database {
     this.save();
   }
 
-  // Real Metrics (never fake)
+  // Audit Logs
+  public addAuditLog(action: string, details: string) {
+    if (!this.data.auditLogs) this.data.auditLogs = [];
+    this.data.auditLogs.unshift({
+      id: 'log-' + Date.now(),
+      timestamp: new Date().toISOString(),
+      action,
+      details
+    });
+    if (this.data.auditLogs.length > 100) this.data.auditLogs = this.data.auditLogs.slice(0, 100);
+    this.save();
+  }
+
+  public getAuditLogs(): AuditLog[] {
+    return this.data.auditLogs || [];
+  }
+
+  // Real Metrics
   public getMetrics() {
     const totalVideos = this.data.videos.length;
     const totalClips = this.data.clips.length;
@@ -367,7 +481,8 @@ export class Database {
       totalStorageBytes,
       storageFormatted: (totalStorageBytes / (1024 * 1024)).toFixed(1) + ' MB',
       platformDistribution,
-      connectedIntegrationsCount: this.data.integrations.filter(i => i.status === 'connected').length
+      connectedIntegrationsCount: this.data.integrations.filter(i => i.status === 'connected').length,
+      liveTrendsCount: (this.data.liveTrends || []).length
     };
   }
 }
