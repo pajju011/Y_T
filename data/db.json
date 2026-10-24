@@ -1,0 +1,226 @@
+{
+  "videos": [
+    {
+      "id": "vid-demo-1792862616207",
+      "title": "Sample Product Tour & Feature Walkthrough",
+      "originalName": "demo-sample-video.mp4",
+      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\videos\\demo-1792862616207.mp4",
+      "urlPath": "/uploads/videos/demo-1792862616207.mp4",
+      "fileSize": 1506828,
+      "duration": 45,
+      "width": 1920,
+      "height": 1080,
+      "uploadedAt": "2026-10-24T17:23:43.386Z",
+      "status": "ready"
+    },
+    {
+      "id": "vid-demo-1792862476930",
+      "title": "Sample Product Tour & Feature Walkthrough",
+      "originalName": "demo-sample-video.mp4",
+      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\videos\\demo-1792862476930.mp4",
+      "urlPath": "/uploads/videos/demo-1792862476930.mp4",
+      "fileSize": 1506828,
+      "duration": 45,
+      "width": 1920,
+      "height": 1080,
+      "uploadedAt": "2026-10-24T17:21:24.585Z",
+      "status": "ready"
+    }
+  ],
+  "clips": [
+    {
+      "id": "clip-1792862606892",
+      "videoId": "vid-demo-1792862476930",
+      "videoTitle": "Sample Product Tour & Feature Walkthrough",
+      "title": "Sample Product Tour & Feature Wa: Core Insight",
+      "hook": "If you only take away one lesson from this entire breakdown, start here.",
+      "transcript": "High-retention dialogue segment.",
+      "suggestedCaption": "Key takeaway from Sample Product Tour & Feature Walkthrough. What do you think about this approach? #learning #tips #insights",
+      "startTime": 0,
+      "endTime": 15,
+      "duration": 15,
+      "viralityScore": 92,
+      "viralityReason": "Immediate premise delivery within first 3 seconds, ideal for cold audience discovery.",
+      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\clip-clip-1792862606892.mp4",
+      "urlPath": "/uploads/clips/clip-clip-1792862606892.mp4",
+      "thumbnailUrl": "/uploads/thumbnails/thumb-clip-1792862606892.jpg",
+      "aspectRatio": "9:16",
+      "captionStyle": "bold-yellow",
+      "status": "in_review",
+      "scheduledDate": null,
+      "scheduledTime": null,
+      "platforms": [
+        "youtube",
+        "tiktok"
+      ],
+      "createdAt": "2026-10-24T17:23:29.295Z",
+      "approvedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "clip-1792862484617",
+      "videoId": "vid-demo-1792862476930",
+      "videoTitle": "Sample Product Tour & Feature Walkthrough",
+      "title": "Sample Product Tour & Feature Wa: Core Insight",
+      "hook": "If you only take away one lesson from this entire breakdown, start here.",
+      "transcript": "High-retention dialogue segment.",
+      "suggestedCaption": "Key takeaway from Sample Product Tour & Feature Walkthrough. What do you think about this approach? #learning #tips #insights",
+      "startTime": 0,
+      "endTime": 30,
+      "duration": 30,
+      "viralityScore": 92,
+      "viralityReason": "Immediate premise delivery within first 3 seconds, ideal for cold audience discovery.",
+      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\clip-clip-1792862484617.mp4",
+      "urlPath": "/uploads/clips/clip-clip-1792862484617.mp4",
+      "thumbnailUrl": "/uploads/thumbnails/thumb-clip-1792862484617.jpg",
+      "aspectRatio": "9:16",
+      "captionStyle": "karaoke-blue",
+      "status": "in_review",
+      "scheduledDate": null,
+      "scheduledTime": null,
+      "platforms": [
+        "youtube",
+        "tiktok"
+      ],
+      "createdAt": "2026-10-24T17:21:29.201Z",
+      "approvedAt": null,
+      "publishedAt": null
+    }
+  ],
+  "trends": [
+    {
+      "id": "trend-1",
+      "title": "The \"Nobody is talking about this\" Framework",
+      "category": "Tech & AI",
+      "description": "High-retention curiosity hook that highlights an underappreciated workflow or software release.",
+      "hookTemplate": "Nobody is talking about this tool, but it saves me 4 hours every single day...",
+      "targetDuration": "30-45s",
+      "engagementVelocity": "Very High",
+      "sampleTags": [
+        "#tech",
+        "#productivity",
+        "#automation",
+        "#tools"
+      ]
+    },
+    {
+      "id": "trend-2",
+      "title": "Myth vs. Reality Rapid Debunking",
+      "category": "Finance & Business",
+      "description": "Contrast a common assumption against verified data in the first 3 seconds.",
+      "hookTemplate": "Most people think [X] is true. Here is what actually happens when you test it...",
+      "targetDuration": "45-60s",
+      "engagementVelocity": "High",
+      "sampleTags": [
+        "#finance",
+        "#businessgrowth",
+        "#casestudy",
+        "#facts"
+      ]
+    },
+    {
+      "id": "trend-3",
+      "title": "The 3-Step Execution Breakdown",
+      "category": "Productivity",
+      "description": "Concise step-by-step tutorial format with on-screen numbering for high completion rates.",
+      "hookTemplate": "Here are the exact 3 steps to [achieve outcome] without [pain point]...",
+      "targetDuration": "35-50s",
+      "engagementVelocity": "High",
+      "sampleTags": [
+        "#productivitytips",
+        "#workflow",
+        "#howto",
+        "#systems"
+      ]
+    },
+    {
+      "id": "trend-4",
+      "title": "The Painful Mistake Framework",
+      "category": "Creator Economy",
+      "description": "Relatable vulnerability hook focusing on a costly or embarrassing mistake and its fix.",
+      "hookTemplate": "I wasted 6 months doing this the wrong way before I figured out this simple shift...",
+      "targetDuration": "40-55s",
+      "engagementVelocity": "Very High",
+      "sampleTags": [
+        "#contentcreator",
+        "#growth",
+        "#strategy",
+        "#learnfrommistakes"
+      ]
+    },
+    {
+      "id": "trend-5",
+      "title": "Direct Comparison Shootout",
+      "category": "Tech & AI",
+      "description": "Side-by-side analysis of two popular approaches or products with clear decision criteria.",
+      "hookTemplate": "Which one is actually better: [Option A] or [Option B]? Let’s look at the numbers...",
+      "targetDuration": "45-60s",
+      "engagementVelocity": "Steady",
+      "sampleTags": [
+        "#comparison",
+        "#review",
+        "#techtips",
+        "#buyersguide"
+      ]
+    }
+  ],
+  "integrations": [
+    {
+      "platform": "youtube",
+      "name": "YouTube Shorts",
+      "status": "not_configured",
+      "channelHandle": null,
+      "quotaUnitsUsed": 0,
+      "dailyLimit": "10,000 units/day (Free Google Cloud Tier)",
+      "requiresKey": true,
+      "instructions": "Obtain a free OAuth 2.0 Client ID or YouTube Data API v3 key from Google Cloud Console. No credit card required.",
+      "freeTierNotes": "Free 10,000 quota units/day is sufficient to publish ~6-10 Shorts per day with zero fees.",
+      "lastSync": null
+    },
+    {
+      "platform": "tiktok",
+      "name": "TikTok for Developers",
+      "status": "not_configured",
+      "channelHandle": null,
+      "quotaUnitsUsed": 0,
+      "dailyLimit": "Standard Rate Limit (Free Developer Account)",
+      "requiresKey": true,
+      "instructions": "Create a free TikTok Developer app to schedule Direct Post videos, or use ClipGenius 1-click MP4 export.",
+      "freeTierNotes": "TikTok Developer API is free to register. Video Kit Direct Post API requires business account verification.",
+      "lastSync": null
+    },
+    {
+      "platform": "instagram",
+      "name": "Instagram Reels",
+      "status": "not_configured",
+      "channelHandle": null,
+      "quotaUnitsUsed": 0,
+      "dailyLimit": "25 API posts/day (Meta Graph API Free Tier)",
+      "requiresKey": true,
+      "instructions": "Link an Instagram Professional / Creator account to a Facebook page, then configure Meta Graph API credentials.",
+      "freeTierNotes": "Meta Graph API has no subscription fee for standard organic publishing limits.",
+      "lastSync": null
+    },
+    {
+      "platform": "linkedin",
+      "name": "LinkedIn Video",
+      "status": "not_configured",
+      "channelHandle": null,
+      "quotaUnitsUsed": 0,
+      "dailyLimit": "100 posts/day (LinkedIn Community Management API)",
+      "requiresKey": true,
+      "instructions": "Configure LinkedIn Developer App with Member Data Portability / Share on LinkedIn permissions.",
+      "freeTierNotes": "Free LinkedIn Developer portal access with standard organic sharing scopes.",
+      "lastSync": null
+    }
+  ],
+  "settings": {
+    "geminiApiKey": "",
+    "groqApiKey": "",
+    "ollamaEndpoint": "http://localhost:11434",
+    "customDomain": "",
+    "defaultAspectRatio": "9:16",
+    "autoApproveHighVirality": false,
+    "storageQuotaMb": 10240
+  }
+}

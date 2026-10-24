@@ -1,0 +1,10 @@
+/* Reset and Root Mount */
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
