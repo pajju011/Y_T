@@ -99,6 +99,10 @@ export class FFmpegService {
     });
   }
 
+  public async getMetadata(filePath: string): Promise<{ duration: number; width: number; height: number; size: number }> {
+    return this.getVideoMetadata(filePath);
+  }
+
   public async extractThumbnail(videoPath: string, outputPath: string, timestampSeconds: number = 1): Promise<string> {
     return new Promise((resolve, reject) => {
       const targetDir = path.dirname(outputPath);
