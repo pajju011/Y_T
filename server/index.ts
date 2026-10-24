@@ -3,9 +3,11 @@ import cors from 'cors';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { ZipArchive } from 'archiver';
 import { db, VideoRecord, ClipRecord } from './db.js';
-import { ffmpegService } from './ffmpeg.js';
+import { ffmpegService, FramingMode, AspectRatio, CaptionStyle } from './ffmpeg.js';
 import { aiService } from './ai.js';
+import { youtubeService } from './youtube.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -35,7 +37,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 500 * 1024 * 1024 }, // 500MB max for local upload
+  limits: { fileSize: 500 * 1024 * 1024 }, // 500MB max
   fileFilter: (req, file, cb) => {
     const allowed = ['.mp4', '.mov', '.webm', '.mkv', '.avi'];
     const ext = path.extname(file.originalname).toLowerCase();
@@ -71,7 +73,7 @@ app.get('/api/videos', (req, res) => {
   res.json(videos);
 });
 
-// Upload Video
+// Upload Video (Local File)
 app.post('/api/videos/upload', upload.single('video'), async (req, res) => {
   try {
     if (!req.file) {
@@ -82,18 +84,14 @@ app.post('/api/videos/upload', upload.single('video'), async (req, res) => {
     const filePath = req.file.path;
     const urlPath = `/uploads/videos/${req.file.filename}`;
 
-    // Get metadata via ffprobe
     const meta = await ffmpegService.getVideoMetadata(filePath);
 
-    // Extract first frame thumbnail
     const thumbFilename = `thumb-${videoId}.jpg`;
     const thumbPath = path.join(uploadsDir, 'thumbnails', thumbFilename);
     const thumbUrl = `/uploads/thumbnails/${thumbFilename}`;
     try {
       await ffmpegService.extractThumbnail(filePath, thumbPath, 1);
-    } catch (thumbErr) {
-      console.warn('Thumbnail generation skipped:', thumbErr);
-    }
+    } catch (e) {}
 
     const newVideo: VideoRecord = {
       id: videoId,
@@ -117,7 +115,53 @@ app.post('/api/videos/upload', upload.single('video'), async (req, res) => {
   }
 });
 
-// Create Instant Demo Video (Zero Download Needed)
+// Import Video from YouTube URL (Upgrade A: yt-dlp)
+app.post('/api/videos/import-youtube', async (req, res) => {
+  try {
+    const { url } = req.body;
+    if (!url || !url.startsWith('http')) {
+      return res.status(400).json({ error: 'Please provide a valid YouTube URL.' });
+    }
+
+    console.log(`[YouTube Import] Downloading ${url} via yt-dlp...`);
+    const videosDest = path.join(uploadsDir, 'videos');
+    const dlResult = await ffmpegService.downloadYouTubeVideo(url, videosDest);
+
+    const videoId = 'vid-yt-' + Date.now();
+    const filename = path.basename(dlResult.filePath);
+    const urlPath = `/uploads/videos/${filename}`;
+
+    const meta = await ffmpegService.getVideoMetadata(dlResult.filePath);
+
+    const thumbFilename = `thumb-${videoId}.jpg`;
+    const thumbPath = path.join(uploadsDir, 'thumbnails', thumbFilename);
+    try {
+      await ffmpegService.extractThumbnail(dlResult.filePath, thumbPath, 2);
+    } catch (e) {}
+
+    const newVideo: VideoRecord = {
+      id: videoId,
+      title: dlResult.title || 'YouTube Ingested Video',
+      originalName: filename,
+      filePath: dlResult.filePath,
+      urlPath: urlPath,
+      fileSize: meta.size,
+      duration: meta.duration,
+      width: meta.width,
+      height: meta.height,
+      uploadedAt: new Date().toISOString(),
+      status: 'ready'
+    };
+
+    db.addVideo(newVideo);
+    res.json(newVideo);
+  } catch (err: any) {
+    console.error('YouTube import failed:', err);
+    res.status(500).json({ error: err.message || 'Failed to download YouTube video' });
+  }
+});
+
+// Create Instant Demo Video
 app.post('/api/videos/demo', async (req, res) => {
   try {
     const videoId = 'vid-demo-' + Date.now();
@@ -125,13 +169,11 @@ app.post('/api/videos/demo', async (req, res) => {
     const filePath = path.join(uploadsDir, 'videos', filename);
     const urlPath = `/uploads/videos/${filename}`;
 
-    console.log('[Demo] Generating synthetic test video with FFmpeg...');
     await ffmpegService.createDemoVideo(filePath);
     const meta = await ffmpegService.getVideoMetadata(filePath);
 
     const thumbFilename = `thumb-${videoId}.jpg`;
     const thumbPath = path.join(uploadsDir, 'thumbnails', thumbFilename);
-    const thumbUrl = `/uploads/thumbnails/${thumbFilename}`;
     try {
       await ffmpegService.extractThumbnail(filePath, thumbPath, 2);
     } catch (e) {}
@@ -186,7 +228,7 @@ app.post('/api/videos/:id/analyze', async (req, res) => {
   }
 });
 
-// Cut Clip with FFmpeg
+// Cut Clip with FFmpeg (Upgrades B & C: Burned Subtitles & Smart Framing)
 app.post('/api/videos/:id/cut-clip', async (req, res) => {
   try {
     const video = db.getVideo(req.params.id);
@@ -201,6 +243,7 @@ app.post('/api/videos/:id/cut-clip', async (req, res) => {
       viralityReason,
       suggestedCaption,
       aspectRatio = '9:16',
+      framingMode = 'center',
       captionStyle = 'bold-yellow'
     } = req.body;
 
@@ -213,10 +256,17 @@ app.post('/api/videos/:id/cut-clip', async (req, res) => {
     const outputPath = path.join(uploadsDir, 'clips', clipFilename);
     const urlPath = `/uploads/clips/${clipFilename}`;
 
-    // Extract vertical video using FFmpeg
-    await ffmpegService.cutVerticalClip(video.filePath, outputPath, startSec, clipDuration, aspectRatio);
+    // Execute advanced cut with Framing and permanently burned ASS subtitles
+    await ffmpegService.cutVerticalClip(video.filePath, outputPath, {
+      startTime: startSec,
+      duration: clipDuration,
+      aspectRatio: aspectRatio as AspectRatio,
+      framingMode: framingMode as FramingMode,
+      captionStyle: captionStyle as CaptionStyle,
+      hookText: hook || title
+    });
 
-    // Extract thumbnail for the clip
+    // Extract thumbnail
     const thumbFilename = `thumb-${clipId}.jpg`;
     const thumbPath = path.join(uploadsDir, 'thumbnails', thumbFilename);
     const thumbnailUrl = `/uploads/thumbnails/${thumbFilename}`;
@@ -240,8 +290,8 @@ app.post('/api/videos/:id/cut-clip', async (req, res) => {
       filePath: outputPath,
       urlPath: urlPath,
       thumbnailUrl: thumbnailUrl,
-      aspectRatio: aspectRatio,
-      captionStyle: captionStyle,
+      aspectRatio: aspectRatio as AspectRatio,
+      captionStyle: captionStyle as CaptionStyle,
       status: 'in_review',
       scheduledDate: null,
       scheduledTime: null,
@@ -274,7 +324,46 @@ app.get('/api/clips', (req, res) => {
   res.json(clips);
 });
 
-// Update Clip (Status, Caption, Schedule)
+// Batch ZIP Export (Upgrade D: 1-Click ZIP of all approved clips)
+app.get('/api/clips/export-zip', (req, res) => {
+  try {
+    const clips = db.getClips().filter(c => c.status === 'approved' || c.status === 'scheduled');
+    if (clips.length === 0) {
+      return res.status(400).json({ error: 'No approved clips available to export.' });
+    }
+
+    const archive = new ZipArchive({ zlib: { level: 9 } });
+
+    res.attachment(`ClipGenius_Approved_Clips_${Date.now()}.zip`);
+    archive.pipe(res);
+
+    let summaryText = `CLIPGENIUS AI - APPROVED CLIPS EXPORT\nGenerated: ${new Date().toISOString()}\nTotal Clips: ${clips.length}\n\n`;
+
+    clips.forEach((clip, index) => {
+      const safeTitle = clip.title.replace(/[^a-zA-Z0-9_-]/g, '_');
+      const clipNumber = String(index + 1).padStart(2, '0');
+      const filenameInZip = `${clipNumber}_${safeTitle}.mp4`;
+      const txtInZip = `${clipNumber}_${safeTitle}_captions.txt`;
+
+      if (fs.existsSync(clip.filePath)) {
+        archive.file(clip.filePath, { name: filenameInZip });
+      }
+
+      const captionContent = `TITLE: ${clip.title} #Shorts\n\nHOOK:\n"${clip.hook}"\n\nCAPTION & HASHTAGS:\n${clip.suggestedCaption}\n\nSCHEDULED FOR: ${clip.scheduledDate || 'Unscheduled'} at ${clip.scheduledTime || '12:00'}\nCHANNELS: ${clip.platforms.join(', ')}\nVIRALITY SCORE: ${clip.viralityScore}/100\n`;
+      archive.append(captionContent, { name: txtInZip });
+
+      summaryText += `${clipNumber}. ${clip.title}\n   Scheduled: ${clip.scheduledDate || 'Manual'}\n   File: ${filenameInZip}\n\n`;
+    });
+
+    archive.append(summaryText, { name: 'README_PUBLISHING_SCHEDULE.txt' });
+    archive.finalize();
+  } catch (err: any) {
+    console.error('ZIP export failed:', err);
+    res.status(500).json({ error: 'ZIP export failed: ' + err.message });
+  }
+});
+
+// Update Clip
 app.patch('/api/clips/:id', (req, res) => {
   const clip = db.getClip(req.params.id);
   if (!clip) return res.status(404).json({ error: 'Clip not found' });
@@ -289,6 +378,48 @@ app.patch('/api/clips/:id', (req, res) => {
 
   db.updateClip(req.params.id, updates);
   res.json(db.getClip(req.params.id));
+});
+
+// Direct YouTube Shorts Publishing (Upgrade E: 1-Click OAuth Upload)
+app.post('/api/clips/:id/publish-youtube', async (req, res) => {
+  try {
+    const clip = db.getClip(req.params.id);
+    if (!clip) return res.status(404).json({ error: 'Clip not found' });
+
+    const integrations = db.getIntegrations();
+    const ytIntegration = integrations.find(i => i.platform === 'youtube');
+    const { accessToken, privacyStatus = 'public' } = req.body;
+
+    const token = accessToken || (ytIntegration as any)?.accessToken;
+    if (!token) {
+      return res.status(400).json({
+        error: 'YouTube Access Token required. Connect YouTube in Integrations or provide an access token.'
+      });
+    }
+
+    console.log(`[YouTube Publish] Uploading "${clip.title}" to YouTube Shorts...`);
+    const uploadResult = await youtubeService.uploadShort({
+      filePath: clip.filePath,
+      title: clip.title,
+      description: clip.suggestedCaption,
+      accessToken: token,
+      privacyStatus
+    });
+
+    db.updateClip(clip.id, {
+      status: 'published',
+      publishedAt: new Date().toISOString()
+    });
+
+    res.json({
+      success: true,
+      videoId: uploadResult.videoId,
+      url: uploadResult.url
+    });
+  } catch (err: any) {
+    console.error('YouTube publish error:', err);
+    res.status(500).json({ error: err.message || 'YouTube upload failed' });
+  }
 });
 
 // Delete Clip
@@ -316,13 +447,14 @@ app.get('/api/integrations', (req, res) => {
 
 app.post('/api/integrations/:platform', (req, res) => {
   const { platform } = req.params;
-  const { channelHandle, apiKey, status } = req.body;
+  const { channelHandle, apiKey, accessToken, status } = req.body;
 
   db.updateIntegration(platform, {
-    status: status || (apiKey ? 'connected' : 'not_configured'),
+    status: status || (channelHandle || apiKey ? 'connected' : 'not_configured'),
     channelHandle: channelHandle || null,
-    lastSync: new Date().toISOString()
-  });
+    lastSync: new Date().toISOString(),
+    ...(accessToken ? { accessToken } : {})
+  } as any);
 
   res.json(db.getIntegrations().find(i => i.platform === platform));
 });
@@ -330,7 +462,6 @@ app.post('/api/integrations/:platform', (req, res) => {
 // Settings
 app.get('/api/settings', (req, res) => {
   const settings = db.getSettings();
-  // Mask API key for UI display
   const masked = {
     ...settings,
     geminiApiKey: settings.geminiApiKey ? `${settings.geminiApiKey.slice(0, 4)}...${settings.geminiApiKey.slice(-4)}` : '',
@@ -342,7 +473,6 @@ app.get('/api/settings', (req, res) => {
 });
 
 app.post('/api/settings', (req, res) => {
-  const current = db.getSettings();
   const updates: any = {};
 
   if (req.body.customDomain !== undefined) updates.customDomain = req.body.customDomain;
@@ -350,7 +480,6 @@ app.post('/api/settings', (req, res) => {
   if (req.body.autoApproveHighVirality !== undefined) updates.autoApproveHighVirality = req.body.autoApproveHighVirality;
   if (req.body.ollamaEndpoint !== undefined) updates.ollamaEndpoint = req.body.ollamaEndpoint;
 
-  // Only update API keys if provided (and not the masked string)
   if (req.body.geminiApiKey && !req.body.geminiApiKey.includes('...')) {
     updates.geminiApiKey = req.body.geminiApiKey;
   }

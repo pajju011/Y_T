@@ -13,6 +13,8 @@ export interface VideoRecord {
   errorMessage?: string;
 }
 
+export type FramingMode = 'center' | 'left' | 'right' | 'blur_fit';
+
 export interface ClipRecord {
   id: string;
   videoId: string;
@@ -30,6 +32,7 @@ export interface ClipRecord {
   urlPath: string;
   thumbnailUrl: string;
   aspectRatio: '9:16' | '1:1' | '16:9';
+  framingMode?: FramingMode;
   captionStyle: 'bold-yellow' | 'minimal-white' | 'karaoke-blue' | 'none';
   status: 'draft' | 'in_review' | 'approved' | 'scheduled' | 'published';
   scheduledDate: string | null;
@@ -62,6 +65,7 @@ export interface IntegrationRecord {
   instructions: string;
   freeTierNotes: string;
   lastSync: string | null;
+  accessToken?: string;
 }
 
 export interface HighlightCandidate {
@@ -82,6 +86,7 @@ export interface SystemInfo {
     version: string;
     ffmpegBinary: string;
     ffprobeBinary: string;
+    hasYtDlp?: boolean;
   };
   activeAiProvider: string;
   customDomain: string;
@@ -155,6 +160,19 @@ export const api = {
     return res.json();
   },
 
+  async importYouTubeVideo(url: string): Promise<VideoRecord> {
+    const res = await fetch(`${API_BASE}/videos/import-youtube`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'YouTube import failed' }));
+      throw new Error(err.error || 'Failed to download YouTube video');
+    }
+    return res.json();
+  },
+
   async createDemoVideo(): Promise<VideoRecord> {
     const res = await fetch(`${API_BASE}/videos/demo`, { method: 'POST' });
     if (!res.ok) {
@@ -190,8 +208,9 @@ export const api = {
     viralityScore: number;
     viralityReason: string;
     suggestedCaption: string;
-    aspectRatio: '9:16' | '1:1' | '16:9';
-    captionStyle: 'bold-yellow' | 'minimal-white' | 'karaoke-blue' | 'none';
+    aspectRatio?: '9:16' | '1:1' | '16:9';
+    framingMode?: FramingMode;
+    captionStyle?: 'bold-yellow' | 'minimal-white' | 'karaoke-blue' | 'none';
   }): Promise<ClipRecord> {
     const res = await fetch(`${API_BASE}/videos/${videoId}/cut-clip`, {
       method: 'POST',
@@ -230,6 +249,23 @@ export const api = {
     if (!res.ok) throw new Error('Failed to delete clip');
   },
 
+  async publishToYouTube(clipId: string, accessToken?: string, privacyStatus?: string): Promise<{ success: boolean; videoId: string; url: string }> {
+    const res = await fetch(`${API_BASE}/clips/${clipId}/publish-youtube`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ accessToken, privacyStatus }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'Publish failed' }));
+      throw new Error(err.error || 'Failed to publish to YouTube Shorts');
+    }
+    return res.json();
+  },
+
+  getZipExportUrl(): string {
+    return `${API_BASE}/clips/export-zip`;
+  },
+
   async getTrends(): Promise<TrendItem[]> {
     const res = await fetch(`${API_BASE}/trends`);
     if (!res.ok) throw new Error('Failed to fetch trends');
@@ -242,7 +278,7 @@ export const api = {
     return res.json();
   },
 
-  async updateIntegration(platform: string, data: { channelHandle?: string; apiKey?: string; status?: string }): Promise<IntegrationRecord> {
+  async updateIntegration(platform: string, data: { channelHandle?: string; apiKey?: string; accessToken?: string; status?: string }): Promise<IntegrationRecord> {
     const res = await fetch(`${API_BASE}/integrations/${platform}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

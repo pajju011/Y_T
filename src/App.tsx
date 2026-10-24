@@ -84,6 +84,19 @@ export function App() {
     }
   };
 
+  const handleImportYouTube = async (url: string) => {
+    showToast(`Downloading YouTube video via yt-dlp...`);
+    try {
+      const newVideo = await api.importYouTubeVideo(url);
+      await refreshData();
+      showToast(`Successfully imported "${newVideo.title}"!`);
+      setActiveTab('studio');
+    } catch (err: any) {
+      showToast(`YouTube import failed: ${err.message}`);
+      throw err;
+    }
+  };
+
   const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       await handleUploadVideo(e.target.files[0]);
@@ -171,7 +184,7 @@ export function App() {
       case 'studio':
         return {
           title: 'Studio & Video Clipper',
-          description: 'Ingest videos, detect high-retention moments, and render 9:16 vertical shorts.'
+          description: 'Ingest local or YouTube videos, detect viral moments, and render 9:16 vertical shorts.'
         };
       case 'approvals':
         return {
@@ -252,10 +265,10 @@ export function App() {
             <StudioView
               videos={videos}
               onUploadVideo={handleUploadVideo}
+              onImportYouTube={handleImportYouTube}
               onDemoClick={handleCreateDemoVideo}
               isGeneratingDemo={isGeneratingDemo}
               onClipCreated={handleClipCreated}
-              onPreviewClip={(clip) => setActivePreviewClip(clip)}
               onDeleteVideo={handleDeleteVideo}
             />
           )}

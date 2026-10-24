@@ -9,9 +9,19 @@ import {
   Film,
   Send,
   Clock,
-  X
+  X,
+  Archive,
+  Loader2,
+  ExternalLink
 } from 'lucide-react';
 import type { ClipRecord } from '../api';
+import { api } from '../api';
+
+const YoutubeIcon: React.FC<{ size?: number; style?: React.CSSProperties }> = ({ size = 14, style }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={style}>
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+  </svg>
+);
 
 interface ApprovalsViewProps {
   clips: ClipRecord[];
@@ -34,9 +44,14 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
   const [scheduleDate, setScheduleDate] = useState<string>('');
   const [scheduleTime, setScheduleTime] = useState<string>('12:00');
 
+  const [publishingClipId, setPublishingClipId] = useState<string | null>(null);
+  const [publishSuccessUrl, setPublishSuccessUrl] = useState<string | null>(null);
+
   const filteredClips = filterStatus === 'all'
     ? clips
     : clips.filter(c => c.status === filterStatus);
+
+  const approvedClipsCount = clips.filter(c => c.status === 'approved' || c.status === 'scheduled').length;
 
   const startEditing = (clip: ClipRecord) => {
     setEditingClipId(clip.id);
@@ -70,32 +85,75 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
     setScheduleModalClip(null);
   };
 
+  const handlePublishYouTube = async (clip: ClipRecord) => {
+    setPublishingClipId(clip.id);
+    setPublishSuccessUrl(null);
+    try {
+      const res = await api.publishToYouTube(clip.id);
+      setPublishSuccessUrl(res.url);
+      await onUpdateClip(clip.id, { status: 'published' });
+    } catch (err: any) {
+      alert(`Publishing to YouTube failed: ${err.message}\nTip: Ensure YouTube token is configured in Integrations, or use the direct MP4 download.`);
+    } finally {
+      setPublishingClipId(null);
+    }
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      {/* Top Filter Bar */}
+      {/* Top Filter Bar with Batch ZIP Export */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h2 style={{ fontSize: '1.25rem' }}>Review & Approval Pipeline</h2>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-            Approve captions, fine-tune titles, and push finalized clips to the publishing schedule.
+            Approve captions, fine-tune titles, push to calendar, or bulk-export as ZIP.
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          {['all', 'in_review', 'approved', 'scheduled', 'published'].map((status) => (
-            <button
-              key={status}
-              className={`btn btn-sm ${filterStatus === status ? 'btn-primary' : 'btn-secondary'}`}
-              onClick={() => setFilterStatus(status)}
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          {/* Batch 1-Click ZIP Export Button */}
+          {approvedClipsCount > 0 && (
+            <a
+              href="/api/clips/export-zip"
+              download
+              className="btn btn-secondary btn-sm"
+              style={{ backgroundColor: 'var(--bg-card-hover)', borderColor: '#475569' }}
+              title="Download all approved 9:16 MP4s and caption .txt files in a single ZIP"
             >
-              {status === 'all' ? 'All Clips' : status.replace('_', ' ')}
-              <span style={{ opacity: 0.7, marginLeft: '0.3rem' }}>
-                ({status === 'all' ? clips.length : clips.filter(c => c.status === status).length})
-              </span>
-            </button>
-          ))}
+              <Archive size={14} style={{ color: '#93c5fd' }} />
+              <span>Export {approvedClipsCount} Approved (ZIP)</span>
+            </a>
+          )}
+
+          <div style={{ display: 'flex', gap: '0.35rem' }}>
+            {['all', 'in_review', 'approved', 'scheduled', 'published'].map((status) => (
+              <button
+                key={status}
+                className={`btn btn-sm ${filterStatus === status ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={() => setFilterStatus(status)}
+              >
+                {status === 'all' ? 'All Clips' : status.replace('_', ' ')}
+                <span style={{ opacity: 0.7, marginLeft: '0.3rem' }}>
+                  ({status === 'all' ? clips.length : clips.filter(c => c.status === status).length})
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
+      {publishSuccessUrl && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.85rem 1.25rem', backgroundColor: 'var(--success-subtle)', border: '1px solid var(--success-border)', borderRadius: 'var(--radius-sm)', color: '#6ee7b7' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Check size={16} />
+            <span>Successfully published to YouTube Shorts!</span>
+          </div>
+          <a href={publishSuccessUrl} target="_blank" rel="noreferrer" className="btn btn-outline btn-sm" style={{ color: '#ffffff' }}>
+            <span>View Short on YouTube</span>
+            <ExternalLink size={12} />
+          </a>
+        </div>
+      )}
 
       {/* Clip Cards Grid */}
       {filteredClips.length === 0 ? (
@@ -110,6 +168,7 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '1.25rem' }}>
           {filteredClips.map((clip) => {
             const isEditing = editingClipId === clip.id;
+            const isPublishing = publishingClipId === clip.id;
 
             return (
               <div key={clip.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
@@ -224,6 +283,23 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
                         >
                           <Calendar size={13} />
                           <span>Schedule</span>
+                        </button>
+                      )}
+
+                      {/* 1-Click YouTube Shorts Direct Publish */}
+                      {clip.status !== 'published' && (
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => handlePublishYouTube(clip)}
+                          disabled={isPublishing}
+                          title="Publish video directly to YouTube Shorts via YouTube Data API v3"
+                        >
+                          {isPublishing ? (
+                            <Loader2 size={13} className="animate-spin" />
+                          ) : (
+                            <YoutubeIcon size={13} style={{ color: '#ef4444' }} />
+                          )}
+                          <span>Publish Short</span>
                         </button>
                       )}
 

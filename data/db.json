@@ -29,6 +29,35 @@
   ],
   "clips": [
     {
+      "id": "clip-1792863699132",
+      "videoId": "vid-demo-1792862616207",
+      "videoTitle": "Sample Product Tour & Feature Walkthrough",
+      "title": "Hormozi Style Animated Short",
+      "hook": "Nobody is talking about this simple workflow shift.",
+      "transcript": "High-retention dialogue segment.",
+      "suggestedCaption": "Workflow shift that saves hours #shorts",
+      "startTime": 0,
+      "endTime": 15,
+      "duration": 15,
+      "viralityScore": 95,
+      "viralityReason": "Cinematic blurred padding with bold yellow burned subtitles",
+      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\clip-clip-1792863699132.mp4",
+      "urlPath": "/uploads/clips/clip-clip-1792863699132.mp4",
+      "thumbnailUrl": "/uploads/thumbnails/thumb-clip-1792863699132.jpg",
+      "aspectRatio": "9:16",
+      "captionStyle": "bold-yellow",
+      "status": "approved",
+      "scheduledDate": null,
+      "scheduledTime": null,
+      "platforms": [
+        "youtube",
+        "tiktok"
+      ],
+      "createdAt": "2026-10-24T17:41:41.579Z",
+      "approvedAt": "2026-10-24T17:41:41.595Z",
+      "publishedAt": null
+    },
+    {
       "id": "clip-1792862606892",
       "videoId": "vid-demo-1792862476930",
       "videoTitle": "Sample Product Tour & Feature Walkthrough",
@@ -75,16 +104,16 @@
       "thumbnailUrl": "/uploads/thumbnails/thumb-clip-1792862484617.jpg",
       "aspectRatio": "9:16",
       "captionStyle": "karaoke-blue",
-      "status": "in_review",
-      "scheduledDate": null,
-      "scheduledTime": null,
+      "status": "published",
+      "scheduledDate": "2026-10-24",
+      "scheduledTime": "22:58",
       "platforms": [
         "youtube",
         "tiktok"
       ],
       "createdAt": "2026-10-24T17:21:29.201Z",
-      "approvedAt": null,
-      "publishedAt": null
+      "approvedAt": "2026-10-24T17:27:15.165Z",
+      "publishedAt": "2026-10-24T17:28:07.786Z"
     }
   ],
   "trends": [

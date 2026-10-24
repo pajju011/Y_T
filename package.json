@@ -5,16 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently -k -n \"server,client\" -c \"cyan,blue\" \"npm run server\" \"vite\"",
-    "server": "tsx server/index.ts",
+    "server": "tsx watch server/index.ts",
     "client": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/archiver": "^8.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/multer": "^2.3.0",
+    "archiver": "^8.0.0",
     "concurrently": "^10.0.6",
     "cors": "^2.8.6",
     "dotenv": "^18.0.9",

@@ -8,24 +8,33 @@ import {
   Sparkles,
   Layers,
   Trash2,
-  Loader2
+  Loader2,
+  Tv,
+  Type
 } from 'lucide-react';
-import type { VideoRecord, HighlightCandidate, ClipRecord } from '../api';
+import type { VideoRecord, HighlightCandidate, ClipRecord, FramingMode } from '../api';
 import { api } from '../api';
+
+const YoutubeIcon: React.FC<{ size?: number; style?: React.CSSProperties }> = ({ size = 14, style }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={style}>
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+  </svg>
+);
 
 interface StudioViewProps {
   videos: VideoRecord[];
   onUploadVideo: (file: File) => Promise<void>;
+  onImportYouTube: (url: string) => Promise<void>;
   onDemoClick: () => void;
   isGeneratingDemo: boolean;
   onClipCreated: (clip: ClipRecord) => void;
-  onPreviewClip: (clip: ClipRecord) => void;
   onDeleteVideo: (id: string) => Promise<void>;
 }
 
 export const StudioView: React.FC<StudioViewProps> = ({
   videos,
   onUploadVideo,
+  onImportYouTube,
   onDemoClick,
   isGeneratingDemo,
   onClipCreated,
@@ -33,6 +42,12 @@ export const StudioView: React.FC<StudioViewProps> = ({
 }) => {
   const [selectedVideoId, setSelectedVideoId] = useState<string>(videos[0]?.id || '');
   const [targetDuration, setTargetDuration] = useState<number>(30);
+  const [framingMode, setFramingMode] = useState<FramingMode>('center');
+  const [captionStyle, setCaptionStyle] = useState<'bold-yellow' | 'minimal-white' | 'karaoke-blue' | 'none'>('bold-yellow');
+  const [ingestMode, setIngestMode] = useState<'upload' | 'youtube'>('upload');
+  const [youtubeUrl, setYoutubeUrl] = useState<string>('');
+  const [isDownloadingYt, setIsDownloadingYt] = useState<boolean>(false);
+
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [candidates, setCandidates] = useState<HighlightCandidate[]>([]);
   const [renderingIndex, setRenderingIndex] = useState<number | null>(null);
@@ -48,6 +63,21 @@ export const StudioView: React.FC<StudioViewProps> = ({
       } catch (err: any) {
         setErrorMsg(err.message || 'Upload failed');
       }
+    }
+  };
+
+  const handleYouTubeSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!youtubeUrl.trim()) return;
+    setIsDownloadingYt(true);
+    setErrorMsg(null);
+    try {
+      await onImportYouTube(youtubeUrl.trim());
+      setYoutubeUrl('');
+    } catch (err: any) {
+      setErrorMsg(err.message || 'YouTube download failed');
+    } finally {
+      setIsDownloadingYt(false);
     }
   };
 
@@ -79,7 +109,8 @@ export const StudioView: React.FC<StudioViewProps> = ({
         viralityReason: candidate.viralityReason,
         suggestedCaption: candidate.suggestedCaption,
         aspectRatio: '9:16',
-        captionStyle: 'bold-yellow',
+        framingMode: framingMode,
+        captionStyle: captionStyle,
       });
       onClipCreated(clip);
     } catch (err: any) {
@@ -115,7 +146,7 @@ export const StudioView: React.FC<StudioViewProps> = ({
                 <Layers className="empty-icon" />
                 <h3 className="empty-title">No videos ingested yet</h3>
                 <p className="empty-desc">
-                  Upload an MP4 recording or click below to generate an instant synthetic test video using local FFmpeg.
+                  Upload an MP4, paste a YouTube link, or generate an instant test video using local FFmpeg.
                 </p>
                 <button
                   className="btn btn-secondary btn-sm"
@@ -176,38 +207,161 @@ export const StudioView: React.FC<StudioViewProps> = ({
 
         {/* Right Column: Ingestion & Highlight Controls */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          {/* Upload Dropzone */}
+          {/* Ingestion Panel with Tabs */}
           <div className="card">
-            <h3 className="card-title" style={{ marginBottom: '0.5rem' }}>Ingest New Video</h3>
-            <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-              Upload local MP4, MOV, or WebM files. Files remain on your machine with 0 external hosting charges.
-            </p>
-
-            <label className="dropzone-container" style={{ display: 'block' }}>
-              <input
-                type="file"
-                accept="video/mp4,video/quicktime,video/webm"
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-              />
-              <Upload size={24} style={{ color: 'var(--accent-primary)', margin: '0 auto 0.5rem auto' }} />
-              <div style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-primary)' }}>
-                Click to browse video file
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+              <h3 className="card-title">Ingest Video Source</h3>
+              <div style={{ display: 'flex', gap: '0.35rem' }}>
+                <button
+                  className={`btn btn-sm ${ingestMode === 'upload' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setIngestMode('upload')}
+                  style={{ padding: '0.25rem 0.55rem', fontSize: '0.75rem' }}
+                >
+                  <Upload size={12} />
+                  <span>Local File</span>
+                </button>
+                <button
+                  className={`btn btn-sm ${ingestMode === 'youtube' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setIngestMode('youtube')}
+                  style={{ padding: '0.25rem 0.55rem', fontSize: '0.75rem' }}
+                >
+                  <YoutubeIcon size={12} />
+                  <span>YouTube URL</span>
+                </button>
               </div>
-              <small>MP4, WebM up to 500MB</small>
-            </label>
+            </div>
+
+            {ingestMode === 'upload' ? (
+              <label className="dropzone-container" style={{ display: 'block' }}>
+                <input
+                  type="file"
+                  accept="video/mp4,video/quicktime,video/webm"
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+                />
+                <Upload size={22} style={{ color: 'var(--accent-primary)', margin: '0 auto 0.4rem auto' }} />
+                <div style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-primary)' }}>
+                  Click to browse local video file
+                </div>
+                <small>MP4, WebM up to 500MB</small>
+              </label>
+            ) : (
+              <form onSubmit={handleYouTubeSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label className="form-label">Paste YouTube URL (Podcast / Video)</label>
+                  <input
+                    className="form-input"
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    value={youtubeUrl}
+                    onChange={(e) => setYoutubeUrl(e.target.value)}
+                  />
+                  <span className="form-hint">Downloads directly using built-in yt-dlp ($0 cost).</span>
+                </div>
+                <button type="submit" className="btn btn-primary btn-sm" disabled={isDownloadingYt || !youtubeUrl.trim()}>
+                  {isDownloadingYt ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" />
+                      <span>Downloading Video...</span>
+                    </>
+                  ) : (
+                    <>
+                      <YoutubeIcon size={14} />
+                      <span>Download & Import</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
           </div>
 
-          {/* AI Clipper Configuration */}
+          {/* Video Formatting & Clipper Configuration */}
           <div className="card">
-            <h3 className="card-title" style={{ marginBottom: '0.5rem' }}>2. Detect High-Retention Moments</h3>
-            <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-              Scans video structure for punchy hooks and viral segment timestamps.
-            </p>
+            <h3 className="card-title" style={{ marginBottom: '0.75rem' }}>2. Output Framing & Subtitles</h3>
 
+            {/* Smart Framing Mode */}
+            <div className="form-group">
+              <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Tv size={14} />
+                <span>Smart Framing (Speaker Positioning)</span>
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.4rem' }}>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${framingMode === 'center' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setFramingMode('center')}
+                  title="Crops center 9:16 (standard single speaker)"
+                >
+                  Center Crop
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${framingMode === 'blur_fit' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setFramingMode('blur_fit')}
+                  title="Preserves entire widescreen video with blurred top/bottom padding"
+                >
+                  Cinematic Blur Fit
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${framingMode === 'left' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setFramingMode('left')}
+                  title="Crops left speaker in 2-person podcast"
+                >
+                  Left Speaker
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${framingMode === 'right' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setFramingMode('right')}
+                  title="Crops right speaker in 2-person podcast"
+                >
+                  Right Speaker
+                </button>
+              </div>
+            </div>
+
+            {/* Burned-in Subtitle Styling */}
+            <div className="form-group">
+              <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Type size={14} />
+                <span>Burned-in Caption Style (Hardcoded into MP4)</span>
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.4rem' }}>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${captionStyle === 'bold-yellow' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setCaptionStyle('bold-yellow')}
+                >
+                  Bold Yellow (Hormozi)
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${captionStyle === 'minimal-white' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setCaptionStyle('minimal-white')}
+                >
+                  Minimal White
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${captionStyle === 'karaoke-blue' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setCaptionStyle('karaoke-blue')}
+                >
+                  Karaoke Sky Blue
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${captionStyle === 'none' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setCaptionStyle('none')}
+                >
+                  No Subtitles
+                </button>
+              </div>
+            </div>
+
+            {/* Target Duration */}
             <div className="form-group">
               <label className="form-label">Target Clip Duration</label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.4rem' }}>
                 <button
                   type="button"
                   className={`btn btn-sm ${targetDuration === 15 ? 'btn-primary' : 'btn-secondary'}`}
@@ -234,7 +388,7 @@ export const StudioView: React.FC<StudioViewProps> = ({
 
             <button
               className="btn btn-primary"
-              style={{ width: '100%', marginTop: '0.5rem' }}
+              style={{ width: '100%', marginTop: '0.25rem' }}
               disabled={!selectedVideo || isAnalyzing}
               onClick={handleScanHighlights}
             >
@@ -263,7 +417,7 @@ export const StudioView: React.FC<StudioViewProps> = ({
                 3. Detected Candidate Clips ({candidates.length})
               </h2>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                Review timestamps, hook lines, and click Render to generate vertical 9:16 video via local FFmpeg.
+                Renders 9:16 vertical video with <strong>{framingMode.replace('_', ' ')} framing</strong> and <strong>{captionStyle} burned captions</strong>.
               </p>
             </div>
           </div>
@@ -302,12 +456,12 @@ export const StudioView: React.FC<StudioViewProps> = ({
                     {renderingIndex === idx ? (
                       <>
                         <Loader2 size={14} className="animate-spin" />
-                        <span>Rendering 9:16 Vertical Clip with FFmpeg...</span>
+                        <span>Rendering 9:16 Video + Burned Subtitles (FFmpeg)...</span>
                       </>
                     ) : (
                       <>
                         <Scissors size={14} />
-                        <span>Render 9:16 Clip (FFmpeg)</span>
+                        <span>Render 9:16 Clip + Burn Subtitles</span>
                       </>
                     )}
                   </button>
