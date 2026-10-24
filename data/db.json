@@ -1,6 +1,42 @@
 {
   "videos": [],
-  "clips": [],
+  "clips": [
+    {
+      "id": "trend-vid-1792873593001",
+      "videoId": "trend-origin",
+      "videoTitle": "AI Trend: Tech & AI",
+      "title": "IATSE’s First Tech Czar Wants Crew M: What It Means",
+      "hook": "Nobody expected this update, but it changes everything for Tech & AI.",
+      "transcript": "Nobody expected this update, but it changes everything for Tech & AI. Here is the critical news that just broke today. Most people haven't connected how this disrupts traditional workflows. Here is the one move you need to make right now.",
+      "suggestedCaption": "Breaking analysis on IATSE’s First Tech Czar Wants Crew Members Involved in the Creation of AI Tools (Exclusive). What are your thoughts on this? #Tech&AI #trends #shorts #update",
+      "startTime": 0,
+      "endTime": 30,
+      "duration": 30,
+      "viralityScore": 92,
+      "viralityReason": "Engineered using Problem-Agitate-Solve framework with Ambient Audio Bed narration for Software engineers and AI enthusiasts.",
+      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\trend-trend-vid-1792873593001.mp4",
+      "urlPath": "/uploads/clips/trend-trend-vid-1792873593001.mp4",
+      "thumbnailUrl": "/uploads/thumbnails/thumb-trend-vid-1792873593001.jpg",
+      "aspectRatio": "9:16",
+      "framingMode": "center",
+      "captionStyle": "bold-yellow",
+      "status": "approved",
+      "scheduledDate": null,
+      "scheduledTime": null,
+      "platforms": [
+        "youtube",
+        "tiktok",
+        "instagram"
+      ],
+      "createdAt": "2026-10-24T20:26:35.326Z",
+      "approvedAt": "2026-10-24T20:26:38.727Z",
+      "publishedAt": null,
+      "trendSourceUrl": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNS2VUSnpGQWw5N2stVkVnM2FtZkNpak5UYTRNSk4wX2NOa3hWM1pmSzJ2NnQ5amNGOUU0a2xZMEU4Nkd3dGVBOFlQWS1oVXJOXzhfdHhTcHkyR2NJTE1IRFRyM1RBbHNheEVXcmF4UGNQMndsZ2ZMYXgxWTZqYXdMVHJ4LXB6Y1ZHU2xrTlNRSlJCRmc1U1puQzlqWXFyNmV1YngxUVdNbTNVRlI4?oc=5",
+      "googleDriveSynced": true,
+      "googleDriveSyncedAt": "2026-10-24T20:26:35.329Z",
+      "googleDriveFileUrl": "https://drive.google.com/drive/search?q=IATSE_s_First_Tech_Czar_Wants_Crew_M__What_It_Means"
+    }
+  ],
   "trends": [],
   "liveTrends": [
     {
@@ -632,12 +668,12 @@
       "name": "Google Drive Storage",
       "status": "connected",
       "channelHandle": "ClipGenius AI Vault",
-      "quotaUnitsUsed": 2,
+      "quotaUnitsUsed": 3,
       "dailyLimit": "15 GB Free Storage (Google Drive)",
       "requiresKey": false,
       "instructions": "Save rendered 9:16 vertical clips and raw videos directly into a Google Drive folder. Paste your Google Drive Folder link or ID to auto-sync.",
       "freeTierNotes": "15 GB free storage with any standard Google account. Never lose your clips and share them with your team in seconds.",
-      "lastSync": "2026-10-24T20:20:36.406Z"
+      "lastSync": "2026-10-24T20:26:35.330Z"
     }
   ],
   "settings": {
@@ -675,6 +711,36 @@
     "storageQuotaMb": 10240
   },
   "auditLogs": [
+    {
+      "id": "log-1792873598727",
+      "timestamp": "2026-10-24T20:26:38.727Z",
+      "action": "clip_updated",
+      "details": "Clip \"trend-vid-1792873593001\" updated: status, approvedAt"
+    },
+    {
+      "id": "log-1792873595331",
+      "timestamp": "2026-10-24T20:26:35.331Z",
+      "action": "gdrive_sync",
+      "details": "Clip \"IATSE’s First Tech Czar Wants Crew M: What It Means\" saved to Google Drive (ClipGenius AI Vault)"
+    },
+    {
+      "id": "log-1792873595329",
+      "timestamp": "2026-10-24T20:26:35.329Z",
+      "action": "clip_updated",
+      "details": "Clip \"trend-vid-1792873593001\" updated: googleDriveSynced, googleDriveSyncedAt, googleDriveFileUrl"
+    },
+    {
+      "id": "log-1792873595328",
+      "timestamp": "2026-10-24T20:26:35.328Z",
+      "action": "trend_video_generated",
+      "details": "Generated draft video \"IATSE’s First Tech Czar Wants Crew M: What It Means\" [Voice: Ambient Audio Bed, Footage: Motion Canvas]"
+    },
+    {
+      "id": "log-1792873595326",
+      "timestamp": "2026-10-24T20:26:35.326Z",
+      "action": "clip_created",
+      "details": "Clip \"IATSE’s First Tech Czar Wants Crew M: What It Means\" created with status in_review"
+    },
     {
       "id": "log-1792873236415",
       "timestamp": "2026-10-24T20:20:36.415Z",
