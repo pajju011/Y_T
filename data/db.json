@@ -29,6 +29,38 @@
   ],
   "clips": [
     {
+      "id": "trend-vid-1792870883635",
+      "videoId": "trend-origin",
+      "videoTitle": "AI Trend: Tech & AI",
+      "title": "PHP2Shell: AI uncovers critical RCE : What It Means",
+      "hook": "Nobody expected this update, but it changes everything for Tech & AI.",
+      "transcript": "Nobody expected this update, but it changes everything for Tech & AI. Here is the critical news that just broke today. Most people haven't connected how this disrupts traditional workflows. Here is the one move you need to make right now.",
+      "suggestedCaption": "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update",
+      "startTime": 0,
+      "endTime": 30,
+      "duration": 30,
+      "viralityScore": 92,
+      "viralityReason": "Engineered using Problem-Agitate-Solve framework with Ambient Audio Bed narration for Software engineers and AI enthusiasts.",
+      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\trend-trend-vid-1792870883635.mp4",
+      "urlPath": "/uploads/clips/trend-trend-vid-1792870883635.mp4",
+      "thumbnailUrl": "/uploads/thumbnails/thumb-trend-vid-1792870883635.jpg",
+      "aspectRatio": "9:16",
+      "framingMode": "center",
+      "captionStyle": "bold-yellow",
+      "status": "in_review",
+      "scheduledDate": null,
+      "scheduledTime": null,
+      "platforms": [
+        "youtube",
+        "tiktok",
+        "instagram"
+      ],
+      "createdAt": "2026-10-24T19:41:25.920Z",
+      "approvedAt": null,
+      "publishedAt": null,
+      "trendSourceUrl": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBfU2lySGdfMVprRm5nUmxNVVEzYjFPQTRhWV9VNzlJNlVZbWFmMVN4UE1uOFFqbVE4UFBvaWwydHUzT2VhRTVaSWVDeVhGbVpHQnEw?oc=5"
+    },
+    {
       "id": "trend-vid-1792865677067",
       "videoId": "trend-origin",
       "videoTitle": "AI Trend: Tech & AI",
@@ -354,6 +386,94 @@
     }
   ],
   "liveTrends": [
+    {
+      "id": "trend-news-1792870883631-0",
+      "title": "PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet",
+      "snippet": "PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet  wiz.io",
+      "source": "wiz.io",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBfU2lySGdfMVprRm5nUmxNVVEzYjFPQTRhWV9VNzlJNlVZbWFmMVN4UE1uOFFqbVE4UFBvaWwydHUzT2VhRTVaSWVDeVhGbVpHQnEw?oc=5",
+      "niche": "Tech & AI",
+      "discoveredAt": "2026-10-24T19:41:23.631Z",
+      "relevanceScore": 78,
+      "generatedClipId": null
+    },
+    {
+      "id": "trend-news-1792870883631-1",
+      "title": "IATSE’s First Tech Czar Wants Crew Members Involved in the Creation of AI Tools (Exclusive)",
+      "snippet": "IATSE’s First Tech Czar Wants Crew Members Involved in the Creation of AI Tools (Exclusive)  The Hollywood Reporter",
+      "source": "The Hollywood Reporter",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNS2VUSnpGQWw5N2stVkVnM2FtZkNpak5UYTRNSk4wX2NOa3hWM1pmSzJ2NnQ5amNGOUU0a2xZMEU4Nkd3dGVBOFlQWS1oVXJOXzhfdHhTcHkyR2NJTE1IRFRyM1RBbHNheEVXcmF4UGNQMndsZ2ZMYXgxWTZqYXdMVHJ4LXB6Y1ZHU2xrTlNRSlJCRmc1U1puQzlqWXFyNmV1YngxUVdNbTNVRlI4?oc=5",
+      "niche": "Tech & AI",
+      "discoveredAt": "2026-10-24T19:41:23.631Z",
+      "relevanceScore": 78,
+      "generatedClipId": null
+    },
+    {
+      "id": "trend-news-1792870883631-2",
+      "title": "Letters to the Editor: Big Tech puts profits over discomfort when it comes to AI tools",
+      "snippet": "Letters to the Editor: Big Tech puts profits over discomfort when it comes to AI tools  Los Angeles Times",
+      "source": "Los Angeles Times",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPODBTZnM5WHMyejdfT3A0SENKTndCekR6cDNoNkJMMTNLVGxabEtqUTVDY2cxcjFtUHJiZlN5bTMzc0VYQmowdzRycGp6WE8tYXRKTU9PdVNoaWk5TDU5cjRicTFzR2dqNVdzc2loTzc5TkJlZ3ZvSkxVODEyWm95ZDZYUFRUbGdBTkRWTm1JVG92d19vYkF0MQ?oc=5",
+      "niche": "Tech & AI",
+      "discoveredAt": "2026-10-24T19:41:23.631Z",
+      "relevanceScore": 78,
+      "generatedClipId": null
+    },
+    {
+      "id": "trend-news-1792870883631-3",
+      "title": "Tech Talk: AI safety concerns grow as autonomous systems raise questions about human control",
+      "snippet": "Tech Talk: AI safety concerns grow as autonomous systems raise questions about human control  MyNorthwest.com",
+      "source": "MyNorthwest.com",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBpdDh6SFNMQ0xVQWRyS3F1ZWJuR2E0b1hucThPa2JaWk5JT0NrREhOYVN6dnJvNXZyelhicFRUWHlCNnJkTHd6bWZVM1NDVHYwZFlma1dvN2xmNFZTZ2twRGpRZTFzV3VoRHVGYUlzdC12RmtKcHZ4UDQ1bw?oc=5",
+      "niche": "Tech & AI",
+      "discoveredAt": "2026-10-24T19:41:23.631Z",
+      "relevanceScore": 80,
+      "generatedClipId": null
+    },
+    {
+      "id": "trend-news-1792870883631-4",
+      "title": "Exclusive | AI Just Found a Bug That Puts up to 70% of the World’s Websites at Risk",
+      "snippet": "Exclusive | AI Just Found a Bug That Puts up to 70% of the World’s Websites at Risk  WSJ",
+      "source": "WSJ",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPN2FJWTlyQXFoRWh5ZnlfTnVOeDlDb0J3ejVCOWhNc0xXSXFLS2lGUlZ5cVI1NGFuWHpvQ1ZiTnkwV2luSHRpYjNuR1NWSlVnTmxuTzFwYWJ3NUVPeWYxVDNNZkdVX2xGZVJja0Z2LUY3STh4X1dnMXJfTjVad3FIbDFUM3dqc1hBcDBBN0JHazhuWVR6NE41ZnZTaFp2QVZhWEpDa1pIZHZaSlZHbjBKU0FMUWRSRklK?oc=5",
+      "niche": "Tech & AI",
+      "discoveredAt": "2026-10-24T19:41:23.631Z",
+      "relevanceScore": 78,
+      "generatedClipId": null
+    },
+    {
+      "id": "trend-news-1792870883631-5",
+      "title": "NYC barred 38 AI tools in schools. Some companies say their products shouldn't be on the list.",
+      "snippet": "NYC barred 38 AI tools in schools. Some companies say their products shouldn't be on the list.  Chalkbeat",
+      "source": "Chalkbeat",
+      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQS2x5bmtaY1hCLUw4ZzdnRjhqT3dadVRqZ3JlcG9QQWJiOE5Ld05SR2xTa0QtSktYcXo2TW5PZldGUEc3cEhRZ2JpYTBnWE90RnZVM0FYQTlWMGhRNHNYQlRsQzlpeWxwcmhUazFrVFJ6Y0JnT0ZPcUxnQi1QQ1FCWjlUd1pfUHhKR25fd0UzNWNCblY2ZzVUb2p4ZVFtcTZpVS1XZg?oc=5",
+      "niche": "Tech & AI",
+      "discoveredAt": "2026-10-24T19:41:23.631Z",
+      "relevanceScore": 78,
+      "generatedClipId": null
+    },
+    {
+      "id": "trend-news-1792870883631-6",
+      "title": "Government websites go dark after AI-discovered flaw sparks security scramble",
+      "snippet": "Government websites go dark after AI-discovered flaw sparks security scramble  Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNemhoUnNZdUg4Sk9JMjJQU25mTUZSX2lHc1JTNTFpNGlTcWxRRDctcFNCcVZiTUhYQ211YnNjSnRvYTYyS29VNFFKcHE4VGFMcHMxTGNwa3NmVUFNamNnektGaU9BbURibzdIY2hHUlpMbEwtNWhrOG9BenJvYkllVnNfakVVRU5yRzRjdDBjQXc2OEwtS1RwZVZhaWhoRWtlalVmU0xOQm5SbmUyeGVGeGgzUkE2XzRtbFBKdTJnUTJoRWdV?oc=5",
+      "niche": "Tech & AI",
+      "discoveredAt": "2026-10-24T19:41:23.631Z",
+      "relevanceScore": 78,
+      "generatedClipId": null
+    },
+    {
+      "id": "trend-news-1792870883632-12",
+      "title": "‘Black October’: cybersecurity experts sound the alarm over new era of AI-enabled hacking",
+      "snippet": "‘Black October’: cybersecurity experts sound the alarm over new era of AI-enabled hacking  The Guardian",
+      "source": "The Guardian",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPTG5XNmRIZVQwZ0hvdmQydjE2elRuNlBscUNJRnhyTWpuUHh1SmlVeGxqRE1HQjJVT3RPTFpaUGZoWUQyOEhYS2JPdUdoeWt2d0pkeUVtbkpSRHpvOVJhMFdkQWdHTi12elp2aldCQTlYMUV4NHpNU0VtM3RoaG4xVkRPdW1YQjhNX2pXYXh0RzhzOWFZSkZPNA?oc=5",
+      "niche": "Tech & AI",
+      "discoveredAt": "2026-10-24T19:41:23.632Z",
+      "relevanceScore": 78,
+      "generatedClipId": null
+    },
     {
       "id": "trend-news-1792864888014-7",
       "title": "Agentic AI Foundation adds four more open-source AI tools",
@@ -815,94 +935,6 @@
       "discoveredAt": "2026-10-24T17:55:35.571Z",
       "relevanceScore": 91,
       "generatedClipId": null
-    },
-    {
-      "id": "trend-live-1792864535571-5",
-      "title": "Big Tech Is Pouring $700 Billion Into AI. An AI App Alone Can't Qualify Her for Medicare Home Health",
-      "snippet": "Big Tech Is Pouring $700 Billion Into AI. An AI App Alone Can't Qualify Her for Medicare Home Health&nbsp;&nbsp;24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxQb1VhOVk0bFltUWZpOW5DOUI4SjhTcFpkNmtSRllienM5aTdMU2ZTbGw2cmJoQzg2VDRLQ1ZfbUY2X0ZIdHhNWFFXc1c5X05QSVREU09aWGFpdHZpRlFXWklDeGN4TlQwYzhYdzQ0WlNGYmhCRm5VQjNEcmhXZDRIT0ZvdnVoNVVWaHF4MnBJZE03QzZ0RWFYOXR3dG5HY3hQaXVRQzJQQVFmVnhGeElsbHVmOEpHY0hCRDYtMFQ0YTBsaE1tT1FjTUlNeW05SjNUSG9lLXNyM20zVG5kUTBXUFhB?oc=5",
-      "niche": "Tech & AI",
-      "discoveredAt": "2026-10-24T17:55:35.571Z",
-      "relevanceScore": 96,
-      "generatedClipId": null
-    },
-    {
-      "id": "trend-live-1792864535571-6",
-      "title": "Jimmy Gomez race turns into AI proxy battle",
-      "snippet": "Jimmy Gomez race turns into AI proxy battle&nbsp;&nbsp;Punchbowl News",
-      "source": "Punchbowl News",
-      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE84TVFSSHZNRkdXT19lcjJKZm84dnFfY1FyZVJfZmpCYW1KYUhaNHNqX1RFY0hnRmlpb3ZQMXFIYTZSdTJfTU9pWmwxR3lwYVpaS0hmelhkSzdpdl9RbDFfbDhORzRnTUY0M3c?oc=5",
-      "niche": "Tech & AI",
-      "discoveredAt": "2026-10-24T17:55:35.571Z",
-      "relevanceScore": 81,
-      "generatedClipId": null
-    },
-    {
-      "id": "trend-live-1792864535571-7",
-      "title": "Wall Street closes lower to end rocky week",
-      "snippet": "Wall Street closes lower to end rocky week&nbsp;&nbsp;Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQR01KeXBjdXBubVRzTlJfWWJTMHctb2hFS2pVT21ydWtZNzBaMldxd1c2ZUJGNWhIeGV6MUxvQVZvSl9GdFh5QThQbFpuT0IwYi02Y3JGM19YSWJ3LXMtb29RbS1WZUljdGtsS2dockxHVm5SWnBSMzJpM0Y4RFItdW5SMzFsdXg2LWtrYWE1SC1TQlkxOERJZHNtQVREdw?oc=5",
-      "niche": "Tech & AI",
-      "discoveredAt": "2026-10-24T17:55:35.571Z",
-      "relevanceScore": 83,
-      "generatedClipId": null
-    },
-    {
-      "id": "trend-live-1792864535571-8",
-      "title": "Watch AI Jitters, Oil & Big Tech",
-      "snippet": "Watch AI Jitters, Oil & Big Tech&nbsp;&nbsp;Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxONmtqLWNpMzZxVm1BMWNlaU9jVEZVSVE2Y2NSa1p4N1ZNcC1veC01d1lhWnNFRXV2azRNVVhKM25iUkdXbmNDSlpIZ1ZOeDVyVWwwZUU3bFdUbHNIN1lDRFh5YXB5UEpaZnlHZE85cnBKal9lZUQ4VnhSQlV5WUl0NA?oc=5",
-      "niche": "Tech & AI",
-      "discoveredAt": "2026-10-24T17:55:35.571Z",
-      "relevanceScore": 83,
-      "generatedClipId": null
-    },
-    {
-      "id": "trend-live-1792864535571-10",
-      "title": "Georgia Tech Partners With Panama to Chart National AI Strategy | Newswise",
-      "snippet": "Georgia Tech Partners With Panama to Chart National AI Strategy | Newswise&nbsp;&nbsp;Newswise",
-      "source": "Newswise",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQS1dTamZxMmtFOTNLS0hZSFEzb0xHd0tCQ2NvOEZMSnZhcktFUkdBM1hDVU5UWC1INjZYRUIweTlKRHlkbXRFaXRyWHZqUkZreEJDbVp1XzBQVFZPTWs3c2lBMG5WWlFFYTZzVUdlUTVDNXJfMWdYdndGTzhVWkdkYzlWajBKaTBKWS1fcnVFb3h4MURLLUw2c29aLUppZ9IBngFBVV95cUxQS1dTamZxMmtFOTNLS0hZSFEzb0xHd0tCQ2NvOEZMSnZhcktFUkdBM1hDVU5UWC1INjZYRUIweTlKRHlkbXRFaXRyWHZqUkZreEJDbVp1XzBQVFZPTWs3c2lBMG5WWlFFYTZzVUdlUTVDNXJfMWdYdndGTzhVWkdkYzlWajBKaTBKWS1fcnVFb3h4MURLLUw2c29aLUppZw?oc=5",
-      "niche": "Tech & AI",
-      "discoveredAt": "2026-10-24T17:55:35.571Z",
-      "relevanceScore": 78,
-      "generatedClipId": null
-    },
-    {
-      "id": "trend-live-1792864535571-11",
-      "title": "AI tech detects high-risk coronary inflammation in many asymptomatic patients",
-      "snippet": "AI tech detects high-risk coronary inflammation in many asymptomatic patients&nbsp;&nbsp;Cardiovascular Business",
-      "source": "Cardiovascular Business",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNdjktdllhRjhDM2lBbzdJbmVaVGhzTkVJQWMzZXRqM2pUcmExV3RDd1hLMjJsSGlWRVBnVDZjSy16ME51YWJqbm9aRXlyQ2ExM1NkOXNGMmJya096NlhRRDdXMHJvVXBtUjRKeC1SWllaWVFjZjJDaXpTeUFpb0Q3ZFlJVllVZ1NhUk56UTNVdXBaUlk0TEQwbk1CNW5sSzctbFNmMmgtaE5CMHlWRkRMd0Rvemc5OU1zMmV1cFpZSS1HdUF4UmN1bXpSVzA?oc=5",
-      "niche": "Tech & AI",
-      "discoveredAt": "2026-10-24T17:55:35.571Z",
-      "relevanceScore": 78,
-      "generatedClipId": null
-    },
-    {
-      "id": "trend-live-1792864535571-12",
-      "title": "Emory and Georgia Tech invest over $1B in AI to drive state’s jobs, economic growth",
-      "snippet": "Emory and Georgia Tech invest over $1B in AI to drive state’s jobs, economic growth&nbsp;&nbsp;Emory News",
-      "source": "Emory News",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPMTJmeHY5Nm9ZMHJ0R1g4TVRNcHIxWFNYR3c1eVU3RXBvalNEQmh4VkhEcUw5b0VncVRVMFZ1djBCcm5zaUo4ZHNldUc5b1dIR09rY3FhZ2RRYnNxR1hXdllJUVlWSjhPcG1EMVFlOE82R0dlbUpMRkNnaHpON1BiMUY4UThpMFRWNkZyVjhkQ09GbEdnTDZvUDMxM3B5UGNsempCdmlUdlhOR2w1Q1REUXB1Zw?oc=5",
-      "niche": "Tech & AI",
-      "discoveredAt": "2026-10-24T17:55:35.571Z",
-      "relevanceScore": 78,
-      "generatedClipId": null
-    },
-    {
-      "id": "trend-live-1792864535571-13",
-      "title": "Inside NVIDIA Sentry: Secure AI Agents at Runtime | NVIDIA Technical Blog",
-      "snippet": "Inside NVIDIA Sentry: Secure AI Agents at Runtime | NVIDIA Technical Blog&nbsp;&nbsp;NVIDIA Developer",
-      "source": "NVIDIA Developer",
-      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOTzZaM2JEbHNuaEZ2SmZSU29EZlA2QmthTEdJNWVScVN3VmVvYl9NNDZqb0tTcFU2S18zMHBLd2ozQXhTU1d5bGF4d2pJRENMc1Zya1lpZTRuNlQzaGVVQWh2bmtIbmNXbHI4SWM3NDhVNXlOVUZpTTdHZWc2SmRlQWc5ZEdmMTV4N3Bz?oc=5",
-      "niche": "Tech & AI",
-      "discoveredAt": "2026-10-24T17:55:35.571Z",
-      "relevanceScore": 78,
-      "generatedClipId": null
     }
   ],
   "strategy": {
@@ -927,7 +959,7 @@
       "instagram"
     ],
     "visualMode": "motion_text",
-    "lastAutoRun": "2026-10-24T18:01:30.080Z"
+    "lastAutoRun": "2026-10-24T19:41:25.923Z"
   },
   "integrations": [
     {
@@ -1008,6 +1040,36 @@
     "storageQuotaMb": 10240
   },
   "auditLogs": [
+    {
+      "id": "log-1792870885924",
+      "timestamp": "2026-10-24T19:41:25.924Z",
+      "action": "daily_automation_complete",
+      "details": "Daily trend video \"PHP2Shell: AI uncovers critical RCE : What It Means\" generated and placed in Review & Approvals."
+    },
+    {
+      "id": "log-1792870885923",
+      "timestamp": "2026-10-24T19:41:25.923Z",
+      "action": "strategy_updated",
+      "details": "Strategy updated for niche \"Tech & AI\""
+    },
+    {
+      "id": "log-1792870885922",
+      "timestamp": "2026-10-24T19:41:25.922Z",
+      "action": "trend_video_generated",
+      "details": "Generated draft video \"PHP2Shell: AI uncovers critical RCE : What It Means\" [Voice: Ambient Audio Bed, Footage: Motion Canvas]"
+    },
+    {
+      "id": "log-1792870885920",
+      "timestamp": "2026-10-24T19:41:25.920Z",
+      "action": "clip_created",
+      "details": "Clip \"PHP2Shell: AI uncovers critical RCE : What It Means\" created with status in_review"
+    },
+    {
+      "id": "log-1792870883633",
+      "timestamp": "2026-10-24T19:41:23.633Z",
+      "action": "trends_discovered",
+      "details": "Discovered 15 live trends for niche \"Tech & AI\""
+    },
     {
       "id": "log-1792865679530",
       "timestamp": "2026-10-24T18:14:39.530Z",
