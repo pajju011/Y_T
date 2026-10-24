@@ -101,9 +101,39 @@ export interface IntegrationRecord {
 }
 
 export interface SettingsRecord {
+  // LLM & Brain
   geminiApiKey: string;
+  openaiApiKey: string;
+  anthropicApiKey: string;
   groqApiKey: string;
+  deepseekApiKey: string;
   ollamaEndpoint: string;
+  customLlmEndpoint: string;
+  customLlmKey: string;
+  customLlmModel: string;
+  preferredLlmProvider: 'gemini' | 'openai' | 'anthropic' | 'groq' | 'deepseek' | 'ollama' | 'custom' | 'heuristic';
+
+  // Voice Narration & Text-to-Speech (TTS)
+  elevenLabsApiKey: string;
+  elevenLabsVoiceId: string;
+  openaiTtsVoice: 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer';
+  deepgramApiKey: string;
+  preferredTtsProvider: 'elevenlabs' | 'openai' | 'deepgram' | 'none';
+
+  // Stock Media & Video Footage
+  pexelsApiKey: string;
+  pixabayApiKey: string;
+  mediaStyle: 'stock_video' | 'motion_gradient' | 'minimal_slate';
+
+  // Speech-to-Text (Transcription)
+  preferredSttProvider: 'groq_whisper' | 'openai_whisper' | 'heuristic';
+
+  // Webhooks & Automation
+  webhookUrl: string;
+  webhookSecret: string;
+  webhookEnabled: boolean;
+
+  // General & Hosting
   customDomain: string;
   defaultAspectRatio: '9:16' | '1:1' | '16:9';
   autoApproveHighVirality: boolean;
@@ -252,8 +282,32 @@ const INITIAL_INTEGRATIONS: IntegrationRecord[] = [
 
 const INITIAL_SETTINGS: SettingsRecord = {
   geminiApiKey: '',
+  openaiApiKey: '',
+  anthropicApiKey: '',
   groqApiKey: '',
+  deepseekApiKey: '',
   ollamaEndpoint: 'http://localhost:11434',
+  customLlmEndpoint: '',
+  customLlmKey: '',
+  customLlmModel: 'gpt-4o-mini',
+  preferredLlmProvider: 'gemini',
+
+  elevenLabsApiKey: '',
+  elevenLabsVoiceId: '21m00Tcm4TlvDq8ikWAM',
+  openaiTtsVoice: 'alloy',
+  deepgramApiKey: '',
+  preferredTtsProvider: 'none',
+
+  pexelsApiKey: '',
+  pixabayApiKey: '',
+  mediaStyle: 'motion_gradient',
+
+  preferredSttProvider: 'heuristic',
+
+  webhookUrl: '',
+  webhookSecret: '',
+  webhookEnabled: false,
+
   customDomain: '',
   defaultAspectRatio: '9:16',
   autoApproveHighVirality: false,

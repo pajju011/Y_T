@@ -149,15 +149,54 @@ export interface MetricsData {
 }
 
 export interface SettingsData {
+  // LLM & Brain
   geminiApiKey: string;
+  openaiApiKey: string;
+  anthropicApiKey: string;
   groqApiKey: string;
+  deepseekApiKey: string;
   ollamaEndpoint: string;
+  customLlmEndpoint: string;
+  customLlmKey: string;
+  customLlmModel: string;
+  preferredLlmProvider: 'gemini' | 'openai' | 'anthropic' | 'groq' | 'deepseek' | 'ollama' | 'custom' | 'heuristic';
+
+  // Voice Narration & TTS
+  elevenLabsApiKey: string;
+  elevenLabsVoiceId: string;
+  openaiTtsVoice: 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer';
+  deepgramApiKey: string;
+  preferredTtsProvider: 'elevenlabs' | 'openai' | 'deepgram' | 'none';
+
+  // Stock Media & Video
+  pexelsApiKey: string;
+  pixabayApiKey: string;
+  mediaStyle: 'stock_video' | 'motion_gradient' | 'minimal_slate';
+
+  // Speech-to-Text
+  preferredSttProvider: 'groq_whisper' | 'openai_whisper' | 'heuristic';
+
+  // Webhooks
+  webhookUrl: string;
+  webhookSecret: string;
+  webhookEnabled: boolean;
+
+  // General
   customDomain: string;
   defaultAspectRatio: '9:16' | '1:1' | '16:9';
   autoApproveHighVirality: boolean;
   storageQuotaMb: number;
+
+  // Presence flags
   hasGeminiKey: boolean;
+  hasOpenAiKey: boolean;
+  hasAnthropicKey: boolean;
   hasGroqKey: boolean;
+  hasDeepseekKey: boolean;
+  hasElevenLabsKey: boolean;
+  hasDeepgramKey: boolean;
+  hasPexelsKey: boolean;
+  hasPixabayKey: boolean;
 }
 
 export interface AuditLog {
@@ -404,5 +443,29 @@ export const api = {
       body: JSON.stringify(data),
     });
     if (!res.ok) throw new Error('Failed to save settings');
+  },
+
+  async testLlm(): Promise<{ success: boolean; response?: string; error?: string }> {
+    const res = await fetch(`${API_BASE}/settings/test-llm`, { method: 'POST' });
+    return res.json();
+  },
+
+  async testTts(): Promise<{ success: boolean; provider?: string; duration?: number; url?: string; error?: string }> {
+    const res = await fetch(`${API_BASE}/settings/test-tts`, { method: 'POST' });
+    return res.json();
+  },
+
+  async testMedia(topic?: string): Promise<{ success: boolean; message: string; url?: string }> {
+    const res = await fetch(`${API_BASE}/settings/test-media`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ topic }),
+    });
+    return res.json();
+  },
+
+  async testWebhook(): Promise<{ success: boolean; message?: string; error?: string }> {
+    const res = await fetch(`${API_BASE}/settings/test-webhook`, { method: 'POST' });
+    return res.json();
   },
 };

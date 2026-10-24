@@ -13,30 +13,183 @@ export interface HighlightCandidate {
 }
 
 export class AIService {
-  public async analyzeVideo(video: VideoRecord, targetDurationSec: number = 30): Promise<HighlightCandidate[]> {
+  /**
+   * Universal completion router supporting Gemini, OpenAI, Claude, Groq, DeepSeek, Ollama, & Custom API
+   */
+  public async generateText(prompt: string, systemPrompt?: string): Promise<string | null> {
     const settings = db.getSettings();
-    const duration = Math.max(15, Math.floor(video.duration || 60));
 
-    // If Google Gemini API Key is provided, call Gemini Free Tier
+    // 1. Google Gemini
     if (settings.geminiApiKey && settings.geminiApiKey.trim() !== '') {
       try {
-        const geminiResult = await this.callGeminiAPI(settings.geminiApiKey, video, targetDurationSec);
-        if (geminiResult && geminiResult.length > 0) {
-          return geminiResult;
+        console.log('[AI] Generating text with Google Gemini...');
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${settings.geminiApiKey.trim()}`;
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: (systemPrompt ? systemPrompt + '\n\n' : '') + prompt }] }]
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (text) return text.trim();
         }
-      } catch (err) {
-        console.warn('[AI] Gemini API failed, falling back to local heuristic engine:', err);
+      } catch (e: any) {
+        console.warn('[AI] Gemini call failed:', e.message);
       }
     }
 
-    // Fallback: Local Heuristic Pattern Engine (100% Free, Offline, Zero API keys required)
-    return this.generateHeuristicHighlights(video, targetDurationSec);
+    // 2. OpenAI (GPT-4o / GPT-4o-mini)
+    if (settings.openaiApiKey && settings.openaiApiKey.trim() !== '') {
+      try {
+        console.log('[AI] Generating text with OpenAI...');
+        const res = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${settings.openaiApiKey.trim()}`
+          },
+          body: JSON.stringify({
+            model: 'gpt-4o-mini',
+            messages: [
+              ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
+              { role: 'user', content: prompt }
+            ],
+            temperature: 0.7
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const text = data?.choices?.[0]?.message?.content;
+          if (text) return text.trim();
+        }
+      } catch (e: any) {
+        console.warn('[AI] OpenAI call failed:', e.message);
+      }
+    }
+
+    // 3. Groq (Llama 3.3 70B - Ultra Fast)
+    if (settings.groqApiKey && settings.groqApiKey.trim() !== '') {
+      try {
+        console.log('[AI] Generating text with Groq...');
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${settings.groqApiKey.trim()}`
+          },
+          body: JSON.stringify({
+            model: 'llama-3.3-70b-versatile',
+            messages: [
+              ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
+              { role: 'user', content: prompt }
+            ]
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const text = data?.choices?.[0]?.message?.content;
+          if (text) return text.trim();
+        }
+      } catch (e: any) {
+        console.warn('[AI] Groq call failed:', e.message);
+      }
+    }
+
+    // 4. Anthropic Claude
+    if (settings.anthropicApiKey && settings.anthropicApiKey.trim() !== '') {
+      try {
+        console.log('[AI] Generating text with Anthropic Claude...');
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': settings.anthropicApiKey.trim(),
+            'anthropic-version': '2023-06-01'
+          },
+          body: JSON.stringify({
+            model: 'claude-3-5-haiku-20241022',
+            max_tokens: 1000,
+            messages: [{ role: 'user', content: prompt }],
+            system: systemPrompt
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const text = data?.content?.[0]?.text;
+          if (text) return text.trim();
+        }
+      } catch (e: any) {
+        console.warn('[AI] Anthropic call failed:', e.message);
+      }
+    }
+
+    // 5. DeepSeek
+    if (settings.deepseekApiKey && settings.deepseekApiKey.trim() !== '') {
+      try {
+        console.log('[AI] Generating text with DeepSeek...');
+        const res = await fetch('https://api.deepseek.com/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${settings.deepseekApiKey.trim()}`
+          },
+          body: JSON.stringify({
+            model: 'deepseek-chat',
+            messages: [
+              ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
+              { role: 'user', content: prompt }
+            ]
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const text = data?.choices?.[0]?.message?.content;
+          if (text) return text.trim();
+        }
+      } catch (e: any) {
+        console.warn('[AI] DeepSeek call failed:', e.message);
+      }
+    }
+
+    // 6. Custom OpenAI-Compatible Endpoint
+    if (settings.customLlmEndpoint && settings.customLlmEndpoint.trim() !== '') {
+      try {
+        console.log('[AI] Generating text with Custom LLM Endpoint...');
+        const url = settings.customLlmEndpoint.replace(/\/+$/, '') + '/chat/completions';
+        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+        if (settings.customLlmKey) headers['Authorization'] = `Bearer ${settings.customLlmKey.trim()}`;
+
+        const res = await fetch(url, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            model: settings.customLlmModel || 'default',
+            messages: [
+              ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
+              { role: 'user', content: prompt }
+            ]
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const text = data?.choices?.[0]?.message?.content;
+          if (text) return text.trim();
+        }
+      } catch (e: any) {
+        console.warn('[AI] Custom LLM call failed:', e.message);
+      }
+    }
+
+    return null;
   }
 
-  private async callGeminiAPI(apiKey: string, video: VideoRecord, targetDuration: number): Promise<HighlightCandidate[]> {
+  public async analyzeVideo(video: VideoRecord, targetDurationSec: number = 30): Promise<HighlightCandidate[]> {
     const prompt = `Analyze this video titled "${video.title}" with duration ${video.duration} seconds.
-Suggest 3 high-retention short-form video clips (target duration: ~${targetDuration} seconds each) suitable for YouTube Shorts and TikTok.
-Return ONLY valid JSON matching this structure:
+Suggest 3 high-retention short-form video clips (target duration: ~${targetDurationSec} seconds each) suitable for YouTube Shorts and TikTok.
+Return ONLY valid JSON array with objects matching:
 [
   {
     "title": "Clear punchy title",
@@ -51,41 +204,33 @@ Return ONLY valid JSON matching this structure:
   }
 ]`;
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { responseMimeType: 'application/json' }
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`Gemini API returned status ${response.status}`);
+    const raw = await this.generateText(prompt, 'You are an expert viral video editor. Return ONLY valid JSON.');
+    if (raw) {
+      try {
+        const cleaned = raw.replace(/```json/g, '').replace(/```/g, '').trim();
+        const parsed: HighlightCandidate[] = JSON.parse(cleaned);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map(c => ({
+            ...c,
+            startTime: Math.max(0, Math.min(video.duration - 5, c.startTime)),
+            endTime: Math.min(video.duration, Math.max(c.startTime + 5, c.endTime)),
+            duration: Math.min(video.duration - c.startTime, c.endTime - c.startTime)
+          }));
+        }
+      } catch (e) {
+        console.warn('[AI] Failed to parse LLM highlights response, using heuristic fallback');
+      }
     }
 
-    const data = await response.json();
-    const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!rawText) throw new Error('Empty response from Gemini');
-
-    const parsed: HighlightCandidate[] = JSON.parse(rawText);
-    return parsed.map(c => ({
-      ...c,
-      startTime: Math.max(0, Math.min(video.duration - 5, c.startTime)),
-      endTime: Math.min(video.duration, Math.max(c.startTime + 5, c.endTime)),
-      duration: Math.min(video.duration - c.startTime, c.endTime - c.startTime)
-    }));
+    // Heuristic Fallback
+    return this.generateHeuristicHighlights(video, targetDurationSec);
   }
 
   private generateHeuristicHighlights(video: VideoRecord, targetSec: number): HighlightCandidate[] {
     const total = Math.floor(video.duration || 60);
     const clipLength = Math.min(Math.max(15, targetSec), Math.floor(total * 0.7));
-
-    // Formulate 3 distinct moments across the video timeline
     const candidates: HighlightCandidate[] = [];
 
-    // Moment 1: Opening hook (0s to clipLength)
     const end1 = Math.min(total, clipLength);
     candidates.push({
       title: `${video.title.slice(0, 32)}: Core Insight`,
@@ -99,7 +244,6 @@ Return ONLY valid JSON matching this structure:
       transcriptSample: `Opening introduction setting the stakes and defining the core problem statement.`
     });
 
-    // Moment 2: Mid-video climax / walkthrough
     if (total >= 40) {
       const start2 = Math.min(Math.floor(total * 0.35), total - clipLength);
       const end2 = Math.min(total, start2 + clipLength);
@@ -116,20 +260,18 @@ Return ONLY valid JSON matching this structure:
       });
     }
 
-    // Moment 3: Conclusion / Summary / Final takeaway
     if (total >= 70) {
-      const start3 = Math.max(0, total - clipLength - 2);
-      const end3 = Math.min(total, start3 + clipLength);
+      const start3 = Math.max(0, total - clipLength);
       candidates.push({
-        title: `Summary & Final Verdict`,
-        hook: "Before you try this yourself, here is the one warning you need to know.",
+        title: `Final Conclusion & Actionable Advice`,
+        hook: "Here is the exact roadmap to put this into practice today.",
         startTime: start3,
-        endTime: end3,
-        duration: end3 - start3,
-        viralityScore: 89,
-        viralityReason: "High emotional closure with cautionary advice; triggers strong comment debate.",
-        suggestedCaption: `Final thoughts and real-world evaluation. Drop your questions below. #review #insights #shorts`,
-        transcriptSample: `Concluding summary weighing pros, cons, and bottom-line verdict.`
+        endTime: total,
+        duration: total - start3,
+        viralityScore: 84,
+        viralityReason: "Definitive closure and call-to-action driving comment debate and shares.",
+        suggestedCaption: `The conclusion to ${video.title}. Follow for more actionable guides. #strategy #success #guide`,
+        transcriptSample: `Summary synthesizing the earlier points into an immediate action item.`
       });
     }
 

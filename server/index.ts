@@ -11,6 +11,9 @@ import { youtubeService } from './youtube.js';
 import { trendDiscoveryService } from './trends.js';
 import { trendVideoGenerator } from './generator.js';
 import { automationEngine } from './automation.js';
+import { ttsService } from './tts.js';
+import { stockMediaService } from './stockMedia.js';
+import { webhookService } from './webhooks.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -550,34 +553,134 @@ app.post('/api/integrations/:platform', (req, res) => {
 
 // Settings
 app.get('/api/settings', (req, res) => {
-  const settings = db.getSettings();
+  const s = db.getSettings();
+  const mask = (k: string) => k ? `${k.slice(0, 4)}...${k.slice(-4)}` : '';
   const masked = {
-    ...settings,
-    geminiApiKey: settings.geminiApiKey ? `${settings.geminiApiKey.slice(0, 4)}...${settings.geminiApiKey.slice(-4)}` : '',
-    groqApiKey: settings.groqApiKey ? `${settings.groqApiKey.slice(0, 4)}...${settings.groqApiKey.slice(-4)}` : '',
-    hasGeminiKey: Boolean(settings.geminiApiKey),
-    hasGroqKey: Boolean(settings.groqApiKey)
+    ...s,
+    geminiApiKey: mask(s.geminiApiKey),
+    openaiApiKey: mask(s.openaiApiKey),
+    anthropicApiKey: mask(s.anthropicApiKey),
+    groqApiKey: mask(s.groqApiKey),
+    deepseekApiKey: mask(s.deepseekApiKey),
+    customLlmKey: mask(s.customLlmKey),
+    elevenLabsApiKey: mask(s.elevenLabsApiKey),
+    deepgramApiKey: mask(s.deepgramApiKey),
+    pexelsApiKey: mask(s.pexelsApiKey),
+    pixabayApiKey: mask(s.pixabayApiKey),
+    webhookSecret: mask(s.webhookSecret),
+    hasGeminiKey: Boolean(s.geminiApiKey),
+    hasOpenAiKey: Boolean(s.openaiApiKey),
+    hasAnthropicKey: Boolean(s.anthropicApiKey),
+    hasGroqKey: Boolean(s.groqApiKey),
+    hasDeepseekKey: Boolean(s.deepseekApiKey),
+    hasElevenLabsKey: Boolean(s.elevenLabsApiKey),
+    hasDeepgramKey: Boolean(s.deepgramApiKey),
+    hasPexelsKey: Boolean(s.pexelsApiKey),
+    hasPixabayKey: Boolean(s.pixabayApiKey)
   };
   res.json(masked);
 });
 
 app.post('/api/settings', (req, res) => {
   const updates: any = {};
+  const isRealKey = (v: any) => typeof v === 'string' && v.trim() !== '' && !v.includes('...');
 
+  // LLM fields
+  if (req.body.preferredLlmProvider !== undefined) updates.preferredLlmProvider = req.body.preferredLlmProvider;
+  if (req.body.ollamaEndpoint !== undefined) updates.ollamaEndpoint = req.body.ollamaEndpoint;
+  if (req.body.customLlmEndpoint !== undefined) updates.customLlmEndpoint = req.body.customLlmEndpoint;
+  if (req.body.customLlmModel !== undefined) updates.customLlmModel = req.body.customLlmModel;
+
+  if (isRealKey(req.body.geminiApiKey)) updates.geminiApiKey = req.body.geminiApiKey.trim();
+  if (isRealKey(req.body.openaiApiKey)) updates.openaiApiKey = req.body.openaiApiKey.trim();
+  if (isRealKey(req.body.anthropicApiKey)) updates.anthropicApiKey = req.body.anthropicApiKey.trim();
+  if (isRealKey(req.body.groqApiKey)) updates.groqApiKey = req.body.groqApiKey.trim();
+  if (isRealKey(req.body.deepseekApiKey)) updates.deepseekApiKey = req.body.deepseekApiKey.trim();
+  if (isRealKey(req.body.customLlmKey)) updates.customLlmKey = req.body.customLlmKey.trim();
+
+  // TTS fields
+  if (req.body.preferredTtsProvider !== undefined) updates.preferredTtsProvider = req.body.preferredTtsProvider;
+  if (req.body.elevenLabsVoiceId !== undefined) updates.elevenLabsVoiceId = req.body.elevenLabsVoiceId;
+  if (req.body.openaiTtsVoice !== undefined) updates.openaiTtsVoice = req.body.openaiTtsVoice;
+  if (isRealKey(req.body.elevenLabsApiKey)) updates.elevenLabsApiKey = req.body.elevenLabsApiKey.trim();
+  if (isRealKey(req.body.deepgramApiKey)) updates.deepgramApiKey = req.body.deepgramApiKey.trim();
+
+  // Media fields
+  if (req.body.mediaStyle !== undefined) updates.mediaStyle = req.body.mediaStyle;
+  if (isRealKey(req.body.pexelsApiKey)) updates.pexelsApiKey = req.body.pexelsApiKey.trim();
+  if (isRealKey(req.body.pixabayApiKey)) updates.pixabayApiKey = req.body.pixabayApiKey.trim();
+
+  // Webhook fields
+  if (req.body.webhookUrl !== undefined) updates.webhookUrl = req.body.webhookUrl;
+  if (req.body.webhookEnabled !== undefined) updates.webhookEnabled = req.body.webhookEnabled;
+  if (isRealKey(req.body.webhookSecret)) updates.webhookSecret = req.body.webhookSecret.trim();
+
+  // General fields
   if (req.body.customDomain !== undefined) updates.customDomain = req.body.customDomain;
   if (req.body.defaultAspectRatio !== undefined) updates.defaultAspectRatio = req.body.defaultAspectRatio;
   if (req.body.autoApproveHighVirality !== undefined) updates.autoApproveHighVirality = req.body.autoApproveHighVirality;
-  if (req.body.ollamaEndpoint !== undefined) updates.ollamaEndpoint = req.body.ollamaEndpoint;
-
-  if (req.body.geminiApiKey && !req.body.geminiApiKey.includes('...')) {
-    updates.geminiApiKey = req.body.geminiApiKey;
-  }
-  if (req.body.groqApiKey && !req.body.groqApiKey.includes('...')) {
-    updates.groqApiKey = req.body.groqApiKey;
-  }
 
   db.updateSettings(updates);
+  db.addAuditLog('settings_updated', 'Updated API configuration and credentials.');
   res.json({ success: true, message: 'Settings saved successfully.' });
+});
+
+// Test LLM Connection
+app.post('/api/settings/test-llm', async (req, res) => {
+  try {
+    const text = await aiService.generateText('Confirm connection in 5 words.');
+    if (text) {
+      res.json({ success: true, response: text });
+    } else {
+      res.status(400).json({ success: false, error: 'No response from configured LLM provider. Check your API key.' });
+    }
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Test TTS Audio Generation
+app.post('/api/settings/test-tts', async (req, res) => {
+  try {
+    const result = await ttsService.generateSpeech('This is a test of your configured voice narration engine.', 'test-tts.mp3');
+    res.json({ success: true, provider: result.provider, duration: result.duration, url: '/uploads/audio/test-tts.mp3' });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Test Stock Media Search
+app.post('/api/settings/test-media', async (req, res) => {
+  try {
+    const topic = req.body.topic || 'technology';
+    const filePath = await stockMediaService.fetchBackgroundVideo(topic, 10);
+    if (filePath) {
+      const relPath = filePath.replace(uploadsDir, '/uploads').replace(/\\/g, '/');
+      res.json({ success: true, message: `Successfully fetched vertical footage for "${topic}"`, url: relPath });
+    } else {
+      res.json({ success: false, message: 'No stock footage API configured or no matching vertical clip found. Using dynamic motion canvas fallback.' });
+    }
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Test Webhook Dispatch
+app.post('/api/settings/test-webhook', async (req, res) => {
+  try {
+    const ok = await webhookService.dispatch('clip.generated', {
+      test: true,
+      message: 'Test ping from ClipGenius AI Automation Engine',
+      timestamp: new Date().toISOString()
+    });
+    if (ok) {
+      res.json({ success: true, message: 'Webhook test ping received 200 OK from endpoint!' });
+    } else {
+      res.status(400).json({ success: false, error: 'Webhook endpoint did not respond with 2xx. Verify URL and server.' });
+    }
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 app.listen(PORT, () => {

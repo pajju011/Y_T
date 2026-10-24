@@ -4,6 +4,9 @@ import { exec } from 'child_process';
 import { db, ClipRecord, LiveTrend, ContentStrategy } from './db.js';
 import { ffmpegService } from './ffmpeg.js';
 import { aiService } from './ai.js';
+import { ttsService } from './tts.js';
+import { stockMediaService } from './stockMedia.js';
+import { webhookService } from './webhooks.js';
 
 const uploadsDir = path.resolve(process.cwd(), 'uploads');
 
@@ -23,7 +26,7 @@ export class TrendVideoGenerator {
    * Generates a complete 9:16 vertical short video from scratch around a trend topic
    */
   public async generateTrendVideo(trend: LiveTrend, strategy: ContentStrategy, framework?: string): Promise<ClipRecord> {
-    const duration = strategy.durationSec || 30;
+    const targetDuration = strategy.durationSec || 30;
     const clipId = 'trend-vid-' + Date.now();
     const clipFilename = `trend-${clipId}.mp4`;
     const outputPath = path.join(uploadsDir, 'clips', clipFilename);
@@ -31,13 +34,21 @@ export class TrendVideoGenerator {
 
     console.log(`[Text-To-Video Engine] Creating original vertical video for "${trend.title}" using framework "${framework || 'Dynamic Story'}"...`);
 
-    // 1. Generate Structured AI Script
+    // 1. Generate Structured AI Script (Universal LLM: Gemini / OpenAI / Claude / Groq / DeepSeek / Heuristic)
     const scriptPlan = await this.generateScript(trend, strategy, framework);
 
-    // 2. Render Motion Graphics Video with FFmpeg
-    await this.renderTemplateVideo(scriptPlan, duration, outputPath);
+    // 2. Generate Real Voiceover Audio (ElevenLabs / OpenAI TTS / Deepgram / Ambient)
+    const audioFilename = `speech-${clipId}.mp3`;
+    const ttsResult = await ttsService.generateSpeech(scriptPlan.fullNarration, audioFilename);
+    const finalDuration = Math.max(15, Math.min(60, Math.round(ttsResult.duration || targetDuration)));
 
-    // 3. Extract Thumbnail
+    // 3. Fetch Real 9:16 Background Stock Footage (Pexels / Pixabay) if API configured
+    const backgroundVideoPath = await stockMediaService.fetchBackgroundVideo(trend.title, finalDuration);
+
+    // 4. Render Final Vertical Video with Burned Captions & Voiceover
+    await this.renderVideo(scriptPlan, finalDuration, ttsResult.audioPath, backgroundVideoPath, outputPath);
+
+    // 5. Extract High-Quality Thumbnail
     const thumbFilename = `thumb-${clipId}.jpg`;
     const thumbPath = path.join(uploadsDir, 'thumbnails', thumbFilename);
     const thumbnailUrl = `/uploads/thumbnails/${thumbFilename}`;
@@ -45,7 +56,7 @@ export class TrendVideoGenerator {
       await ffmpegService.extractThumbnail(outputPath, thumbPath, 2);
     } catch (e) {}
 
-    // 4. Save to Database as Pending Creator Approval
+    // 6. Save to Database as Pending Creator Approval
     const newClip: ClipRecord = {
       id: clipId,
       videoId: 'trend-origin',
@@ -55,10 +66,10 @@ export class TrendVideoGenerator {
       transcript: scriptPlan.fullNarration,
       suggestedCaption: scriptPlan.caption,
       startTime: 0,
-      endTime: duration,
-      duration: duration,
+      endTime: finalDuration,
+      duration: finalDuration,
       viralityScore: scriptPlan.viralityScore,
-      viralityReason: `Engineered using ${framework || 'Problem-Agitate-Solve'} framework for ${strategy.targetAudience} around trend from ${trend.source}.`,
+      viralityReason: `Engineered using ${framework || 'Problem-Agitate-Solve'} framework with ${ttsResult.provider} narration for ${strategy.targetAudience}.`,
       filePath: outputPath,
       urlPath: urlPath,
       thumbnailUrl: thumbnailUrl,
@@ -76,18 +87,17 @@ export class TrendVideoGenerator {
     };
 
     db.addClip(newClip);
-    db.addAuditLog('trend_video_generated', `Generated draft video "${newClip.title}" from trend "${trend.title}" [Framework: ${framework || 'Auto'}]`);
+    db.addAuditLog('trend_video_generated', `Generated draft video "${newClip.title}" [Voice: ${ttsResult.provider}, Footage: ${backgroundVideoPath ? 'Pexels/Stock' : 'Motion Canvas'}]`);
+
+    // 7. Dispatch Webhook Event to Zapier / Make / n8n / Discord
+    await webhookService.dispatch('clip.generated', newClip);
+
     return newClip;
   }
 
   private async generateScript(trend: LiveTrend, strategy: ContentStrategy, framework?: string): Promise<TrendScriptPlan> {
-    const settings = db.getSettings();
     const frameworkInstruction = framework ? `Adopt the "${framework}" storytelling framework.` : 'Use a high-retention problem-insight-action framework.';
-
-    // If Gemini API Key is provided, use Google Gemini 2.0 Flash
-    if (settings.geminiApiKey && settings.geminiApiKey.trim() !== '') {
-      try {
-        const prompt = `You are a viral short-form video creator.
+    const prompt = `You are a viral short-form video creator.
 Topic: "${trend.title}"
 Context: "${trend.snippet}"
 Niche: "${strategy.niche}"
@@ -105,30 +115,21 @@ Return ONLY valid JSON matching this schema:
   "scene1": "First insight (5-10 words)",
   "scene2": "The surprising breakdown (5-10 words)",
   "scene3": "The bottom-line takeaway (5-10 words)",
-  "fullNarration": "Complete spoken voice-over script (approx 55 words)",
+  "fullNarration": "Complete spoken voice-over script (approx 50 words)",
   "caption": "Platform-ready caption with 4 hashtags",
   "viralityScore": 92
 }`;
 
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${settings.geminiApiKey}`;
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { responseMimeType: 'application/json' }
-          })
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (raw) {
-            return JSON.parse(raw);
-          }
+    const raw = await aiService.generateText(prompt, 'You are an elite short-form scriptwriter. Return ONLY valid JSON.');
+    if (raw) {
+      try {
+        const cleaned = raw.replace(/```json/g, '').replace(/```/g, '').trim();
+        const parsed = JSON.parse(cleaned);
+        if (parsed.hook && parsed.fullNarration) {
+          return parsed;
         }
-      } catch (err) {
-        console.warn('[Generator] Gemini API failed, falling back to heuristic script:', err);
+      } catch (e) {
+        console.warn('[Generator] Failed to parse AI script JSON, falling back to heuristic script');
       }
     }
 
@@ -163,9 +164,15 @@ Return ONLY valid JSON matching this schema:
   }
 
   /**
-   * Renders motion graphics vertical video using FFmpeg
+   * Renders vertical 9:16 video using FFmpeg combining voiceover, stock footage, and burned captions
    */
-  private async renderTemplateVideo(plan: TrendScriptPlan, duration: number, outputPath: string): Promise<string> {
+  private async renderVideo(
+    plan: TrendScriptPlan,
+    duration: number,
+    audioPath: string,
+    stockVideoPath: string | null,
+    outputPath: string
+  ): Promise<string> {
     return new Promise((resolve, reject) => {
       const targetDir = path.dirname(outputPath);
       if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
@@ -173,6 +180,10 @@ Return ONLY valid JSON matching this schema:
       // Build timed ASS Subtitles for the 3 scenes + hook
       const subFilename = `sub-trend-${Date.now()}.ass`;
       const subPath = path.join(targetDir, subFilename);
+
+      const sHook = Math.min(6, Math.floor(duration * 0.22));
+      const s1 = Math.floor(duration * 0.48);
+      const s2 = Math.floor(duration * 0.74);
 
       const assHeader = `[Script Info]
 ScriptType: v4.00+
@@ -188,23 +199,32 @@ Style: CTA,Arial,62,&H00FFA500,&H00000000,&H00000000,&H80000000,-1,0,0,0,100,100
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:06.00,Hook,,0,0,0,,{\\b1}${plan.hook.toUpperCase()}{\\b0}
-Dialogue: 0,0:00:06.00,0:00:14.00,Scene,,0,0,0,,{\\b1}${plan.scene1.toUpperCase()}{\\b0}
-Dialogue: 0,0:00:14.00,0:00:22.00,Scene,,0,0,0,,{\\b1}${plan.scene2.toUpperCase()}{\\b0}
-Dialogue: 0,0:00:22.00,0:00:30.00,CTA,,0,0,0,,{\\b1}${plan.scene3.toUpperCase()}{\\b0}
+Dialogue: 0,0:00:00.00,0:00:0${sHook}.00,Hook,,0,0,0,,{\\b1}${plan.hook.toUpperCase()}{\\b0}
+Dialogue: 0,0:00:0${sHook}.00,0:00:${s1}.00,Scene,,0,0,0,,{\\b1}${plan.scene1.toUpperCase()}{\\b0}
+Dialogue: 0,0:00:${s1}.00,0:00:${s2}.00,Scene,,0,0,0,,{\\b1}${plan.scene2.toUpperCase()}{\\b0}
+Dialogue: 0,0:00:${s2}.00,0:00:${duration}.00,CTA,,0,0,0,,{\\b1}${plan.scene3.toUpperCase()}{\\b0}
 `;
       fs.writeFileSync(subPath, assHeader, 'utf-8');
       const escapedSubPath = subPath.replace(/\\/g, '/').replace(/:/g, '\\:');
+      const escapedAudioPath = audioPath.replace(/\\/g, '/');
 
-      // 1080x1920 dynamic slate gradient with subtle pulsing particles & audio tone
-      const cmd = `ffmpeg -y -f lavfi -i "color=c=#0B1220:s=1080x1920:d=${duration}" -f lavfi -i "sine=frequency=432:duration=${duration}" -vf "drawbox=x=80:y=200:w=920:h=6:color=#2563EB@0.8:t=fill,drawtext=text='TREND ALERT':x=(w-text_w)/2:y=120:fontsize=36:fontcolor=#93C5FD:font='Arial':box=1:boxcolor=#1E293B@0.8:boxborderw=10,ass='${escapedSubPath}'" -c:v libx264 -preset fast -crf 22 -c:a aac -b:a 128k "${outputPath}"`;
+      let cmd = '';
+
+      if (stockVideoPath && fs.existsSync(stockVideoPath)) {
+        // Real Stock Footage mode: Loop/scale video to 1080x1920, add dark overlay, burn subtitles, combine with audio
+        const escapedStockPath = stockVideoPath.replace(/\\/g, '/');
+        cmd = `ffmpeg -y -stream_loop -1 -i "${escapedStockPath}" -i "${escapedAudioPath}" -t ${duration} -vf "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,eq=brightness=-0.12:contrast=1.05,drawbox=x=80:y=200:w=920:h=6:color=#2563EB@0.8:t=fill,drawtext=text='TREND ALERT':x=(w-text_w)/2:y=120:fontsize=36:fontcolor=#93C5FD:font='Arial':box=1:boxcolor=#1E293B@0.8:boxborderw=10,ass='${escapedSubPath}'" -c:v libx264 -preset fast -crf 22 -c:a aac -b:a 128k "${outputPath}"`;
+      } else {
+        // Dynamic Canvas Slate mode: 1080x1920 gradient, banner, burned subtitles, voiceover audio
+        cmd = `ffmpeg -y -f lavfi -i "color=c=#0B1220:s=1080x1920:d=${duration}" -i "${escapedAudioPath}" -t ${duration} -vf "drawbox=x=80:y=200:w=920:h=6:color=#2563EB@0.8:t=fill,drawtext=text='TREND ALERT':x=(w-text_w)/2:y=120:fontsize=36:fontcolor=#93C5FD:font='Arial':box=1:boxcolor=#1E293B@0.8:boxborderw=10,ass='${escapedSubPath}'" -c:v libx264 -preset fast -crf 22 -c:a aac -b:a 128k "${outputPath}"`;
+      }
 
       exec(cmd, (err) => {
         try { fs.unlinkSync(subPath); } catch (e) {}
 
         if (err) {
-          console.error('[Trend Video Generator] Failed with advanced template, using fallback:', err);
-          const fallbackCmd = `ffmpeg -y -f lavfi -i "color=c=#0F172A:s=1080x1920:d=${duration}" -f lavfi -i "sine=frequency=440:duration=${duration}" -c:v libx264 -c:a aac "${outputPath}"`;
+          console.error('[Trend Video Generator] Failed with primary command, using safe fallback:', err);
+          const fallbackCmd = `ffmpeg -y -f lavfi -i "color=c=#0F172A:s=1080x1920:d=${duration}" -i "${escapedAudioPath}" -t ${duration} -c:v libx264 -c:a aac "${outputPath}"`;
           exec(fallbackCmd, (fbErr) => {
             if (fbErr) return reject(fbErr);
             resolve(outputPath);
