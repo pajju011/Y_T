@@ -1,0 +1,126 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper" [ref=e22] [cursor=pointer]
+      - generic [ref=e27]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [ref=e28] [cursor=pointer]
+      - button "Live Trends Radar 50" [ref=e209] [cursor=pointer]:
+        - generic [ref=e37]: Live Trends Radar
+        - generic [ref=e210]: "50"
+      - generic [ref=e38]: Production & Publishing
+      - button "Review & Approvals 1" [ref=e412] [cursor=pointer]:
+        - generic [ref=e43]: Review & Approvals
+        - generic [ref=e413]: "1"
+      - button "Publishing Calendar" [ref=e44] [cursor=pointer]
+      - button "Channel Integrations" [active] [ref=e48] [cursor=pointer]
+      - generic [ref=e56]: Configuration & Trust
+      - button "Settings & Free Setup" [ref=e57] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e62] [cursor=pointer]
+    - generic [ref=e67]:
+      - generic [ref=e68]: "FFmpeg 8.1: Ready (Local)"
+      - generic [ref=e71]: "Local Storage: 0.0 MB"
+      - generic [ref=e75]: "Cost: $0.00 (100% Free)"
+  - main [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e83]:
+        - heading "Channel Integrations" [level=1] [ref=e1584]
+        - paragraph [ref=e85]: Manage connections to YouTube Shorts, TikTok, Instagram, and LinkedIn.
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: Local Instance
+          - generic [ref=e211]: Google Drive
+          - generic [ref=e92]: 100% Free AI
+        - button "Quick Setup" [ref=e94] [cursor=pointer]
+        - button "Import YouTube" [ref=e99] [cursor=pointer]
+        - button "Upload Video" [ref=e103] [cursor=pointer]
+    - generic [ref=e1585]:
+      - generic [ref=e1586]:
+        - heading "Channel & Platform Integrations" [level=2] [ref=e1587]
+        - paragraph [ref=e1588]: Transparent integration states with official platform developer APIs. No hidden fees or unexpected charges.
+      - generic [ref=e1589]:
+        - heading "100% Free Manual Export Available Always" [level=3] [ref=e1594]
+        - paragraph [ref=e1595]: You do not need to connect any API if you do not want to. Every rendered 9:16 clip can be downloaded directly as an MP4 file with burned captions and dragged into YouTube Shorts, TikTok, or Instagram Reels in 5 seconds.
+      - generic [ref=e1596]:
+        - generic [ref=e1597]:
+          - generic [ref=e1598]:
+            - generic [ref=e1607]:
+              - heading "YouTube Shorts" [level=3] [ref=e1608]
+              - text: Unconnected
+            - generic [ref=e1609]: not configured
+          - generic [ref=e1610]:
+            - generic [ref=e1611]:
+              - generic [ref=e1612]: "Free Tier Quota:"
+              - generic [ref=e1613]: 10,000 units/day (Free Google Cloud Tier)
+            - paragraph [ref=e1614]: Free 10,000 quota units/day is sufficient to publish ~6-10 Shorts per day with zero fees.
+          - generic [ref=e1615]:
+            - strong [ref=e1616]: "Setup Requirement:"
+            - text: Obtain a free OAuth 2.0 Client ID or YouTube Data API v3 key from Google Cloud Console. No credit card required.
+          - button "Configure Connection" [ref=e1618] [cursor=pointer]
+        - generic [ref=e1624]:
+          - generic [ref=e1625]:
+            - generic [ref=e1634]:
+              - heading "TikTok for Developers" [level=3] [ref=e1635]
+              - text: Unconnected
+            - generic [ref=e1636]: not configured
+          - generic [ref=e1637]:
+            - generic [ref=e1638]:
+              - generic [ref=e1639]: "Free Tier Quota:"
+              - generic [ref=e1640]: Standard Rate Limit (Free Developer Account)
+            - paragraph [ref=e1641]: TikTok Developer API is free to register. Video Kit Direct Post API requires business account verification.
+          - generic [ref=e1642]:
+            - strong [ref=e1643]: "Setup Requirement:"
+            - text: Create a free TikTok Developer app to schedule Direct Post videos, or use ClipGenius 1-click MP4 export.
+          - button "Configure Connection" [ref=e1645] [cursor=pointer]
+        - generic [ref=e1651]:
+          - generic [ref=e1652]:
+            - generic [ref=e1661]:
+              - heading "Instagram Reels" [level=3] [ref=e1662]
+              - text: Unconnected
+            - generic [ref=e1663]: not configured
+          - generic [ref=e1664]:
+            - generic [ref=e1665]:
+              - generic [ref=e1666]: "Free Tier Quota:"
+              - generic [ref=e1667]: 25 API posts/day (Meta Graph API Free Tier)
+            - paragraph [ref=e1668]: Meta Graph API has no subscription fee for standard organic publishing limits.
+          - generic [ref=e1669]:
+            - strong [ref=e1670]: "Setup Requirement:"
+            - text: Link an Instagram Professional / Creator account to a Facebook page, then configure Meta Graph API credentials.
+          - button "Configure Connection" [ref=e1672] [cursor=pointer]
+        - generic [ref=e1678]:
+          - generic [ref=e1679]:
+            - generic [ref=e1688]:
+              - heading "LinkedIn Video" [level=3] [ref=e1689]
+              - text: Unconnected
+            - generic [ref=e1690]: not configured
+          - generic [ref=e1691]:
+            - generic [ref=e1692]:
+              - generic [ref=e1693]: "Free Tier Quota:"
+              - generic [ref=e1694]: 100 posts/day (LinkedIn Community Management API)
+            - paragraph [ref=e1695]: Free LinkedIn Developer portal access with standard organic sharing scopes.
+          - generic [ref=e1696]:
+            - strong [ref=e1697]: "Setup Requirement:"
+            - text: Configure LinkedIn Developer App with Member Data Portability / Share on LinkedIn permissions.
+          - button "Configure Connection" [ref=e1699] [cursor=pointer]
+        - generic [ref=e1705]:
+          - generic [ref=e1706]:
+            - generic [ref=e1711]:
+              - heading "Google Drive Storage" [level=3] [ref=e1712]
+              - text: ClipGenius AI Vault
+            - generic [ref=e1713]: connected
+          - generic [ref=e1714]:
+            - generic [ref=e1715]:
+              - generic [ref=e1716]: "Free Tier Quota:"
+              - generic [ref=e1717]: 15 GB Free Storage (Google Drive)
+            - paragraph [ref=e1718]: 15 GB free storage with any standard Google account. Never lose your clips and share them with your team in seconds.
+          - generic [ref=e1719]:
+            - strong [ref=e1720]: "Setup Requirement:"
+            - text: Save rendered 9:16 vertical clips and raw videos directly into a Google Drive folder. Paste your Google Drive Folder link or ID to auto-sync.
+          - generic [ref=e1721]:
+            - button "Configure" [ref=e1722] [cursor=pointer]
+            - button "Disconnect" [ref=e1724] [cursor=pointer]

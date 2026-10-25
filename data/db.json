@@ -2,6 +2,38 @@
   "videos": [],
   "clips": [
     {
+      "id": "trend-vid-1792912731737",
+      "videoId": "trend-origin",
+      "videoTitle": "AI Trend: Tech & AI",
+      "title": "PHP2Shell: AI uncovers critical RCE : What It Means",
+      "hook": "Nobody expected this update, but it changes everything for Tech & AI.",
+      "transcript": "Nobody expected this update, but it changes everything for Tech & AI. Here is the critical news that just broke today. Most people haven't connected how this disrupts traditional workflows. Here is the one move you need to make right now.",
+      "suggestedCaption": "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update",
+      "startTime": 0,
+      "endTime": 30,
+      "duration": 30,
+      "viralityScore": 92,
+      "viralityReason": "Engineered using Problem-Agitate-Solve framework with Ambient Audio Bed narration for Software engineers and AI enthusiasts.",
+      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\trend-trend-vid-1792912731737.mp4",
+      "urlPath": "/uploads/clips/trend-trend-vid-1792912731737.mp4",
+      "thumbnailUrl": "/uploads/thumbnails/thumb-trend-vid-1792912731737.jpg",
+      "aspectRatio": "9:16",
+      "framingMode": "center",
+      "captionStyle": "bold-yellow",
+      "status": "in_review",
+      "scheduledDate": null,
+      "scheduledTime": null,
+      "platforms": [
+        "youtube",
+        "tiktok",
+        "instagram"
+      ],
+      "createdAt": "2026-10-25T07:18:53.868Z",
+      "approvedAt": null,
+      "publishedAt": null,
+      "trendSourceUrl": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBfU2lySGdfMVprRm5nUmxNVVEzYjFPQTRhWV9VNzlJNlVZbWFmMVN4UE1uOFFqbVE4UFBvaWwydHUzT2VhRTVaSWVDeVhGbVpHQnEw?oc=5"
+    },
+    {
       "id": "trend-vid-1792873593001",
       "videoId": "trend-origin",
       "videoTitle": "AI Trend: Tech & AI",
@@ -39,6 +71,28 @@
   ],
   "trends": [],
   "liveTrends": [
+    {
+      "id": "trend-news-1792912731734-12",
+      "title": "Deciding with fake images: More candidates are using AI in political ads to get your vote",
+      "snippet": "Deciding with fake images: More candidates are using AI in political ads to get your vote  NBC News",
+      "source": "NBC News",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPNjBIcFl2cGhpemRSNzBYVlFWaGg0eGxycFYxcTVLa3FMeks3U0xVVVpheXlkcktrOTROUlJKUGh3TjV1cUlRTjVlRy1id2Z5azRMbGViUUJGMDBFSEMzaTlSSV9pdl9YTnZwek1lajRfdUpJNUhBUEtyVVV5cFFmYUFFQmJ0UWJFOVdOTEVHQmZRZTgzdVJyUnVHdDRnT1lyS05qMkdfUFptT0w4U1o4ZE9WVnN6NEk3?oc=5",
+      "niche": "Tech & AI",
+      "discoveredAt": "2026-10-25T07:18:51.734Z",
+      "relevanceScore": 78,
+      "generatedClipId": null
+    },
+    {
+      "id": "trend-news-1792912731734-14",
+      "title": "Research reveals the ways students really use AI to write",
+      "snippet": "Research reveals the ways students really use AI to write  Virginia Tech News",
+      "source": "Virginia Tech News",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPOTJtMGJfZVJkMFRuclVJSEY3eTIwaXpMTjBPdmJadkhUanpXREhCaktzVHpFRy1sRkFtdjItX2JoWWM4SGdtWjd4aFZOalBLeHBOMnZyR2drU3l0a2ljMEptN2hRT3VrVG1qdTl3OXJuNzhMRmVON3ByTXpGTGlsbF9hOFNSV3hG?oc=5",
+      "niche": "Tech & AI",
+      "discoveredAt": "2026-10-25T07:18:51.734Z",
+      "relevanceScore": 78,
+      "generatedClipId": null
+    },
     {
       "id": "trend-news-1792870883631-0",
       "title": "PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet",
@@ -566,28 +620,6 @@
       "discoveredAt": "2026-10-24T17:55:35.571Z",
       "relevanceScore": 92,
       "generatedClipId": null
-    },
-    {
-      "id": "trend-live-1792864535571-3",
-      "title": "AI Hacks Are Coming Thick and Fast and Overwhelming the Internet",
-      "snippet": "AI Hacks Are Coming Thick and Fast and Overwhelming the Internet&nbsp;&nbsp;WSJ",
-      "source": "WSJ",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPTUNnR1RPd3VXa0hoTW1USmVib3RXRVNMbjI3R2NwNDhtYkV4YU10azF5U0VVUEZWQXFRdFdlaUg1eWFDRkZTZi04UUJ6MmtEem5YdUhra0lCX2trOEtSWGIydnpjQXotNDBZVHdXT2lOeWlKenNnWC1CS3NBNVhQOW9KNmJWZTNoTlZkUEd0c01XTWs1M3dTbkstZVpCNjVROE5r?oc=5",
-      "niche": "Tech & AI",
-      "discoveredAt": "2026-10-24T17:55:35.571Z",
-      "relevanceScore": 84,
-      "generatedClipId": null
-    },
-    {
-      "id": "trend-live-1792864535571-4",
-      "title": "A timeline of developments in AI safety since the attack on Hugging Face",
-      "snippet": "A timeline of developments in AI safety since the attack on Hugging Face&nbsp;&nbsp;Tech Xplore",
-      "source": "Tech Xplore",
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBDMVcxbzNHMVQ3dEVCbGMzQzJ3bGFxUWNLU3g1MU5jZzN0UUh4OG9COTh6RkNNUnYzUjdPZjZoUzVjY3FfZjZjRjVBNjdBcllsdU53RU1JaVpDaUw0aVZET00wQlp4V0dSV2o2bzR3?oc=5",
-      "niche": "Tech & AI",
-      "discoveredAt": "2026-10-24T17:55:35.571Z",
-      "relevanceScore": 91,
-      "generatedClipId": null
     }
   ],
   "strategy": {
@@ -612,7 +644,7 @@
       "instagram"
     ],
     "visualMode": "motion_text",
-    "lastAutoRun": "2026-10-24T19:41:25.923Z"
+    "lastAutoRun": "2026-10-25T07:18:53.870Z"
   },
   "integrations": [
     {
@@ -673,7 +705,7 @@
       "requiresKey": false,
       "instructions": "Save rendered 9:16 vertical clips and raw videos directly into a Google Drive folder. Paste your Google Drive Folder link or ID to auto-sync.",
       "freeTierNotes": "15 GB free storage with any standard Google account. Never lose your clips and share them with your team in seconds.",
-      "lastSync": "2026-10-24T20:26:35.330Z"
+      "lastSync": "2026-10-25T07:20:09.868Z"
     }
   ],
   "settings": {
@@ -711,6 +743,54 @@
     "storageQuotaMb": 10240
   },
   "auditLogs": [
+    {
+      "id": "log-1792912809876",
+      "timestamp": "2026-10-25T07:20:09.876Z",
+      "action": "settings_updated",
+      "details": "Updated API configuration and credentials."
+    },
+    {
+      "id": "log-1792912809869",
+      "timestamp": "2026-10-25T07:20:09.869Z",
+      "action": "gdrive_config_updated",
+      "details": "Google Drive settings updated: Folder \"ClipGenius AI Vault\", AutoSync: true"
+    },
+    {
+      "id": "log-1792912809859",
+      "timestamp": "2026-10-25T07:20:09.859Z",
+      "action": "strategy_updated",
+      "details": "Strategy updated for niche \"Tech & AI\""
+    },
+    {
+      "id": "log-1792912733872",
+      "timestamp": "2026-10-25T07:18:53.872Z",
+      "action": "daily_automation_complete",
+      "details": "Daily trend video \"PHP2Shell: AI uncovers critical RCE : What It Means\" generated and placed in Review & Approvals."
+    },
+    {
+      "id": "log-1792912733870",
+      "timestamp": "2026-10-25T07:18:53.870Z",
+      "action": "strategy_updated",
+      "details": "Strategy updated for niche \"Tech & AI\""
+    },
+    {
+      "id": "log-1792912733869",
+      "timestamp": "2026-10-25T07:18:53.869Z",
+      "action": "trend_video_generated",
+      "details": "Generated draft video \"PHP2Shell: AI uncovers critical RCE : What It Means\" [Voice: Ambient Audio Bed, Footage: Motion Canvas]"
+    },
+    {
+      "id": "log-1792912733868",
+      "timestamp": "2026-10-25T07:18:53.868Z",
+      "action": "clip_created",
+      "details": "Clip \"PHP2Shell: AI uncovers critical RCE : What It Means\" created with status in_review"
+    },
+    {
+      "id": "log-1792912731736",
+      "timestamp": "2026-10-25T07:18:51.736Z",
+      "action": "trends_discovered",
+      "details": "Discovered 15 live trends for niche \"Tech & AI\""
+    },
     {
       "id": "log-1792873598727",
       "timestamp": "2026-10-24T20:26:38.727Z",

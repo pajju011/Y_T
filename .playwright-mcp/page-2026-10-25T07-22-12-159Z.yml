@@ -1,0 +1,228 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper" [ref=e22] [cursor=pointer]
+      - generic [ref=e27]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [ref=e28] [cursor=pointer]
+      - button "Live Trends Radar 50" [ref=e209] [cursor=pointer]:
+        - generic [ref=e37]: Live Trends Radar
+        - generic [ref=e210]: "50"
+      - generic [ref=e38]: Production & Publishing
+      - button "Review & Approvals 1" [ref=e412] [cursor=pointer]:
+        - generic [ref=e43]: Review & Approvals
+        - generic [ref=e413]: "1"
+      - button "Publishing Calendar" [ref=e44] [cursor=pointer]
+      - button "Channel Integrations" [ref=e48] [cursor=pointer]
+      - generic [ref=e56]: Configuration & Trust
+      - button "Settings & Free Setup" [active] [ref=e57] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e62] [cursor=pointer]
+    - generic [ref=e67]:
+      - generic [ref=e68]: "FFmpeg 8.1: Ready (Local)"
+      - generic [ref=e71]: "Local Storage: 0.0 MB"
+      - generic [ref=e75]: "Cost: $0.00 (100% Free)"
+  - main [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e83]:
+        - heading "Settings & 100% Free Setup" [level=1] [ref=e1726]
+        - paragraph [ref=e85]: Configure free AI provider keys, inspect local FFmpeg, and setup DNS.
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: Local Instance
+          - generic [ref=e211]: Google Drive
+          - generic [ref=e92]: 100% Free AI
+        - button "Quick Setup" [ref=e94] [cursor=pointer]
+        - button "Import YouTube" [ref=e99] [cursor=pointer]
+        - button "Upload Video" [ref=e103] [cursor=pointer]
+    - generic [ref=e1727]:
+      - generic [ref=e1728]:
+        - heading "API & Automation Hub" [level=2] [ref=e1729]
+        - paragraph [ref=e1730]: Configure any LLM, text-to-speech voice engine, stock media API, or webhook automations to power fully hands-free video production.
+      - generic [ref=e1731]:
+        - generic [ref=e1732]:
+          - heading "Bring Your Own API Keys — Or Run 100% Free" [level=3] [ref=e1736]
+          - generic [ref=e1737]: "Local FFmpeg: v8.1 Ready"
+        - paragraph [ref=e1742]: Every feature in ClipGenius AI has a $0 built-in fallback (local FFmpeg rendering, offline heuristics, ambient beds). Entering any API key below instantly upgrades that component to cloud-scale intelligence.
+      - generic [ref=e1743]:
+        - generic [ref=e1744]:
+          - generic [ref=e1745]:
+            - heading "1. AI Scriptwriting & Brain (LLM)" [level=3] [ref=e1750]
+            - button "Test LLM Connection" [ref=e1751] [cursor=pointer]
+          - paragraph [ref=e1755]: Used to analyze video highlights, craft curiosity hooks, and generate original multi-scene scripts.
+          - generic [ref=e1756]:
+            - generic [ref=e1757]:
+              - generic [ref=e1758]:
+                - generic [ref=e1759]: Google Gemini API Key (100% Free)
+                - link "Get Free Key" [ref=e1760] [cursor=pointer]:
+                  - /url: https://aistudio.google.com/app/apikey
+              - textbox "AIzaSy..." [ref=e1766]
+              - generic [ref=e1767]: Google AI Studio offers 1,500 free requests/day with no card required.
+            - generic [ref=e1768]:
+              - generic [ref=e1769]:
+                - generic [ref=e1770]: Groq API Key (Free Fast Llama 3.3 70B)
+                - link "Get Free Key" [ref=e1771] [cursor=pointer]:
+                  - /url: https://console.groq.com/keys
+              - textbox "gsk_..." [ref=e1777]
+            - generic [ref=e1778]:
+              - generic [ref=e1779]:
+                - generic [ref=e1780]: OpenAI API Key (GPT-4o / GPT-4o-mini)
+                - link "OpenAI Keys" [ref=e1781] [cursor=pointer]:
+                  - /url: https://platform.openai.com/api-keys
+              - textbox "sk-..." [ref=e1787]
+            - generic [ref=e1788]:
+              - generic [ref=e1789]:
+                - generic [ref=e1790]: Anthropic Claude API Key
+                - link "Anthropic Keys" [ref=e1791] [cursor=pointer]:
+                  - /url: https://console.anthropic.com/
+              - textbox "sk-ant-..." [ref=e1797]
+            - generic [ref=e1798]:
+              - generic [ref=e1799]:
+                - generic [ref=e1800]: DeepSeek API Key (V3 / R1)
+                - link "DeepSeek Keys" [ref=e1801] [cursor=pointer]:
+                  - /url: https://platform.deepseek.com/
+              - textbox "sk-..." [ref=e1807]
+            - generic [ref=e1808]:
+              - generic [ref=e1809]: Custom OpenAI-Compatible Endpoint
+              - textbox "https://api.together.xyz/v1 or http://localhost:1234/v1" [ref=e1810]
+              - generic [ref=e1811]: Connect any custom endpoint (LMStudio, vLLM, OpenRouter, LocalAI).
+            - generic [ref=e1812]:
+              - generic [ref=e1813]: Custom Endpoint API Key (Optional)
+              - textbox "API Key for custom endpoint" [ref=e1814]
+        - generic [ref=e1815]:
+          - generic [ref=e1816]:
+            - heading "2. AI Voice Narration & Speech (TTS)" [level=3] [ref=e1821]
+            - button "Test Voiceover Sample" [ref=e1822] [cursor=pointer]
+          - paragraph [ref=e1827]: Turns video scripts into natural spoken human voiceovers for vertical text-to-video production.
+          - generic [ref=e1828]:
+            - generic [ref=e1829]:
+              - generic [ref=e1830]:
+                - generic [ref=e1831]: ElevenLabs API Key
+                - link "ElevenLabs Portal" [ref=e1832] [cursor=pointer]:
+                  - /url: https://elevenlabs.io
+              - textbox "Paste ElevenLabs Key" [ref=e1838]
+            - generic [ref=e1839]:
+              - generic [ref=e1840]: ElevenLabs Voice ID
+              - textbox "21m00Tcm4TlvDq8ikWAM (Rachel)" [ref=e1841]: 21m00Tcm4TlvDq8ikWAM
+              - generic [ref=e1842]: "Default: 21m00Tcm4TlvDq8ikWAM (Rachel) or paste any Voice Library ID."
+            - generic [ref=e1843]:
+              - generic [ref=e1844]: OpenAI TTS Voice (Uses OpenAI Key)
+              - combobox [ref=e1845]:
+                - option "Alloy (Balanced & Versatile)" [selected]
+                - option "Echo (Warm & Authoritative)"
+                - option "Fable (Expressive & British accent)"
+                - option "Onyx (Deep & Confident)"
+                - option "Nova (Energetic & Dynamic)"
+                - option "Shimmer (Clear & Engaging)"
+            - generic [ref=e1846]:
+              - generic [ref=e1847]: Deepgram Aura API Key (Optional)
+              - textbox "Deepgram Token" [ref=e1848]
+        - generic [ref=e1849]:
+          - generic [ref=e1850]:
+            - heading "3. Stock Video & Background Footage" [level=3] [ref=e1855]
+            - button "Test Video Search" [ref=e1856] [cursor=pointer]
+          - paragraph [ref=e1861]: Automatically finds real 9:16 vertical video clips matching your trend topics for rich multi-scene backgrounds.
+          - generic [ref=e1862]:
+            - generic [ref=e1863]:
+              - generic [ref=e1864]:
+                - generic [ref=e1865]: Pexels API Key (100% Free Stock Video)
+                - link "Get Free Pexels Key" [ref=e1866] [cursor=pointer]:
+                  - /url: https://www.pexels.com/api/
+              - textbox "Pexels API Key" [ref=e1872]
+              - generic [ref=e1873]: Free Pexels API provides 200 requests/hour to fetch real vertical 9:16 video clips.
+            - generic [ref=e1874]:
+              - generic [ref=e1875]:
+                - generic [ref=e1876]: Pixabay API Key (Free Stock Footage)
+                - link "Get Free Pixabay Key" [ref=e1877] [cursor=pointer]:
+                  - /url: https://pixabay.com/api/docs/
+              - textbox "Pixabay API Key" [ref=e1883]
+        - generic [ref=e1884]:
+          - generic [ref=e1885]:
+            - heading "4. Webhook & Pipeline Automations" [level=3] [ref=e1893]
+            - button "Send Test Webhook Ping" [disabled]
+          - paragraph [ref=e1894]: Trigger custom external automations (Zapier, Make.com, n8n, Discord, Telegram, or custom web servers) whenever videos are generated or approved.
+          - generic [ref=e1895]:
+            - generic [ref=e1896]:
+              - generic [ref=e1897]: Webhook Destination URL
+              - textbox "https://hooks.zapier.com/hooks/catch/... or n8n URL" [ref=e1898]
+              - generic [ref=e1899]:
+                - text: "Receives POST JSON payloads for events:"
+                - code [ref=e1900]: clip.generated
+                - text: ","
+                - code [ref=e1901]: clip.approved
+                - text: ","
+                - code [ref=e1902]: video.published
+                - text: .
+            - generic [ref=e1903]:
+              - generic [ref=e1904]: Webhook Secret Token (Optional)
+              - textbox "Custom secret sent in X-ClipGenius-Secret header" [ref=e1905]
+          - generic [ref=e1906]:
+            - checkbox "Enable active webhook dispatch on clip generation and approval" [ref=e1907]
+            - generic [ref=e1908] [cursor=pointer]: Enable active webhook dispatch on clip generation and approval
+        - generic [ref=e1909]:
+          - generic [ref=e1910]:
+            - heading "5. Google Drive & Video Storage Settings" [level=3] [ref=e1911]
+            - generic [ref=e1915]: Google Drive Connected
+          - paragraph [ref=e1916]: Store and back up all rendered 9:16 clips to your Google Drive folder with 15 GB of free cloud space.
+          - generic [ref=e1917]:
+            - generic [ref=e1918]:
+              - generic [ref=e1919]: Storage Provider Mode
+              - combobox [ref=e1920]:
+                - option "Google Drive Cloud + Local Disk (Recommended)" [selected]
+                - option "Local Disk Only (Private uploads/)"
+                - option "Google Drive Cloud Primary"
+            - generic [ref=e1921]:
+              - generic [ref=e1922]: Google Drive Target Folder Name
+              - textbox "e.g. ClipGenius AI Vault" [ref=e1923]: ClipGenius AI Vault
+          - generic [ref=e1924]:
+            - generic [ref=e1925]: Google Drive Folder Share Link or ID
+            - textbox "https://drive.google.com/drive/folders/your-folder-id" [ref=e1926]
+            - generic [ref=e1927]: Open Google Drive in your browser, create a folder, copy its link and paste it here. Clips will be organized under this folder.
+          - generic [ref=e1928]:
+            - checkbox "Automatically sync every newly generated 9:16 clip to Google Drive upon completion" [checked] [ref=e1929]
+            - generic [ref=e1930] [cursor=pointer]: Automatically sync every newly generated 9:16 clip to Google Drive upon completion
+        - generic [ref=e1931]:
+          - heading "6. Custom Domain Readiness & DNS" [level=3] [ref=e1932]
+          - paragraph [ref=e1933]:
+            - text: ClipGenius AI can be bound to any domain or subdomain (e.g.,
+            - code [ref=e1934]: clips.yourdomain.com
+            - text: ).
+          - generic [ref=e1935]:
+            - generic [ref=e1936]: Custom Domain Hostname
+            - textbox "e.g. clipgenius.yourdomain.com" [ref=e1937]
+          - table [ref=e1939]:
+            - rowgroup [ref=e1940]:
+              - row [ref=e1941]:
+                - columnheader "Type" [ref=e1942]
+                - columnheader "Name / Host" [ref=e1943]
+                - columnheader "Target / Value" [ref=e1944]
+                - columnheader "TTL" [ref=e1945]
+            - rowgroup [ref=e1946]:
+              - row [ref=e1947]:
+                - cell [ref=e1948]:
+                  - code [ref=e1949]: CNAME
+                - cell "clips" [ref=e1950]
+                - cell [ref=e1951]:
+                  - code [ref=e1952]: cname.vercel-dns.com
+                  - text: or VPS IP
+                - cell "Auto" [ref=e1953]
+              - row [ref=e1954]:
+                - cell [ref=e1955]:
+                  - code [ref=e1956]: A
+                - cell "@ (Root)" [ref=e1957]
+                - cell [ref=e1958]:
+                  - code [ref=e1959]: 76.76.21.21
+                - cell "300" [ref=e1960]
+        - generic [ref=e1961]:
+          - generic [ref=e1962]:
+            - heading "Workspace Data & Clean Slate" [level=3] [ref=e1963]
+            - generic [ref=e1968]: Maintenance
+          - paragraph [ref=e1969]: Manage local library records. Ensure your workspace is clean, realistic, and contains zero synthetic demo data.
+          - generic [ref=e1970]:
+            - button "Clean Demo & Test Files" [ref=e1971] [cursor=pointer]
+            - button "Reset Workspace (Pristine Slate)" [ref=e1976] [cursor=pointer]
+        - button "Save API Configuration" [ref=e1982] [cursor=pointer]

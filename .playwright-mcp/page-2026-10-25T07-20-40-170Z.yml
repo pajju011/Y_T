@@ -1,0 +1,186 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper" [ref=e22] [cursor=pointer]
+      - generic [ref=e27]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [active] [ref=e28] [cursor=pointer]
+      - button "Live Trends Radar 50" [ref=e209] [cursor=pointer]:
+        - generic [ref=e37]: Live Trends Radar
+        - generic [ref=e210]: "50"
+      - generic [ref=e38]: Production & Publishing
+      - button "Review & Approvals 1" [ref=e412] [cursor=pointer]:
+        - generic [ref=e43]: Review & Approvals
+        - generic [ref=e413]: "1"
+      - button "Publishing Calendar" [ref=e44] [cursor=pointer]
+      - button "Channel Integrations" [ref=e48] [cursor=pointer]
+      - generic [ref=e56]: Configuration & Trust
+      - button "Settings & Free Setup" [ref=e57] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e62] [cursor=pointer]
+    - generic [ref=e67]:
+      - generic [ref=e68]: "FFmpeg 8.1: Ready (Local)"
+      - generic [ref=e71]: "Local Storage: 0.0 MB"
+      - generic [ref=e75]: "Cost: $0.00 (100% Free)"
+  - main [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e83]:
+        - 'heading "Module B: AI Trend Studio — Content Strategy" [level=1] [ref=e527]'
+        - paragraph [ref=e85]: Configure your daily publishing strategy, target audience, and autonomous trend pipeline.
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: Local Instance
+          - generic [ref=e211]: Google Drive
+          - generic [ref=e92]: 100% Free AI
+        - button "Quick Setup" [ref=e94] [cursor=pointer]
+        - button "Import YouTube" [ref=e99] [cursor=pointer]
+        - button "Upload Video" [ref=e103] [cursor=pointer]
+    - generic [ref=e528]:
+      - generic [ref=e529]:
+        - generic [ref=e530]:
+          - generic [ref=e531]:
+            - heading "AI Trend Studio — Content Strategy & Daily Automation" [level=2] [ref=e532]
+            - generic [ref=e533]: Module B
+          - paragraph [ref=e534]: Configure channel persona, niche keywords, target audience, and language. The background runner automatically generates 1 ready-to-review draft video per day with $0 cost.
+        - button "Run Daily Pipeline Now" [ref=e535] [cursor=pointer]
+      - generic [ref=e539]:
+        - generic [ref=e540]:
+          - heading "Human-in-the-Loop Governance Standard" [level=3] [ref=e544]
+          - generic [ref=e545]: "Last Daily Run: Oct 25, 12:48 PM"
+        - paragraph [ref=e550]:
+          - text: Even with daily automation enabled,
+          - strong [ref=e551]: no video is ever published automatically
+          - text: . All generated trend videos enter the
+          - strong [ref=e552]: Review & Approvals
+          - text: queue with status
+          - code [ref=e553]: in_review
+          - text: until you review the burned-in captions, audio, and metadata, and click Approve or Publish.
+      - generic [ref=e554]:
+        - generic [ref=e555]:
+          - heading "1. Channel Profile & Niche Alignment" [level=3] [ref=e560]
+          - paragraph [ref=e561]: Define your audience profile and the topic boundaries for autonomous trend discovery.
+          - generic [ref=e562]:
+            - generic [ref=e563]:
+              - generic [ref=e564]: Channel / Project Name
+              - textbox "e.g. FutureTech Daily" [ref=e565]: My Viral Shorts
+            - generic [ref=e566]:
+              - generic [ref=e567]: Core Niche
+              - combobox [ref=e568]:
+                - option "Tech & Artificial Intelligence" [selected]
+                - option "Finance, Markets & Business"
+                - option "Productivity & Software Systems"
+                - option "Creator Economy & Marketing"
+                - option "Gaming & Digital Culture"
+                - option "Science, Space & Discoveries"
+                - option "Facts, History & Education"
+          - generic [ref=e569]:
+            - generic [ref=e570]: Focus Keywords & Topics (Comma-separated)
+            - textbox "e.g. Artificial Intelligence, Software Engineering, Productivity Tools" [ref=e571]: Artificial Intelligence, Software, Productivity Tools, Future Tech
+            - generic [ref=e572]: Used by Google News and RSS parsers to filter and score trending candidate articles.
+          - generic [ref=e573]:
+            - generic [ref=e574]:
+              - generic [ref=e575]: Target Audience
+              - textbox "e.g. Tech professionals, startup founders, curious builders" [ref=e576]: Software engineers and AI enthusiasts
+            - generic [ref=e577]:
+              - generic [ref=e578]: Content Tone & Style
+              - combobox [ref=e579]:
+                - option "Informed, concise, analytical & engaging" [selected]
+                - option "Fast-paced, energetic & curiosity-driven"
+                - option "Storyteller, conversational & relatable"
+                - option "Contrarian & thought-provoking"
+                - option "Authoritative, executive & data-backed"
+          - generic [ref=e580]:
+            - generic [ref=e581]:
+              - generic [ref=e582]: Content Language
+              - combobox [ref=e583]:
+                - option "English" [selected]
+                - option "Spanish (Español)"
+                - option "French (Français)"
+                - option "German (Deutsch)"
+                - option "Hindi (हिंदी)"
+                - option "Portuguese (Português)"
+                - option "Japanese (日本語)"
+              - generic [ref=e584]: Language used for AI script narration and burned-in captions.
+            - generic [ref=e585]:
+              - generic [ref=e586]: Target Geographic Region
+              - combobox [ref=e587]:
+                - option "Global / North America (US/CA)" [selected]
+                - option "United Kingdom & Europe"
+                - option "Asia Pacific & India"
+                - option "Latin America"
+              - generic [ref=e588]: Calibrates regional RSS search and posting time zone alignment.
+        - generic [ref=e589]:
+          - heading "2. Video Format & Autonomous Limits" [level=3] [ref=e595]
+          - paragraph [ref=e596]: Define daily generation frequency, output length, and target social platforms.
+          - generic [ref=e597]:
+            - generic [ref=e598]:
+              - generic [ref=e599]: Target Video Duration
+              - combobox [ref=e600]:
+                - option "15 Seconds (Rapid Discovery)"
+                - option "30 Seconds (Optimal Shorts/Reels)" [selected]
+                - option "60 Seconds (Deep-Dive Analysis)"
+            - generic [ref=e601]:
+              - generic [ref=e602]: Daily Video Limit
+              - combobox [ref=e603]:
+                - option "1 Video / Day (Recommended)" [selected]
+                - option "2 Videos / Day"
+                - option "3 Videos / Day"
+            - generic [ref=e604]:
+              - generic [ref=e605]: Autonomous Background Runner
+              - combobox [ref=e606]:
+                - option "Enabled (Auto-prepare draft video daily)" [selected]
+                - option "Disabled (Manual trigger only)"
+          - generic [ref=e607]:
+            - generic [ref=e608]: Visual Style Mode (Text-to-Video)
+            - generic [ref=e609]:
+              - generic [ref=e610] [cursor=pointer]:
+                - strong [ref=e618]: Kinetic Typography & Slate Gradient
+                - paragraph [ref=e619]: High-contrast dynamic text with burned-in yellow hooks and scene breakdowns over a 9:16 slate canvas.
+              - generic [ref=e620] [cursor=pointer]:
+                - strong [ref=e625]: Minimalist Editorial & Badges
+                - paragraph [ref=e626]: Clean newsroom style with verified source header banner, timeline markers, and bold caption cards.
+          - generic [ref=e627]:
+            - generic [ref=e628]: Target Publishing Platforms
+            - generic [ref=e629]:
+              - button "YouTube Shorts" [ref=e630] [cursor=pointer]
+              - button "Tiktok" [ref=e632] [cursor=pointer]
+              - button "Instagram" [ref=e634] [cursor=pointer]
+              - button "Linkedin" [ref=e636] [cursor=pointer]
+        - button "Save Strategy" [ref=e639] [cursor=pointer]
+      - region [ref=e645]:
+        - heading "Autonomous Pipeline Activity Log" [level=3] [ref=e646]
+        - generic [ref=e648]:
+          - generic [ref=e649]:
+            - generic [ref=e650]:
+              - generic [ref=e651]: settings_updated
+              - generic [ref=e652]: Updated API configuration and credentials.
+            - generic [ref=e653]: 12:50 PM
+          - generic [ref=e654]:
+            - generic [ref=e655]:
+              - generic [ref=e656]: gdrive_config_updated
+              - generic [ref=e657]: "Google Drive settings updated: Folder \"ClipGenius AI Vault\", AutoSync: true"
+            - generic [ref=e658]: 12:50 PM
+          - generic [ref=e659]:
+            - generic [ref=e660]:
+              - generic [ref=e661]: strategy_updated
+              - generic [ref=e662]: Strategy updated for niche "Tech & AI"
+            - generic [ref=e663]: 12:50 PM
+          - generic [ref=e664]:
+            - generic [ref=e665]:
+              - generic [ref=e666]: daily_automation_complete
+              - generic [ref=e667]: "Daily trend video \"PHP2Shell: AI uncovers critical RCE : What It Means\" generated and placed in Review & Approvals."
+            - generic [ref=e668]: 12:48 PM
+          - generic [ref=e669]:
+            - generic [ref=e670]:
+              - generic [ref=e671]: strategy_updated
+              - generic [ref=e672]: Strategy updated for niche "Tech & AI"
+            - generic [ref=e673]: 12:48 PM
+          - generic [ref=e674]:
+            - generic [ref=e675]:
+              - generic [ref=e676]: trend_video_generated
+              - generic [ref=e677]: "Generated draft video \"PHP2Shell: AI uncovers critical RCE : What It Means\" [Voice: Ambient Audio Bed, Footage: Motion Canvas]"
+            - generic [ref=e678]: 12:48 PM

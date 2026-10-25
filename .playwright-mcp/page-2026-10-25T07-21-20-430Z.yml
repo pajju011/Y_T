@@ -1,0 +1,149 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper" [ref=e22] [cursor=pointer]
+      - generic [ref=e27]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [ref=e28] [cursor=pointer]
+      - button "Live Trends Radar 50" [ref=e209] [cursor=pointer]:
+        - generic [ref=e37]: Live Trends Radar
+        - generic [ref=e210]: "50"
+      - generic [ref=e38]: Production & Publishing
+      - button "Review & Approvals 1" [ref=e412] [cursor=pointer]:
+        - generic [ref=e43]: Review & Approvals
+        - generic [ref=e413]: "1"
+      - button "Publishing Calendar" [ref=e44] [cursor=pointer]
+      - button "Channel Integrations" [ref=e48] [cursor=pointer]
+      - generic [ref=e56]: Configuration & Trust
+      - button "Settings & Free Setup" [ref=e57] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e62] [cursor=pointer]
+    - generic [ref=e67]:
+      - generic [ref=e68]: "FFmpeg 8.1: Ready (Local)"
+      - generic [ref=e71]: "Local Storage: 0.0 MB"
+      - generic [ref=e75]: "Cost: $0.00 (100% Free)"
+  - main [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e83]:
+        - heading "Review & Approvals Pipeline" [level=1] [ref=e1283]
+        - paragraph [ref=e85]: Review auto-detected hooks, edit captions, and approve clips before publishing.
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: Local Instance
+          - generic [ref=e211]: Google Drive
+          - generic [ref=e92]: 100% Free AI
+        - button "Quick Setup" [ref=e94] [cursor=pointer]
+        - button "Import YouTube" [ref=e99] [cursor=pointer]
+        - button "Upload Video" [ref=e103] [cursor=pointer]
+    - generic [ref=e1284]:
+      - generic [ref=e1285]:
+        - generic [ref=e1286]:
+          - heading "Review & Approval Pipeline" [level=2] [ref=e1287]
+          - paragraph [ref=e1288]: Approve captions, fine-tune titles, push to calendar, or bulk-export as ZIP.
+        - generic [ref=e1289]:
+          - button "Sync All to Google Drive" [ref=e1290] [cursor=pointer]
+          - link "Export 1 Approved (ZIP)" [ref=e1294] [cursor=pointer]:
+            - /url: /api/clips/export-zip
+          - generic [ref=e1299]:
+            - button "All Clips (2)" [ref=e1300] [cursor=pointer]:
+              - text: All Clips
+              - generic [ref=e1301]: (2)
+            - button "in review (1)" [ref=e1302] [cursor=pointer]:
+              - text: in review
+              - generic [ref=e1303]: (1)
+            - button "approved (1)" [ref=e1304] [cursor=pointer]:
+              - text: approved
+              - generic [ref=e1305]: (1)
+            - button "scheduled (0)" [ref=e1306] [cursor=pointer]:
+              - text: scheduled
+              - generic [ref=e1307]: (0)
+            - button "published (0)" [ref=e1308] [cursor=pointer]:
+              - text: published
+              - generic [ref=e1309]: (0)
+      - generic [ref=e1310]:
+        - generic [ref=e1311]:
+          - generic [ref=e1312]:
+            - generic [ref=e1313]: in review
+            - generic [ref=e1315]: "Virality: 92/100"
+          - generic [ref=e1316]:
+            - 'heading "PHP2Shell: AI uncovers critical RCE : What It Means" [level=3] [ref=e1317]'
+            - generic [ref=e1318]: "Duration: 30s • Format: 9:16 • Source: AI Trend: Tech & AI"
+          - generic [ref=e1319]:
+            - generic [ref=e1320]: "HOOK LINE:"
+            - paragraph [ref=e1321]: "\"Nobody expected this update, but it changes everything for Tech & AI.\""
+            - generic [ref=e1322]: "CAPTION:"
+            - paragraph [ref=e1323]: "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update"
+          - generic [ref=e1324]:
+            - button "Preview" [active] [ref=e1325] [cursor=pointer]
+            - button "Edit" [ref=e1330] [cursor=pointer]
+            - link "Download MP4" [ref=e1334] [cursor=pointer]:
+              - /url: /uploads/clips/trend-trend-vid-1792912731737.mp4
+            - button "Save to Google Drive" [ref=e1338] [cursor=pointer]
+            - button "Approve" [ref=e1341] [cursor=pointer]
+            - button "Schedule" [ref=e1345] [cursor=pointer]
+            - button "Publish Short" [ref=e1349] [cursor=pointer]
+            - button "Delete clip" [ref=e1353] [cursor=pointer]
+        - generic [ref=e1357]:
+          - generic [ref=e1358]:
+            - generic [ref=e1359]:
+              - generic [ref=e1360]: approved
+              - link "Drive" [ref=e1361] [cursor=pointer]:
+                - /url: https://drive.google.com/drive/search?q=IATSE_s_First_Tech_Czar_Wants_Crew_M__What_It_Means
+            - generic [ref=e1365]: "Virality: 92/100"
+          - generic [ref=e1366]:
+            - 'heading "IATSE’s First Tech Czar Wants Crew M: What It Means" [level=3] [ref=e1367]'
+            - generic [ref=e1368]: "Duration: 30s • Format: 9:16 • Source: AI Trend: Tech & AI"
+          - generic [ref=e1369]:
+            - generic [ref=e1370]: "HOOK LINE:"
+            - paragraph [ref=e1371]: "\"Nobody expected this update, but it changes everything for Tech & AI.\""
+            - generic [ref=e1372]: "CAPTION:"
+            - paragraph [ref=e1373]: "Breaking analysis on IATSE’s First Tech Czar Wants Crew Members Involved in the Creation of AI Tools (Exclusive). What are your thoughts on this? #Tech&AI #trends #shorts #update"
+          - generic [ref=e1374]:
+            - button "Preview" [ref=e1375] [cursor=pointer]
+            - button "Edit" [ref=e1380] [cursor=pointer]
+            - link "Download MP4" [ref=e1384] [cursor=pointer]:
+              - /url: /uploads/clips/trend-trend-vid-1792873593001.mp4
+            - button "Synced to Google Drive (Click to re-sync)" [ref=e1388] [cursor=pointer]
+            - button "Schedule" [ref=e1391] [cursor=pointer]
+            - button "Publish Short" [ref=e1395] [cursor=pointer]
+            - button "Delete clip" [ref=e1399] [cursor=pointer]
+  - dialog [ref=e1403]:
+    - generic [ref=e1404]:
+      - generic [ref=e1405]:
+        - generic [ref=e1406]:
+          - 'heading "PHP2Shell: AI uncovers critical RCE : What It Means" [level=2] [ref=e1407]'
+          - paragraph [ref=e1408]: "Source: AI Trend: Tech & AI • Duration: 30s • Aspect: 9:16"
+        - button "Close modal" [ref=e1409] [cursor=pointer]
+      - generic [ref=e1413]:
+        - generic [ref=e1414]: Nobody expected this update, but it changes everything for Tech & AI.
+        - generic [ref=e1416]:
+          - generic [ref=e1417]:
+            - generic [ref=e1418]:
+              - generic [ref=e1419]: VIRALITY ANALYSIS
+              - generic [ref=e1420]: "Score: 92/100"
+            - paragraph [ref=e1421]: Engineered using Problem-Agitate-Solve framework with Ambient Audio Bed narration for Software engineers and AI enthusiasts.
+          - generic [ref=e1422]:
+            - generic [ref=e1423]: On-Screen Caption Styling
+            - generic [ref=e1427]:
+              - button "Bold Yellow" [ref=e1428] [cursor=pointer]
+              - button "Minimal White" [ref=e1429] [cursor=pointer]
+              - button "Karaoke Blue" [ref=e1430] [cursor=pointer]
+              - button "None" [ref=e1431] [cursor=pointer]
+          - generic [ref=e1432]:
+            - text: First 3-Second Spoken Hook
+            - paragraph [ref=e1433]: "\"Nobody expected this update, but it changes everything for Tech & AI.\""
+          - generic [ref=e1434]:
+            - text: Suggested Caption & Hashtags
+            - textbox [ref=e1435]: "Breaking analysis on PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet. What are your thoughts on this? #Tech&AI #trends #shorts #update"
+          - generic [ref=e1436]:
+            - generic [ref=e1437]:
+              - link "Download MP4" [ref=e1438] [cursor=pointer]:
+                - /url: /uploads/clips/trend-trend-vid-1792912731737.mp4
+              - button "Save to Google Drive" [ref=e1443] [cursor=pointer]
+            - generic [ref=e1447]:
+              - button "Approve Clip" [ref=e1448] [cursor=pointer]
+              - button "Send to Schedule" [ref=e1452] [cursor=pointer]

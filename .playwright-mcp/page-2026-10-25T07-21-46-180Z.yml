@@ -1,0 +1,99 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper" [ref=e22] [cursor=pointer]
+      - generic [ref=e27]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [ref=e28] [cursor=pointer]
+      - button "Live Trends Radar 50" [ref=e209] [cursor=pointer]:
+        - generic [ref=e37]: Live Trends Radar
+        - generic [ref=e210]: "50"
+      - generic [ref=e38]: Production & Publishing
+      - button "Review & Approvals 1" [ref=e412] [cursor=pointer]:
+        - generic [ref=e43]: Review & Approvals
+        - generic [ref=e413]: "1"
+      - button "Publishing Calendar" [active] [ref=e44] [cursor=pointer]
+      - button "Channel Integrations" [ref=e48] [cursor=pointer]
+      - generic [ref=e56]: Configuration & Trust
+      - button "Settings & Free Setup" [ref=e57] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e62] [cursor=pointer]
+    - generic [ref=e67]:
+      - generic [ref=e68]: "FFmpeg 8.1: Ready (Local)"
+      - generic [ref=e71]: "Local Storage: 0.0 MB"
+      - generic [ref=e75]: "Cost: $0.00 (100% Free)"
+  - main [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e83]:
+        - heading "Publishing Calendar" [level=1] [ref=e1456]
+        - paragraph [ref=e85]: View scheduled clips organized across publishing dates and channels.
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: Local Instance
+          - generic [ref=e211]: Google Drive
+          - generic [ref=e92]: 100% Free AI
+        - button "Quick Setup" [ref=e94] [cursor=pointer]
+        - button "Import YouTube" [ref=e99] [cursor=pointer]
+        - button "Upload Video" [ref=e103] [cursor=pointer]
+    - generic [ref=e1457]:
+      - generic [ref=e1458]:
+        - generic [ref=e1459]:
+          - heading "October 2026" [level=2] [ref=e1460]
+          - generic [ref=e1461]:
+            - button "Previous month" [ref=e1462] [cursor=pointer]
+            - button "Next month" [ref=e1465] [cursor=pointer]
+        - generic [ref=e1468]:
+          - generic [ref=e1469]: "Platform:"
+          - combobox [ref=e1470]:
+            - option "All Channels" [selected]
+            - option "YouTube Shorts"
+            - option "TikTok"
+            - option "Instagram Reels"
+            - option "LinkedIn"
+      - generic [ref=e1471]:
+        - generic [ref=e1472]: Sun
+        - generic [ref=e1473]: Mon
+        - generic [ref=e1474]: Tue
+        - generic [ref=e1475]: Wed
+        - generic [ref=e1476]: Thu
+        - generic [ref=e1477]: Fri
+        - generic [ref=e1478]: Sat
+        - generic [ref=e1479]: "27"
+        - generic [ref=e1482]: "28"
+        - generic [ref=e1485]: "29"
+        - generic [ref=e1488]: "30"
+        - generic [ref=e1491]: "1"
+        - generic [ref=e1494]: "2"
+        - generic [ref=e1497]: "3"
+        - generic [ref=e1500]: "4"
+        - generic [ref=e1503]: "5"
+        - generic [ref=e1506]: "6"
+        - generic [ref=e1509]: "7"
+        - generic [ref=e1512]: "8"
+        - generic [ref=e1515]: "9"
+        - generic [ref=e1518]: "10"
+        - generic [ref=e1521]: "11"
+        - generic [ref=e1524]: "12"
+        - generic [ref=e1527]: "13"
+        - generic [ref=e1530]: "14"
+        - generic [ref=e1533]: "15"
+        - generic [ref=e1536]: "16"
+        - generic [ref=e1539]: "17"
+        - generic [ref=e1542]: "18"
+        - generic [ref=e1545]: "19"
+        - generic [ref=e1548]: "20"
+        - generic [ref=e1551]: "21"
+        - generic [ref=e1554]: "22"
+        - generic [ref=e1557]: "23"
+        - generic [ref=e1560]: "24"
+        - generic [ref=e1563]: "25"
+        - generic [ref=e1566]: "26"
+        - generic [ref=e1569]: "27"
+        - generic [ref=e1572]: "28"
+        - generic [ref=e1575]: "29"
+        - generic [ref=e1578]: "30"
+        - generic [ref=e1581]: "31"
