@@ -1,0 +1,101 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module C: AI Video Creator"
+      - button "Prompt-to-Video Studio NEW" [ref=e22] [cursor=pointer]:
+        - generic [ref=e26]: Prompt-to-Video Studio
+        - generic [ref=e27]: NEW
+      - generic [ref=e28]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper" [ref=e29] [cursor=pointer]
+      - generic [ref=e34]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [ref=e35] [cursor=pointer]
+      - button "Live Trends Radar" [ref=e40] [cursor=pointer]
+      - generic [ref=e45]: Production & Publishing
+      - button "Review & Approvals" [ref=e46] [cursor=pointer]
+      - button "Publishing Calendar" [ref=e51] [cursor=pointer]
+      - button "Channel Integrations" [ref=e55] [cursor=pointer]
+      - generic [ref=e63]: Configuration & Trust
+      - button "Settings & Free Setup" [ref=e64] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e69] [cursor=pointer]
+    - generic [ref=e74]:
+      - generic [ref=e75]: "FFmpeg 8.1: Initializing"
+      - generic [ref=e78]: "Local Storage: 0.0 MB"
+      - generic [ref=e82]: "Cost: $0.00 (100% Free)"
+  - main [ref=e87]:
+    - generic [ref=e88]:
+      - generic [ref=e90]:
+        - heading "Workspace Dashboard" [level=1] [ref=e91]
+        - paragraph [ref=e92]: Production metrics, library overview, and active publishing pipeline.
+      - generic [ref=e93]:
+        - generic [ref=e94]:
+          - generic [ref=e95]: Local Instance
+          - generic [ref=e99]: $0 Cost Model
+        - button "Quick Setup" [ref=e101] [cursor=pointer]
+        - button "Import YouTube" [ref=e106] [cursor=pointer]
+        - button "Upload Video" [ref=e110] [cursor=pointer]
+    - generic [ref=e116]:
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - generic [ref=e119]:
+            - heading "How ClipGenius Works — In 3 Simple Steps" [level=3] [ref=e120]
+            - paragraph [ref=e125]: Zero complicated editing. Turn any long recording or YouTube video into viral 9:16 vertical shorts.
+          - button "Quick Setup Wizard" [ref=e126] [cursor=pointer]
+        - generic [ref=e131]:
+          - generic [ref=e132] [cursor=pointer]:
+            - generic [ref=e133]:
+              - generic [ref=e134]: "1"
+              - strong [ref=e135]: Add Video
+            - paragraph [ref=e136]: Upload an MP4 or paste any YouTube URL in AI Studio to begin.
+          - generic [ref=e137] [cursor=pointer]:
+            - generic [ref=e138]:
+              - generic [ref=e139]: "2"
+              - strong [ref=e140]: 1-Click AI Detect
+            - paragraph [ref=e141]: Click "Detect Viral Highlights" to auto-find the top hook segments and punchy quotes.
+          - generic [ref=e142] [cursor=pointer]:
+            - generic [ref=e143]:
+              - generic [ref=e144]: "3"
+              - strong [ref=e145]: Save & Google Drive
+            - paragraph [ref=e146]: Render 9:16 with burned subtitles, sync directly to Google Drive or download MP4.
+      - region [ref=e147]:
+        - heading "Workspace Activity & Storage" [level=2] [ref=e148]
+        - generic [ref=e149]:
+          - generic [ref=e150]:
+            - generic [ref=e151]: Source Videos
+            - generic [ref=e156]: "0"
+            - generic [ref=e157]: Ingested into local library
+          - generic [ref=e158]:
+            - generic [ref=e159]: Generated Shorts
+            - generic [ref=e163]: "0"
+            - generic [ref=e164]: Rendered with local FFmpeg
+          - generic [ref=e165]:
+            - generic [ref=e166]: Approved & Scheduled
+            - generic [ref=e171]: "0"
+            - generic [ref=e172]: 0 queued on calendar
+          - generic [ref=e173]:
+            - generic [ref=e174]: Google Drive & Storage
+            - generic [ref=e178]: 0.0 MB
+            - generic [ref=e179]: Local uploads/ • Drive ready
+      - generic [ref=e180]:
+        - generic [ref=e181]:
+          - heading "Direct Production Controls" [level=3] [ref=e182]
+          - paragraph [ref=e183]: Turn long-form recordings into vertical 9:16 short clips, edit captions, and schedule posts.
+        - generic [ref=e184]:
+          - button "AI Prompt Studio" [ref=e185] [cursor=pointer]
+          - button "View Trend Radar" [ref=e190] [cursor=pointer]
+          - button "Publishing Calendar" [ref=e195] [cursor=pointer]
+          - button "Open Studio" [ref=e199] [cursor=pointer]
+      - region [ref=e204]:
+        - generic [ref=e205]:
+          - heading "Recent Clips" [level=2] [ref=e206]
+          - button "View All (0)" [ref=e207] [cursor=pointer]
+        - generic [ref=e208]:
+          - heading "No clips created yet" [level=3] [ref=e211]
+          - paragraph [ref=e212]: Upload an MP4/MOV recording or import any public YouTube URL to cut vertical shorts.
+          - generic [ref=e213]:
+            - button "Import YouTube" [ref=e214] [cursor=pointer]
+            - button "Upload Video" [ref=e216] [cursor=pointer]

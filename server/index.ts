@@ -149,6 +149,58 @@ app.post('/api/trends/:id/generate-video', async (req, res) => {
   }
 });
 
+// AI Prompt-To-Video: Generate Video from Custom User Prompt (Supports 9:16 and 16:9)
+app.post('/api/generate-from-prompt', async (req, res) => {
+  try {
+    const {
+      prompt,
+      aspectRatio = '9:16',
+      durationSec = 30,
+      style = 'cinematic',
+      captionStyle = 'bold-yellow',
+      voiceLanguage = 'English',
+      musicBed = true
+    } = req.body;
+
+    if (!prompt || typeof prompt !== 'string' || prompt.trim() === '') {
+      return res.status(400).json({ error: 'Prompt is required' });
+    }
+
+    const clip = await trendVideoGenerator.generateVideoFromPrompt({
+      prompt: prompt.trim(),
+      aspectRatio,
+      durationSec: Number(durationSec) || 30,
+      style,
+      captionStyle,
+      voiceLanguage,
+      musicBed
+    });
+
+    // Auto-sync to Google Drive if configured
+    const s = db.getSettings();
+    if (s.googleDriveAutoSync && (s.googleDriveConnected || s.googleDriveFolderUrl)) {
+      googleDriveService.syncClip(clip.id).catch(e => console.error('Auto-sync to Google Drive failed:', e));
+    }
+
+    res.json(clip);
+  } catch (err: any) {
+    console.error('Prompt video generation failed:', err);
+    res.status(500).json({ error: 'Video generation failed: ' + err.message });
+  }
+});
+
+// AI Prompt Enhancement
+app.post('/api/prompt/enhance', async (req, res) => {
+  try {
+    const { prompt, niche } = req.body;
+    if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
+    const result = await trendVideoGenerator.enhancePrompt(prompt, niche);
+    res.json(result);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Daily Automation Trigger & Status
 app.get('/api/automation/status', (req, res) => {
   res.json(automationEngine.getStatus());
@@ -520,7 +572,7 @@ app.patch('/api/clips/:id', (req, res) => {
   res.json(db.getClip(req.params.id));
 });
 
-// Direct YouTube Shorts Publishing
+// Direct YouTube Publishing (Shorts or Standard Videos)
 app.post('/api/clips/:id/publish-youtube', async (req, res) => {
   try {
     const clip = db.getClip(req.params.id);
@@ -528,28 +580,46 @@ app.post('/api/clips/:id/publish-youtube', async (req, res) => {
 
     const integrations = db.getIntegrations();
     const ytIntegration = integrations.find(i => i.platform === 'youtube');
-    const { accessToken, privacyStatus = 'public' } = req.body;
+    const {
+      accessToken,
+      privacyStatus = 'public',
+      title,
+      description,
+      tags,
+      categoryId
+    } = req.body;
 
     const token = accessToken || (ytIntegration as any)?.accessToken;
     if (!token) {
       return res.status(400).json({
-        error: 'YouTube Access Token required. Connect YouTube in Integrations or provide an access token.'
+        error: 'YouTube Access Token required. Connect YouTube in Integrations or enter your OAuth access token.'
       });
     }
 
-    console.log(`[YouTube Publish] Uploading "${clip.title}" to YouTube Shorts...`);
-    const uploadResult = await youtubeService.uploadShort({
+    const isShort = clip.aspectRatio === '9:16';
+    const uploadTitle = title || clip.title;
+    const uploadDesc = description || clip.suggestedCaption;
+
+    console.log(`[YouTube Publish] Uploading "${uploadTitle}" to YouTube (${isShort ? 'Shorts' : 'Video'})...`);
+    const uploadResult = await youtubeService.uploadVideo({
       filePath: clip.filePath,
-      title: clip.title,
-      description: clip.suggestedCaption,
+      title: uploadTitle,
+      description: uploadDesc,
       accessToken: token,
-      privacyStatus
+      privacyStatus,
+      tags: tags || ['clipgenius', 'trending', isShort ? 'Shorts' : 'video'],
+      categoryId: categoryId || '22',
+      isShort
     });
 
     db.updateClip(clip.id, {
       status: 'published',
-      publishedAt: new Date().toISOString()
+      publishedAt: new Date().toISOString(),
+      youtubeVideoUrl: uploadResult.url,
+      youtubeVideoId: uploadResult.videoId
     });
+
+    db.addAuditLog('youtube_published', `Uploaded "${uploadTitle}" to YouTube: ${uploadResult.url}`);
 
     res.json({
       success: true,

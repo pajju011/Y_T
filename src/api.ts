@@ -42,6 +42,9 @@ export interface ClipRecord {
   approvedAt: string | null;
   publishedAt: string | null;
   trendSourceUrl?: string;
+  prompt?: string;
+  youtubeVideoUrl?: string;
+  youtubeVideoId?: string;
   googleDriveFileUrl?: string;
   googleDriveSynced?: boolean;
   googleDriveSyncedAt?: string;
@@ -408,15 +411,55 @@ export const api = {
     if (!res.ok) throw new Error('Failed to delete clip');
   },
 
-  async publishToYouTube(clipId: string, accessToken?: string, privacyStatus?: string): Promise<{ success: boolean; videoId: string; url: string }> {
+  async publishToYouTube(clipId: string, options?: {
+    accessToken?: string;
+    privacyStatus?: string;
+    title?: string;
+    description?: string;
+    tags?: string[];
+    categoryId?: string;
+  }): Promise<{ success: boolean; videoId: string; url: string }> {
     const res = await fetch(`${API_BASE}/clips/${clipId}/publish-youtube`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ accessToken, privacyStatus }),
+      body: JSON.stringify(options || {}),
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({ error: 'Publish failed' }));
-      throw new Error(err.error || 'Failed to publish to YouTube Shorts');
+      throw new Error(err.error || 'Failed to publish to YouTube');
+    }
+    return res.json();
+  },
+
+  async generateFromPrompt(params: {
+    prompt: string;
+    aspectRatio?: '9:16' | '16:9';
+    durationSec?: number;
+    style?: 'cinematic' | 'kinetic' | 'editorial' | 'neon';
+    captionStyle?: 'bold-yellow' | 'karaoke-blue' | 'minimal-white' | 'red-alert';
+    voiceLanguage?: string;
+    musicBed?: boolean;
+  }): Promise<ClipRecord> {
+    const res = await fetch(`${API_BASE}/generate-from-prompt`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'Video generation failed' }));
+      throw new Error(err.error || 'Failed to generate video from prompt');
+    }
+    return res.json();
+  },
+
+  async enhancePrompt(prompt: string, niche?: string): Promise<{ enhancedPrompt: string; suggestedStyle: string; suggestedDuration: number }> {
+    const res = await fetch(`${API_BASE}/prompt/enhance`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, niche }),
+    });
+    if (!res.ok) {
+      throw new Error('Failed to enhance prompt');
     }
     return res.json();
   },

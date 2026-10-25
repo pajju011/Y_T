@@ -9,7 +9,8 @@ import {
   Eye,
   TrendingUp,
   Sparkles,
-  Cloud
+  Cloud,
+  Wand2
 } from 'lucide-react';
 import type { MetricsData, ClipRecord, VideoRecord } from '../api';
 import type { ActiveTab } from '../components/Sidebar';
@@ -210,6 +211,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => setActiveTab('prompt-video')}
+            style={{ background: 'linear-gradient(135deg, #2563EB, #7C3AED)', border: 'none', boxShadow: '0 2px 8px rgba(124, 58, 237, 0.3)' }}
+          >
+            <Wand2 size={15} />
+            <span>AI Prompt Studio</span>
+          </button>
           <button className="btn btn-secondary btn-sm" onClick={() => setActiveTab('trends')}>
             <TrendingUp size={15} />
             <span>View Trend Radar</span>
@@ -218,7 +227,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <Calendar size={15} />
             <span>Publishing Calendar</span>
           </button>
-          <button className="btn btn-primary btn-sm" onClick={() => setActiveTab('studio')}>
+          <button className="btn btn-outline btn-sm" onClick={() => setActiveTab('studio')}>
             <Sparkles size={15} />
             <span>Open Studio</span>
           </button>

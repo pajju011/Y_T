@@ -29,6 +29,7 @@ interface ApprovalsViewProps {
   onPreviewClip: (clip: ClipRecord) => void;
   onUpdateClip: (id: string, updates: Partial<ClipRecord>) => Promise<void>;
   onDeleteClip: (id: string) => Promise<void>;
+  onOpenYouTubeUpload?: (clip: ClipRecord) => void;
 }
 
 export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
@@ -36,6 +37,7 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
   onPreviewClip,
   onUpdateClip,
   onDeleteClip,
+  onOpenYouTubeUpload,
 }) => {
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [editingClipId, setEditingClipId] = useState<string | null>(null);
@@ -373,7 +375,13 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
                       {clip.status !== 'published' && (
                         <button
                           className="btn btn-secondary btn-sm"
-                          onClick={() => handlePublishYouTube(clip)}
+                          onClick={() => {
+                            if (onOpenYouTubeUpload) {
+                              onOpenYouTubeUpload(clip);
+                            } else {
+                              handlePublishYouTube(clip);
+                            }
+                          }}
                           disabled={isPublishing}
                           title="Publish video directly to YouTube Shorts via YouTube Data API v3"
                         >
@@ -382,7 +390,7 @@ export const ApprovalsView: React.FC<ApprovalsViewProps> = ({
                           ) : (
                             <YoutubeIcon size={13} style={{ color: '#ef4444' }} />
                           )}
-                          <span>Publish Short</span>
+                          <span>Upload to YouTube</span>
                         </button>
                       )}
 

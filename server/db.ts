@@ -45,6 +45,9 @@ export interface ClipRecord {
   approvedAt: string | null;
   publishedAt: string | null;
   trendSourceUrl?: string;
+  prompt?: string;
+  youtubeVideoUrl?: string;
+  youtubeVideoId?: string;
   googleDriveFileUrl?: string;
   googleDriveSynced?: boolean;
   googleDriveSyncedAt?: string;

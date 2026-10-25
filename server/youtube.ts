@@ -7,6 +7,9 @@ export interface YouTubeUploadOptions {
   description: string;
   accessToken: string;
   privacyStatus?: 'public' | 'unlisted' | 'private';
+  tags?: string[];
+  categoryId?: string;
+  isShort?: boolean;
 }
 
 export class YouTubeService {
@@ -63,10 +66,19 @@ export class YouTubeService {
   }
 
   /**
-   * Upload video file directly to YouTube Shorts via YouTube Data API v3
+   * Upload video file directly to YouTube (Shorts or Standard Landscape) via YouTube Data API v3
    */
-  public async uploadShort(options: YouTubeUploadOptions): Promise<{ videoId: string; url: string }> {
-    const { filePath, title, description, accessToken, privacyStatus = 'public' } = options;
+  public async uploadVideo(options: YouTubeUploadOptions): Promise<{ videoId: string; url: string }> {
+    const {
+      filePath,
+      title,
+      description,
+      accessToken,
+      privacyStatus = 'public',
+      tags = ['clipgenius', 'ai', 'video'],
+      categoryId = '22',
+      isShort = true
+    } = options;
 
     if (!fs.existsSync(filePath)) {
       throw new Error(`Video file not found at ${filePath}`);
@@ -77,16 +89,15 @@ export class YouTubeService {
     const delimiter = `\r\n--${boundary}\r\n`;
     const closeDelimiter = `\r\n--${boundary}--`;
 
-    // Ensure #Shorts is in the title and description for YouTube Shorts shelf ranking
-    const finalTitle = title.includes('#Shorts') ? title : `${title} #Shorts`;
-    const finalDesc = `${description}\n\nUploaded with ClipGenius AI #Shorts`;
+    const finalTitle = isShort && !title.includes('#Shorts') ? `${title} #Shorts` : title;
+    const finalDesc = isShort && !description.includes('#Shorts') ? `${description}\n\n#Shorts #ClipGenius` : description;
 
     const metadata = {
       snippet: {
         title: finalTitle.slice(0, 100),
-        description: finalDesc,
-        tags: ['Shorts', 'clipgenius', 'trending', 'shorts'],
-        categoryId: '22' // People & Blogs
+        description: finalDesc.slice(0, 5000),
+        tags: Array.from(new Set([...tags, 'clipgenius', isShort ? 'Shorts' : 'video'])),
+        categoryId: categoryId || '22'
       },
       status: {
         privacyStatus: privacyStatus,
@@ -100,10 +111,9 @@ export class YouTubeService {
         'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
         JSON.stringify(metadata) +
         delimiter +
-        'Content-Type: video/mp4\r\n' +
-        'Content-Transfer-Encoding: base64\r\n\r\n'
+        'Content-Type: video/mp4\r\n\r\n'
       ),
-      Buffer.from(fileBuffer.toString('base64')),
+      fileBuffer,
       Buffer.from(closeDelimiter)
     ]);
 
@@ -121,15 +131,27 @@ export class YouTubeService {
 
     if (!response.ok) {
       const err = await response.text();
-      throw new Error(`YouTube API upload error (${response.status}): ${err}`);
+      let parsedMsg = err;
+      try {
+        const j = JSON.parse(err);
+        parsedMsg = j?.error?.message || err;
+      } catch (e) {}
+      throw new Error(`YouTube API upload error (${response.status}): ${parsedMsg}`);
     }
 
     const result = await response.json();
     const videoId = result.id;
     return {
       videoId,
-      url: `https://youtube.com/shorts/${videoId}`
+      url: isShort ? `https://youtube.com/shorts/${videoId}` : `https://youtu.be/${videoId}`
     };
+  }
+
+  /**
+   * Backward-compatible alias for uploadShort
+   */
+  public async uploadShort(options: YouTubeUploadOptions): Promise<{ videoId: string; url: string }> {
+    return this.uploadVideo({ ...options, isShort: true });
   }
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Download, Check, Calendar, Type, Cloud, ExternalLink, Loader2 } from 'lucide-react';
+import { X, Download, Check, Calendar, Type, Cloud, ExternalLink, Loader2, Upload } from 'lucide-react';
 import type { ClipRecord } from '../api';
 import { api } from '../api';
 
@@ -9,6 +9,7 @@ interface VideoPlayerModalProps {
   onUpdateStatus?: (id: string, status: ClipRecord['status']) => void;
   onUpdateCaptionStyle?: (id: string, style: ClipRecord['captionStyle']) => void;
   onSyncGoogleDrive?: (id: string) => Promise<void>;
+  onOpenYouTubeUpload?: (clip: ClipRecord) => void;
 }
 
 export const VideoPlayerModal: React.FC<VideoPlayerModalProps> = ({
@@ -17,6 +18,7 @@ export const VideoPlayerModal: React.FC<VideoPlayerModalProps> = ({
   onUpdateStatus,
   onUpdateCaptionStyle,
   onSyncGoogleDrive,
+  onOpenYouTubeUpload,
 }) => {
   const [captionStyle, setCaptionStyle] = useState<ClipRecord['captionStyle']>(clip.captionStyle || 'bold-yellow');
   const [isSyncingDrive, setIsSyncingDrive] = useState<boolean>(false);
@@ -210,6 +212,29 @@ export const VideoPlayerModal: React.FC<VideoPlayerModalProps> = ({
                   </button>
                 )}
               </div>
+
+              {onOpenYouTubeUpload && (
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  style={{
+                    width: '100%',
+                    justifyContent: 'center',
+                    backgroundColor: '#ef4444',
+                    borderColor: '#ef4444',
+                    color: '#ffffff',
+                    fontWeight: 600,
+                    gap: '0.45rem'
+                  }}
+                  onClick={() => {
+                    onClose();
+                    onOpenYouTubeUpload(clip);
+                  }}
+                >
+                  <Upload size={14} />
+                  <span>Upload Directly to YouTube</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

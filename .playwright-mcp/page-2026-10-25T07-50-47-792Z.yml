@@ -1,0 +1,171 @@
+- generic [ref=e3]:
+  - complementary "Main Navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]: ClipGenius AI
+      - generic [ref=e11]: SaaS
+    - navigation [ref=e12]:
+      - generic [ref=e13]: Core Workspace
+      - button "Dashboard" [ref=e14] [cursor=pointer]
+      - generic [ref=e21]: "Module C: AI Video Creator"
+      - button "Prompt-to-Video Studio NEW" [ref=e22] [cursor=pointer]:
+        - generic [ref=e26]: Prompt-to-Video Studio
+        - generic [ref=e27]: NEW
+      - generic [ref=e28]: "Module A: AI Clip Maker"
+      - button "Long-to-Shorts Clipper" [ref=e29] [cursor=pointer]
+      - generic [ref=e34]: "Module B: AI Trend Studio"
+      - button "Content Strategy" [ref=e35] [cursor=pointer]
+      - button "Live Trends Radar 50" [ref=e221] [cursor=pointer]:
+        - generic [ref=e44]: Live Trends Radar
+        - generic [ref=e222]: "50"
+      - generic [ref=e45]: Production & Publishing
+      - button "Review & Approvals 2" [ref=e352] [cursor=pointer]:
+        - generic [ref=e50]: Review & Approvals
+        - generic [ref=e224]: "2"
+      - button "Publishing Calendar" [ref=e51] [cursor=pointer]
+      - button "Channel Integrations" [ref=e55] [cursor=pointer]
+      - generic [ref=e63]: Configuration & Trust
+      - button "Settings & Free Setup" [ref=e64] [cursor=pointer]
+      - button "Credibility & Policies" [ref=e69] [cursor=pointer]
+    - generic [ref=e74]:
+      - generic [ref=e75]: "FFmpeg 8.1: Ready (Local)"
+      - generic [ref=e78]: "Local Storage: 0.0 MB"
+      - generic [ref=e82]: "Cost: $0.00 (100% Free)"
+  - main [ref=e87]:
+    - generic [ref=e88]:
+      - generic [ref=e90]:
+        - 'heading "Module C: AI Prompt-to-Video Studio" [level=1] [ref=e283]'
+        - paragraph [ref=e92]: Type any prompt or story idea. Generate full AI videos with voiceover, b-roll, and burned subtitles.
+      - generic [ref=e93]:
+        - generic [ref=e94]:
+          - generic [ref=e95]: Local Instance
+          - generic [ref=e225]: Google Drive
+          - generic [ref=e99]: 100% Free AI
+        - button "Quick Setup" [ref=e101] [cursor=pointer]
+        - button "Import YouTube" [ref=e106] [cursor=pointer]
+        - button "Upload Video" [ref=e110] [cursor=pointer]
+    - generic [ref=e284]:
+      - generic [ref=e285]:
+        - generic [ref=e291]:
+          - generic [ref=e292]:
+            - heading "AI Prompt-to-Video Studio" [level=2] [ref=e293]
+            - generic [ref=e294]: Full Generation
+          - paragraph [ref=e295]: Turn any topic or idea into a finished video with neural voiceover, b-roll footage, and dynamic subtitles.
+        - generic [ref=e296]:
+          - generic [ref=e297]: "Spoken Neural Voice: $0.00 Free"
+          - generic [ref=e298]: Direct YouTube Upload
+      - generic [ref=e299]:
+        - generic [ref=e300]:
+          - generic [ref=e301]:
+            - generic [ref=e302]: Enter Video Topic or Story Prompt
+            - button "Enhance with AI" [ref=e303] [cursor=pointer]
+          - textbox "e.g. 5 psychological tricks that instantly make people trust you... or Explain how quantum computers work in 30 seconds" [ref=e308]: 5 subtle psychology tricks that make people instantly respect you
+          - generic [ref=e309]:
+            - generic [ref=e310]: "Quick Prompts:"
+            - 'button "🧠 Psychology & Mind: \"5 subtle psychology tricks that ...\"" [ref=e311] [cursor=pointer]':
+              - generic [ref=e312]: "🧠 Psychology & Mind:"
+              - generic [ref=e313]: "\"5 subtle psychology tricks that ...\""
+            - 'button "🤖 AI & Future Tech: \"Why humanoid robots are quietly ...\"" [ref=e314] [cursor=pointer]':
+              - generic [ref=e315]: "🤖 AI & Future Tech:"
+              - generic [ref=e316]: "\"Why humanoid robots are quietly ...\""
+            - 'button "⚡ Productivity: \"The 2-minute morning rule used b...\"" [ref=e317] [cursor=pointer]':
+              - generic [ref=e318]: "⚡ Productivity:"
+              - generic [ref=e319]: "\"The 2-minute morning rule used b...\""
+            - 'button "💰 Business Secrets: \"The shocking reason why Costco w...\"" [ref=e320] [cursor=pointer]':
+              - generic [ref=e321]: "💰 Business Secrets:"
+              - generic [ref=e322]: "\"The shocking reason why Costco w...\""
+            - 'button "🌌 Science & Space: \"What happens to time as you appr...\"" [ref=e323] [cursor=pointer]':
+              - generic [ref=e324]: "🌌 Science & Space:"
+              - generic [ref=e325]: "\"What happens to time as you appr...\""
+        - generic [ref=e326]:
+          - generic [ref=e327]:
+            - generic [ref=e328]: Format & Platform
+            - generic [ref=e329]:
+              - button "9:16 (Shorts/Reels)" [ref=e330] [cursor=pointer]
+              - button "16:9 (YouTube Video)" [ref=e332] [cursor=pointer]
+          - generic [ref=e334]:
+            - generic [ref=e335]: Visual Style
+            - combobox [ref=e336]:
+              - option "Cinematic B-Roll & Depth" [selected]
+              - option "Cyberpunk Neon & Glow"
+              - option "Editorial Special Report"
+              - option "Kinetic High-Contrast Motion"
+          - generic [ref=e337]:
+            - generic [ref=e338]: Target Duration
+            - combobox [ref=e339]:
+              - option "15 Seconds (Rapid Hook)"
+              - option "30 Seconds (Optimal Retention)" [selected]
+              - option "60 Seconds (Deep-Dive Narrative)"
+          - generic [ref=e340]:
+            - generic [ref=e341]: Burned Subtitle Style
+            - combobox [ref=e342]:
+              - option "Bold Yellow (MrBeast / Hormozi)" [selected]
+              - option "Karaoke Sky Blue (Glowing Modern)"
+              - option "Minimalist White Documentary"
+              - option "Red Alert High-Energy"
+          - generic [ref=e343]:
+            - generic [ref=e344]: Spoken Narration
+            - combobox [ref=e345]:
+              - option "English (US / Neutral)" [selected]
+              - option "Spanish (Español)"
+              - option "French (Français)"
+              - option "German (Deutsch)"
+              - option "Hindi (हिंदी)"
+              - option "Portuguese (Português)"
+        - button "Generate Video from Prompt (1-Click)" [ref=e347] [cursor=pointer]
+      - generic [ref=e356]:
+        - generic [ref=e357]:
+          - generic [ref=e362]:
+            - heading "AI Video Rendered Successfully!" [level=3] [ref=e363]
+            - generic [ref=e364]: "Duration: 24s • Format: 9:16 • Virality Score: 94/100"
+          - button "Upload Directly to YouTube" [ref=e365] [cursor=pointer]
+        - generic [ref=e373]:
+          - generic [ref=e374]:
+            - text: Video Title
+            - 'heading "5 subtle psychology tricks that make p...: What You Must Know" [level=4] [ref=e375]'
+          - generic [ref=e376]:
+            - text: Spoken 3-Second Hook
+            - paragraph [ref=e377]: "\"Here is what nobody tells you about 5 subtle psychology tricks that .\""
+          - generic [ref=e378]:
+            - text: YouTube Caption & Hashtags
+            - paragraph [ref=e379]: "Deep-dive on 5 subtle psychology tricks that make p.... What are your thoughts on this? #ai #learning #insights #breakthrough #shorts"
+          - generic [ref=e380]:
+            - button "Full Screen Preview" [ref=e381] [cursor=pointer]
+            - link "Download MP4" [ref=e385] [cursor=pointer]:
+              - /url: /uploads/clips/ai-video-ai-video-1792914618446.mp4
+  - dialog [ref=e390]:
+    - generic [ref=e391]:
+      - generic [ref=e392]:
+        - generic [ref=e393]:
+          - 'heading "5 subtle psychology tricks that make p...: What You Must Know" [level=2] [ref=e394]'
+          - paragraph [ref=e395]: "Source: AI Prompt Video: 5 subtle psychology tricks tha • Duration: 24s • Aspect: 9:16"
+        - button "Close modal" [ref=e396] [cursor=pointer]
+      - generic [ref=e400]:
+        - generic [ref=e401]: Here is what nobody tells you about 5 subtle psychology tricks that .
+        - generic [ref=e403]:
+          - generic [ref=e404]:
+            - generic [ref=e405]:
+              - generic [ref=e406]: VIRALITY ANALYSIS
+              - generic [ref=e407]: "Score: 94/100"
+            - paragraph [ref=e408]: Generated from custom prompt using cinematic motion styling and Google Neural Voice (Free) narration.
+          - generic [ref=e409]:
+            - generic [ref=e410]: On-Screen Caption Styling
+            - generic [ref=e414]:
+              - button "Bold Yellow" [ref=e415] [cursor=pointer]
+              - button "Minimal White" [ref=e416] [cursor=pointer]
+              - button "Karaoke Blue" [ref=e417] [cursor=pointer]
+              - button "None" [ref=e418] [cursor=pointer]
+          - generic [ref=e419]:
+            - text: First 3-Second Spoken Hook
+            - paragraph [ref=e420]: "\"Here is what nobody tells you about 5 subtle psychology tricks that .\""
+          - generic [ref=e421]:
+            - text: Suggested Caption & Hashtags
+            - textbox [ref=e422]: "Deep-dive on 5 subtle psychology tricks that make p.... What are your thoughts on this? #ai #learning #insights #breakthrough #shorts"
+          - generic [ref=e423]:
+            - generic [ref=e424]:
+              - link "Download MP4" [ref=e425] [cursor=pointer]:
+                - /url: /uploads/clips/ai-video-ai-video-1792914618446.mp4
+              - button "Save to Google Drive" [ref=e430] [cursor=pointer]
+            - generic [ref=e434]:
+              - button "Approve Clip" [ref=e435] [cursor=pointer]
+              - button "Send to Schedule" [ref=e439] [cursor=pointer]
+            - button "Upload Directly to YouTube" [ref=e443] [cursor=pointer]

@@ -4,8 +4,10 @@ import type { ActiveTab } from './components/Sidebar';
 import { Header } from './components/Header';
 import { VideoPlayerModal } from './components/VideoPlayerModal';
 import { SetupWizardModal } from './components/SetupWizardModal';
+import { YouTubeUploadModal } from './components/YouTubeUploadModal';
 import { DashboardView } from './views/DashboardView';
 import { StudioView } from './views/StudioView';
+import { PromptStudioView } from './views/PromptStudioView';
 import { StrategyView } from './views/StrategyView';
 import { ApprovalsView } from './views/ApprovalsView';
 import { CalendarView } from './views/CalendarView';
@@ -33,6 +35,7 @@ export function App() {
   const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null);
 
   const [activePreviewClip, setActivePreviewClip] = useState<ClipRecord | null>(null);
+  const [youtubeModalClip, setYoutubeModalClip] = useState<ClipRecord | null>(null);
   const [studioIngestMode, setStudioIngestMode] = useState<'upload' | 'youtube'>('upload');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isSetupWizardOpen, setIsSetupWizardOpen] = useState<boolean>(() => {
@@ -176,6 +179,11 @@ export function App() {
           title: 'Workspace Dashboard',
           description: 'Production metrics, library overview, and active publishing pipeline.'
         };
+      case 'prompt-video':
+        return {
+          title: 'Module C: AI Prompt-to-Video Studio',
+          description: 'Type any prompt or story idea. Generate full AI videos with voiceover, b-roll, and burned subtitles.'
+        };
       case 'studio':
         return {
           title: 'Module A: AI Clip Maker',
@@ -275,6 +283,14 @@ export function App() {
             />
           )}
 
+          {activeTab === 'prompt-video' && (
+            <PromptStudioView
+              onClipCreated={handleClipCreated}
+              onPreviewClip={(clip) => setActivePreviewClip(clip)}
+              onOpenYouTubeUpload={(clip) => setYoutubeModalClip(clip)}
+            />
+          )}
+
           {activeTab === 'strategy' && (
             <StrategyView
               setActiveTab={setActiveTab}
@@ -295,6 +311,7 @@ export function App() {
               onPreviewClip={(clip) => setActivePreviewClip(clip)}
               onUpdateClip={handleUpdateClip}
               onDeleteClip={handleDeleteClip}
+              onOpenYouTubeUpload={(clip) => setYoutubeModalClip(clip)}
             />
           )}
 
@@ -337,6 +354,20 @@ export function App() {
             await api.syncClipToGoogleDrive(id);
             await refreshData();
             showToast('Clip synced to Google Drive!');
+          }}
+          onOpenYouTubeUpload={(clip) => setYoutubeModalClip(clip)}
+        />
+      )}
+
+      {/* Direct YouTube Upload Modal */}
+      {youtubeModalClip && (
+        <YouTubeUploadModal
+          clip={youtubeModalClip}
+          integrations={integrations}
+          onClose={() => setYoutubeModalClip(null)}
+          onSuccess={async (_updatedClip, url) => {
+            await refreshData();
+            showToast(`Uploaded to YouTube: ${url}`);
           }}
         />
       )}

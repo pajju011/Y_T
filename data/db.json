@@ -2,6 +2,41 @@
   "videos": [],
   "clips": [
     {
+      "id": "ai-video-1792914618446",
+      "videoId": "prompt-origin",
+      "videoTitle": "AI Prompt Video: 5 subtle psychology tricks tha",
+      "title": "5 subtle psychology tricks that make p...: What You Must Know",
+      "hook": "Here is what nobody tells you about 5 subtle psychology tricks that .",
+      "transcript": "Here is what nobody tells you about 5 subtle psychology tricks that . The standard approach you see everywhere is actually holding you back. When you look at the data, the real breakthrough comes from one hidden variable. Apply this insight right away and see the difference immediately. Subscribe for more daily deep-dives and save this for later.",
+      "suggestedCaption": "Deep-dive on 5 subtle psychology tricks that make p.... What are your thoughts on this? #ai #learning #insights #breakthrough #shorts",
+      "startTime": 0,
+      "endTime": 24,
+      "duration": 24,
+      "viralityScore": 94,
+      "viralityReason": "Generated from custom prompt using cinematic motion styling and Google Neural Voice (Free) narration.",
+      "filePath": "C:\\Users\\ASUS\\Desktop\\YT\\uploads\\clips\\ai-video-ai-video-1792914618446.mp4",
+      "urlPath": "/uploads/clips/ai-video-ai-video-1792914618446.mp4",
+      "thumbnailUrl": "/uploads/thumbnails/thumb-ai-video-1792914618446.jpg",
+      "aspectRatio": "9:16",
+      "framingMode": "center",
+      "captionStyle": "bold-yellow",
+      "status": "in_review",
+      "scheduledDate": null,
+      "scheduledTime": null,
+      "platforms": [
+        "youtube",
+        "tiktok",
+        "instagram"
+      ],
+      "createdAt": "2026-10-25T07:50:23.812Z",
+      "approvedAt": null,
+      "publishedAt": null,
+      "prompt": "5 subtle psychology tricks that make people instantly respect you",
+      "googleDriveSynced": true,
+      "googleDriveSyncedAt": "2026-10-25T07:50:23.815Z",
+      "googleDriveFileUrl": "https://drive.google.com/drive/search?q=5_subtle_psychology_tricks_that_make_p_____What_You_Must_Know"
+    },
+    {
       "id": "trend-vid-1792912731737",
       "videoId": "trend-origin",
       "videoTitle": "AI Trend: Tech & AI",
@@ -700,12 +735,12 @@
       "name": "Google Drive Storage",
       "status": "connected",
       "channelHandle": "ClipGenius AI Vault",
-      "quotaUnitsUsed": 3,
+      "quotaUnitsUsed": 4,
       "dailyLimit": "15 GB Free Storage (Google Drive)",
       "requiresKey": false,
       "instructions": "Save rendered 9:16 vertical clips and raw videos directly into a Google Drive folder. Paste your Google Drive Folder link or ID to auto-sync.",
       "freeTierNotes": "15 GB free storage with any standard Google account. Never lose your clips and share them with your team in seconds.",
-      "lastSync": "2026-10-25T07:20:09.868Z"
+      "lastSync": "2026-10-25T07:50:23.817Z"
     }
   ],
   "settings": {
@@ -743,6 +778,30 @@
     "storageQuotaMb": 10240
   },
   "auditLogs": [
+    {
+      "id": "log-1792914623817",
+      "timestamp": "2026-10-25T07:50:23.817Z",
+      "action": "gdrive_sync",
+      "details": "Clip \"5 subtle psychology tricks that make p...: What You Must Know\" saved to Google Drive (ClipGenius AI Vault)"
+    },
+    {
+      "id": "log-1792914623815",
+      "timestamp": "2026-10-25T07:50:23.815Z",
+      "action": "clip_updated",
+      "details": "Clip \"ai-video-1792914618446\" updated: googleDriveSynced, googleDriveSyncedAt, googleDriveFileUrl"
+    },
+    {
+      "id": "log-1792914623814",
+      "timestamp": "2026-10-25T07:50:23.814Z",
+      "action": "prompt_video_generated",
+      "details": "Generated AI video from prompt \"5 subtle psychology tricks that make people instantly respect you\" (9:16, 24s, [Voice: Google Neural Voice (Free)])"
+    },
+    {
+      "id": "log-1792914623812",
+      "timestamp": "2026-10-25T07:50:23.812Z",
+      "action": "clip_created",
+      "details": "Clip \"5 subtle psychology tricks that make p...: What You Must Know\" created with status in_review"
+    },
     {
       "id": "log-1792912809876",
       "timestamp": "2026-10-25T07:20:09.876Z",

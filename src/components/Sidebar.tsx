@@ -10,11 +10,12 @@ import {
   ShieldCheck,
   HardDrive,
   Cpu,
-  Sparkles
+  Sparkles,
+  Wand2
 } from 'lucide-react';
 import type { MetricsData, SystemInfo } from '../api';
 
-export type ActiveTab = 'dashboard' | 'studio' | 'strategy' | 'trends' | 'approvals' | 'calendar' | 'integrations' | 'settings' | 'legal';
+export type ActiveTab = 'dashboard' | 'studio' | 'prompt-video' | 'strategy' | 'trends' | 'approvals' | 'calendar' | 'integrations' | 'settings' | 'legal';
 
 interface SidebarProps {
   activeTab: ActiveTab;
@@ -51,6 +52,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
         >
           <LayoutDashboard size={17} />
           <span>Dashboard</span>
+        </button>
+
+        <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Module C: AI Video Creator</span>
+        <button
+          className={`nav-item ${activeTab === 'prompt-video' ? 'active' : ''}`}
+          onClick={() => setActiveTab('prompt-video')}
+        >
+          <Wand2 size={17} style={{ color: '#a78bfa' }} />
+          <span>Prompt-to-Video Studio</span>
+          <span className="badge" style={{ backgroundColor: 'rgba(124, 58, 237, 0.25)', color: '#c4b5fd', fontSize: '0.65rem', padding: '0.1rem 0.35rem', marginLeft: 'auto' }}>
+            NEW
+          </span>
         </button>
 
         <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Module A: AI Clip Maker</span>
