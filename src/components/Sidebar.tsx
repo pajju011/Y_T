@@ -9,9 +9,9 @@ import {
   Settings,
   ShieldCheck,
   HardDrive,
-  Cpu,
   Sparkles,
-  Wand2
+  Wand2,
+  Flame
 } from 'lucide-react';
 import type { MetricsData, SystemInfo } from '../api';
 
@@ -33,7 +33,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside className="app-sidebar" aria-label="Main Navigation">
       <div className="sidebar-header">
-        <div className="brand-icon-box" aria-hidden="true">
+        <div className="brand-icon-box" aria-hidden="true" style={{ background: 'linear-gradient(135deg, #2563EB, #7C3AED)' }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
           </svg>
@@ -41,50 +41,44 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div>
           <div className="brand-title">ClipGenius AI</div>
         </div>
-        <span className="brand-badge">SaaS</span>
+        <span className="brand-badge" style={{ background: 'rgba(124, 58, 237, 0.25)', color: '#c4b5fd', borderColor: '#7c3aed' }}>
+          PRO
+        </span>
       </div>
 
       <nav className="sidebar-nav">
-        <span className="nav-section-label">Core Workspace</span>
-        <button
-          className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
-          onClick={() => setActiveTab('dashboard')}
-        >
-          <LayoutDashboard size={17} />
-          <span>Dashboard</span>
-        </button>
-
-        <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Module C: AI Video Creator</span>
+        {/* Core Studio Creators */}
+        <span className="nav-section-label">Creator Studio</span>
         <button
           className={`nav-item ${activeTab === 'prompt-video' ? 'active' : ''}`}
           onClick={() => setActiveTab('prompt-video')}
         >
           <Wand2 size={17} style={{ color: '#a78bfa' }} />
-          <span>Prompt-to-Video Studio</span>
+          <span>AI Video Creator</span>
           <span className="badge" style={{ backgroundColor: 'rgba(124, 58, 237, 0.25)', color: '#c4b5fd', fontSize: '0.65rem', padding: '0.1rem 0.35rem', marginLeft: 'auto' }}>
-            NEW
+            Multi-Scene
           </span>
         </button>
 
-        <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Module A: AI Clip Maker</span>
         <button
           className={`nav-item ${activeTab === 'studio' ? 'active' : ''}`}
           onClick={() => setActiveTab('studio')}
         >
           <Video size={17} />
-          <span>Long-to-Shorts Clipper</span>
+          <span>Long Video Clipper</span>
           {metrics && metrics.totalVideos > 0 && (
             <span className="nav-item-count">{metrics.totalVideos}</span>
           )}
         </button>
 
-        <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Module B: AI Trend Studio</span>
+        {/* Content & Intelligence */}
+        <span className="nav-section-label" style={{ marginTop: '0.75rem' }}>Content & Discovery</span>
         <button
-          className={`nav-item ${activeTab === 'strategy' ? 'active' : ''}`}
-          onClick={() => setActiveTab('strategy')}
+          className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
+          onClick={() => setActiveTab('dashboard')}
         >
-          <Sparkles size={17} />
-          <span>Content Strategy</span>
+          <LayoutDashboard size={17} />
+          <span>Studio Hub</span>
         </button>
 
         <button
@@ -98,7 +92,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
           ) : null}
         </button>
 
-        <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Production & Publishing</span>
+        <button
+          className={`nav-item ${activeTab === 'strategy' ? 'active' : ''}`}
+          onClick={() => setActiveTab('strategy')}
+        >
+          <Sparkles size={17} />
+          <span>Content Strategy</span>
+        </button>
+
+        {/* Publishing & Workflow */}
+        <span className="nav-section-label" style={{ marginTop: '0.75rem' }}>Publishing & Queue</span>
         <button
           className={`nav-item ${activeTab === 'approvals' ? 'active' : ''}`}
           onClick={() => setActiveTab('approvals')}
@@ -115,27 +118,28 @@ export const Sidebar: React.FC<SidebarProps> = ({
           onClick={() => setActiveTab('calendar')}
         >
           <Calendar size={17} />
-          <span>Publishing Calendar</span>
+          <span>Schedule & Calendar</span>
           {metrics && metrics.scheduledClips > 0 && (
             <span className="nav-item-count">{metrics.scheduledClips}</span>
           )}
         </button>
 
+        {/* Settings & Channels */}
+        <span className="nav-section-label" style={{ marginTop: '0.75rem' }}>Channels & Setup</span>
         <button
           className={`nav-item ${activeTab === 'integrations' ? 'active' : ''}`}
           onClick={() => setActiveTab('integrations')}
         >
           <Share2 size={17} />
-          <span>Channel Integrations</span>
+          <span>Channel Connections</span>
         </button>
 
-        <span className="nav-section-label" style={{ marginTop: '0.5rem' }}>Configuration & Trust</span>
         <button
           className={`nav-item ${activeTab === 'settings' ? 'active' : ''}`}
           onClick={() => setActiveTab('settings')}
         >
           <Settings size={17} />
-          <span>Settings & Free Setup</span>
+          <span>Studio Settings</span>
         </button>
 
         <button
@@ -143,22 +147,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
           onClick={() => setActiveTab('legal')}
         >
           <ShieldCheck size={17} />
-          <span>Credibility & Policies</span>
+          <span>Policies & Compliance</span>
         </button>
       </nav>
 
       <div className="sidebar-footer">
         <div className="system-status-indicator">
           <span className="status-dot" style={{ backgroundColor: systemInfo?.ffmpeg.available ? 'var(--success)' : 'var(--warning)' }}></span>
-          <span>FFmpeg 8.1: {systemInfo?.ffmpeg.available ? 'Ready (Local)' : 'Initializing'}</span>
+          <span>Engine: {systemInfo?.ffmpeg.available ? 'FFmpeg 8.1 Ready' : 'Initializing'}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-          <HardDrive size={13} />
-          <span>Local Storage: {metrics?.storageFormatted || '0.0 MB'}</span>
+          <Flame size={13} style={{ color: '#f59e0b' }} />
+          <span>Neural Voice: Edge HD ($0)</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-          <Cpu size={13} />
-          <span>Cost: $0.00 (100% Free)</span>
+          <HardDrive size={13} />
+          <span>Storage: {metrics?.storageFormatted || '0.0 MB'}</span>
         </div>
       </div>
     </aside>

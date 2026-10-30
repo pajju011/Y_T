@@ -27,7 +27,7 @@ import './styles/design-system.css';
 import './styles/app.css';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('prompt-video');
   const [metrics, setMetrics] = useState<MetricsData | null>(null);
   const [videos, setVideos] = useState<VideoRecord[]>([]);
   const [clips, setClips] = useState<ClipRecord[]>([]);
@@ -38,13 +38,7 @@ export function App() {
   const [youtubeModalClip, setYoutubeModalClip] = useState<ClipRecord | null>(null);
   const [studioIngestMode, setStudioIngestMode] = useState<'upload' | 'youtube'>('upload');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [isSetupWizardOpen, setIsSetupWizardOpen] = useState<boolean>(() => {
-    try {
-      return !localStorage.getItem('clipgenius_setup_status');
-    } catch {
-      return true;
-    }
-  });
+  const [isSetupWizardOpen, setIsSetupWizardOpen] = useState<boolean>(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 

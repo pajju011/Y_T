@@ -435,9 +435,10 @@ export const api = {
     prompt: string;
     aspectRatio?: '9:16' | '16:9';
     durationSec?: number;
-    style?: 'cinematic' | 'kinetic' | 'editorial' | 'neon';
+    style?: 'cinematic' | 'kinetic' | 'editorial' | 'neon' | 'mouthwatering' | 'documentary';
     captionStyle?: 'bold-yellow' | 'karaoke-blue' | 'minimal-white' | 'red-alert';
     voiceLanguage?: string;
+    voiceName?: string;
     musicBed?: boolean;
   }): Promise<ClipRecord> {
     const res = await fetch(`${API_BASE}/generate-from-prompt`, {

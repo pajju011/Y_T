@@ -6,7 +6,18 @@ import {
   Download,
   Upload,
   Check,
-  Loader2
+  Loader2,
+  Volume2,
+  Film,
+  Music,
+  Clock,
+  Type,
+  Utensils,
+  Cpu,
+  Brain,
+  Rocket,
+  DollarSign,
+  Copy
 } from 'lucide-react';
 import { api } from '../api';
 import type { ClipRecord } from '../api';
@@ -19,34 +30,39 @@ interface PromptStudioViewProps {
 
 const INSPIRATION_PROMPTS = [
   {
-    category: '🧠 Psychology & Mind',
-    prompt: '5 subtle psychology tricks that make people instantly respect you',
-    style: 'cinematic',
+    category: '🍔 Food & Cooking',
+    icon: Utensils,
+    prompt: 'The secret technique top chefs use to make steak ten times juicier',
+    style: 'mouthwatering',
     aspect: '9:16'
   },
   {
     category: '🤖 AI & Future Tech',
-    prompt: 'Why humanoid robots are quietly replacing warehouse workers in 2026',
+    icon: Cpu,
+    prompt: 'Why humanoid robots are quietly transforming warehouse manufacturing in 2026',
     style: 'neon',
     aspect: '9:16'
   },
   {
-    category: '⚡ Productivity',
-    prompt: 'The 2-minute morning rule used by top CEOs to eliminate brain fog',
+    category: '🧠 Mind & Psychology',
+    icon: Brain,
+    prompt: '5 subtle psychology tricks that instantly command respect in any conversation',
+    style: 'cinematic',
+    aspect: '9:16'
+  },
+  {
+    category: '🌌 Space Mysteries',
+    icon: Rocket,
+    prompt: 'What actually happens to time and light when you approach a supermassive black hole',
+    style: 'cinematic',
+    aspect: '9:16'
+  },
+  {
+    category: '💰 Wealth Principles',
+    icon: DollarSign,
+    prompt: 'The counter-intuitive leverage rule that separates the top 1% from wage earners',
     style: 'editorial',
     aspect: '9:16'
-  },
-  {
-    category: '💰 Business Secrets',
-    prompt: 'The shocking reason why Costco will never raise the $1.50 hotdog price',
-    style: 'kinetic',
-    aspect: '9:16'
-  },
-  {
-    category: '🌌 Science & Space',
-    prompt: 'What happens to time as you approach the event horizon of a black hole',
-    style: 'cinematic',
-    aspect: '16:9'
   }
 ];
 
@@ -55,19 +71,20 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
   onPreviewClip,
   onOpenYouTubeUpload
 }) => {
-  const [prompt, setPrompt] = useState('5 subtle psychology tricks that make people instantly respect you');
+  const [prompt, setPrompt] = useState('The secret technique top chefs use to make steak ten times juicier');
   const [aspectRatio, setAspectRatio] = useState<'9:16' | '16:9'>('9:16');
-  const [style, setStyle] = useState<'cinematic' | 'kinetic' | 'editorial' | 'neon'>('cinematic');
+  const [style, setStyle] = useState<'cinematic' | 'kinetic' | 'editorial' | 'neon' | 'mouthwatering' | 'documentary'>('mouthwatering');
   const [durationSec, setDurationSec] = useState<number>(30);
   const [captionStyle, setCaptionStyle] = useState<'bold-yellow' | 'karaoke-blue' | 'minimal-white' | 'red-alert'>('bold-yellow');
-  const [voiceLanguage, setVoiceLanguage] = useState<string>('English');
-  const [musicBed] = useState<boolean>(true);
+  const [voiceName, setVoiceName] = useState<string>('en-US-ChristopherNeural');
+  const [musicBed, setMusicBed] = useState<boolean>(true);
 
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [activeStep, setActiveStep] = useState<number>(1);
   const [generatedClip, setGeneratedClip] = useState<ClipRecord | null>(null);
   const [generationError, setGenerationError] = useState<string | null>(null);
+  const [copiedCaption, setCopiedCaption] = useState(false);
 
   const handleEnhancePrompt = async () => {
     if (!prompt.trim()) return;
@@ -93,10 +110,10 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
     setGeneratedClip(null);
     setActiveStep(1);
 
-    // Simulated progress steps for smooth UX feedback
+    // Dynamic progress stepper
     const t1 = setTimeout(() => setActiveStep(2), 2200);
-    const t2 = setTimeout(() => setActiveStep(3), 5000);
-    const t3 = setTimeout(() => setActiveStep(4), 9500);
+    const t2 = setTimeout(() => setActiveStep(3), 5500);
+    const t3 = setTimeout(() => setActiveStep(4), 11000);
 
     try {
       const clip = await api.generateFromPrompt({
@@ -105,7 +122,7 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
         durationSec,
         style,
         captionStyle,
-        voiceLanguage,
+        voiceName,
         musicBed
       });
 
@@ -123,9 +140,16 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
     }
   };
 
+  const copyCaptionToClipboard = () => {
+    if (!generatedClip) return;
+    navigator.clipboard.writeText(`${generatedClip.title}\n\n${generatedClip.suggestedCaption}`);
+    setCopiedCaption(true);
+    setTimeout(() => setCopiedCaption(false), 2500);
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
-      {/* Top Banner */}
+      {/* Studio Header Banner */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -137,9 +161,9 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
           <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '10px',
+            width: '44px',
+            height: '44px',
+            borderRadius: '12px',
             background: 'linear-gradient(135deg, #2563EB, #7C3AED)',
             display: 'flex',
             alignItems: 'center',
@@ -147,27 +171,27 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
             color: '#ffffff',
             boxShadow: '0 4px 14px rgba(124, 58, 237, 0.4)'
           }}>
-            <Wand2 size={22} />
+            <Wand2 size={24} />
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h2 style={{ fontSize: '1.25rem', margin: 0, fontWeight: 700 }}>AI Prompt-to-Video Studio</h2>
-              <span className="badge" style={{ backgroundColor: 'rgba(124, 58, 237, 0.2)', color: '#c4b5fd', borderColor: '#7c3aed' }}>
-                Full Generation
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <h2 style={{ fontSize: '1.3rem', margin: 0, fontWeight: 700 }}>AI Prompt-to-Shorts Studio</h2>
+              <span className="badge" style={{ backgroundColor: 'rgba(124, 58, 237, 0.25)', color: '#c4b5fd', borderColor: '#7c3aed' }}>
+                Multi-Scene Ken Burns Engine
               </span>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0' }}>
-              Turn any topic or idea into a finished video with neural voiceover, b-roll footage, and dynamic subtitles.
+              Transform any idea into a vibrant, multi-scene viral video with AI visuals, neural voices, and kinetic captions.
             </p>
           </div>
         </div>
 
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <span className="badge badge-approved" style={{ fontSize: '0.75rem' }}>
-            Spoken Neural Voice: $0.00 Free
+          <span className="badge" style={{ backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#6ee7b7', borderColor: '#10b981' }}>
+            Microsoft Neural Voice ($0)
           </span>
-          <span className="badge" style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#fca5a5', borderColor: '#ef4444' }}>
-            Direct YouTube Upload
+          <span className="badge" style={{ backgroundColor: 'rgba(59, 130, 246, 0.15)', color: '#93c5fd', borderColor: '#3b82f6' }}>
+            Cinematic Ken Burns
           </span>
         </div>
       </div>
@@ -178,7 +202,7 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
         <div className="form-group" style={{ marginBottom: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
             <label className="form-label" style={{ fontSize: '0.95rem', fontWeight: 600, margin: 0 }}>
-              Enter Video Topic or Story Prompt
+              What video would you like to create?
             </label>
             <button
               type="button"
@@ -186,10 +210,10 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
               onClick={handleEnhancePrompt}
               disabled={isEnhancing || isGenerating || !prompt.trim()}
               style={{ color: '#c4b5fd', borderColor: '#7c3aed' }}
-              title="Use AI to turn this idea into a high-retention video script blueprint"
+              title="Use AI to turn this idea into a viral script blueprint"
             >
               {isEnhancing ? <Loader2 size={13} className="animate-spin" /> : <Sparkles size={13} />}
-              <span>{isEnhancing ? 'Enhancing...' : 'Enhance with AI'}</span>
+              <span>{isEnhancing ? 'Enhancing...' : 'Enhance Hook with AI'}</span>
             </button>
           </div>
 
@@ -198,14 +222,14 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
             rows={3}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="e.g. 5 psychological tricks that instantly make people trust you... or Explain how quantum computers work in 30 seconds"
-            style={{ fontSize: '0.95rem', resize: 'vertical' }}
+            placeholder="e.g. The secret technique top chefs use to make steak ten times juicier... or 5 subtle psychology tricks that make people respect you instantly"
+            style={{ fontSize: '1rem', resize: 'vertical', lineHeight: 1.5 }}
             disabled={isGenerating}
           />
 
-          {/* Quick Starter Pills */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', marginTop: '0.75rem', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Quick Prompts:</span>
+          {/* Quick Creative Inspiration Pills */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.85rem', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Try an Idea:</span>
             {INSPIRATION_PROMPTS.map((item, idx) => (
               <button
                 key={idx}
@@ -217,16 +241,23 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
                   setAspectRatio(item.aspect as any);
                 }}
                 disabled={isGenerating}
-                style={{ fontSize: '0.75rem', padding: '0.2rem 0.55rem', borderRadius: '14px' }}
+                style={{
+                  fontSize: '0.75rem',
+                  padding: '0.25rem 0.65rem',
+                  borderRadius: '20px',
+                  borderColor: 'rgba(255, 255, 255, 0.12)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem'
+                }}
               >
-                <span>{item.category}:</span>
-                <span style={{ color: 'var(--text-secondary)' }}>"{item.prompt.slice(0, 32)}..."</span>
+                <span>{item.category}</span>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Configuration Options Grid */}
+        {/* Studio Configuration Grid */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
@@ -236,93 +267,111 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
           border: '1px solid var(--border-color)',
           borderRadius: 'var(--radius-sm)'
         }}>
-          {/* 1. Aspect Ratio */}
+          {/* 1. Visual Creative Style */}
           <div className="form-group" style={{ marginBottom: 0 }}>
-            <label className="form-label" style={{ fontWeight: 600 }}>Format & Platform</label>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button
-                type="button"
-                className={`btn btn-sm ${aspectRatio === '9:16' ? 'btn-primary' : 'btn-outline'}`}
-                style={{ flex: 1 }}
-                onClick={() => setAspectRatio('9:16')}
-                disabled={isGenerating}
-              >
-                <span>9:16 (Shorts/Reels)</span>
-              </button>
-              <button
-                type="button"
-                className={`btn btn-sm ${aspectRatio === '16:9' ? 'btn-primary' : 'btn-outline'}`}
-                style={{ flex: 1 }}
-                onClick={() => setAspectRatio('16:9')}
-                disabled={isGenerating}
-              >
-                <span>16:9 (YouTube Video)</span>
-              </button>
-            </div>
-          </div>
-
-          {/* 2. Visual Motion Style */}
-          <div className="form-group" style={{ marginBottom: 0 }}>
-            <label className="form-label" style={{ fontWeight: 600 }}>Visual Style</label>
+            <label className="form-label" style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <Film size={14} style={{ color: '#a78bfa' }} />
+              <span>Visual Creative Style</span>
+            </label>
             <select
               className="form-input"
               value={style}
               onChange={(e) => setStyle(e.target.value as any)}
               disabled={isGenerating}
             >
-              <option value="cinematic">Cinematic B-Roll & Depth</option>
-              <option value="neon">Cyberpunk Neon & Glow</option>
-              <option value="editorial">Editorial Special Report</option>
-              <option value="kinetic">Kinetic High-Contrast Motion</option>
+              <option value="mouthwatering">🍔 Mouthwatering Culinary (Food & Recipe)</option>
+              <option value="cinematic">🎬 Cinematic Realism (35mm Depth)</option>
+              <option value="kinetic">⚡ Kinetic Viral High-Energy</option>
+              <option value="neon">🔮 Cyberpunk Neon & Glow</option>
+              <option value="editorial">📜 Documentary Special Report</option>
             </select>
           </div>
 
-          {/* 3. Duration */}
+          {/* 2. Neural Voice Artist */}
           <div className="form-group" style={{ marginBottom: 0 }}>
-            <label className="form-label" style={{ fontWeight: 600 }}>Target Duration</label>
+            <label className="form-label" style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <Volume2 size={14} style={{ color: '#38bdf8' }} />
+              <span>Voiceover Narrator</span>
+            </label>
             <select
               className="form-input"
-              value={durationSec}
-              onChange={(e) => setDurationSec(Number(e.target.value))}
+              value={voiceName}
+              onChange={(e) => setVoiceName(e.target.value)}
               disabled={isGenerating}
             >
-              <option value={15}>15 Seconds (Rapid Hook)</option>
-              <option value={30}>30 Seconds (Optimal Retention)</option>
-              <option value={60}>60 Seconds (Deep-Dive Narrative)</option>
+              <option value="en-US-ChristopherNeural">🎙️ Christopher (Energetic Creator)</option>
+              <option value="en-US-JennyNeural">🎙️ Jenny (Warm & Natural Storyteller)</option>
+              <option value="en-US-GuyNeural">🎙️ Guy (Casual & Confident Host)</option>
+              <option value="en-US-AriaNeural">🎙️ Aria (Dynamic & Enthusiastic)</option>
+              <option value="en-US-EricNeural">🎙️ Eric (Deep & Cinematic Narrator)</option>
             </select>
           </div>
 
-          {/* 4. Subtitle Style */}
+          {/* 3. Subtitle Typography */}
           <div className="form-group" style={{ marginBottom: 0 }}>
-            <label className="form-label" style={{ fontWeight: 600 }}>Burned Subtitle Style</label>
+            <label className="form-label" style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <Type size={14} style={{ color: '#facc15' }} />
+              <span>Burned Subtitles</span>
+            </label>
             <select
               className="form-input"
               value={captionStyle}
               onChange={(e) => setCaptionStyle(e.target.value as any)}
               disabled={isGenerating}
             >
-              <option value="bold-yellow">Bold Yellow (MrBeast / Hormozi)</option>
-              <option value="karaoke-blue">Karaoke Sky Blue (Glowing Modern)</option>
-              <option value="minimal-white">Minimalist White Documentary</option>
+              <option value="bold-yellow">Bold Yellow (MrBeast / Viral)</option>
+              <option value="karaoke-blue">Karaoke Cyan (Glowing High-Tech)</option>
+              <option value="minimal-white">Minimalist Clean White</option>
               <option value="red-alert">Red Alert High-Energy</option>
             </select>
           </div>
 
-          {/* 5. Voice Language */}
+          {/* 4. Format & Duration */}
           <div className="form-group" style={{ marginBottom: 0 }}>
-            <label className="form-label" style={{ fontWeight: 600 }}>Spoken Narration</label>
+            <label className="form-label" style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <Clock size={14} style={{ color: '#34d399' }} />
+              <span>Duration & Format</span>
+            </label>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <select
+                className="form-input"
+                style={{ flex: 1 }}
+                value={durationSec}
+                onChange={(e) => setDurationSec(Number(e.target.value))}
+                disabled={isGenerating}
+              >
+                <option value={15}>15s (Rapid Hook)</option>
+                <option value={30}>30s (Viral Short)</option>
+                <option value={60}>60s (Deep Story)</option>
+              </select>
+
+              <select
+                className="form-input"
+                style={{ flex: 1 }}
+                value={aspectRatio}
+                onChange={(e) => setAspectRatio(e.target.value as any)}
+                disabled={isGenerating}
+              >
+                <option value="9:16">9:16 (Shorts/TikTok)</option>
+                <option value="16:9">16:9 (Landscape)</option>
+              </select>
+            </div>
+          </div>
+
+          {/* 5. Background Audio Bed */}
+          <div className="form-group" style={{ marginBottom: 0 }}>
+            <label className="form-label" style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <Music size={14} style={{ color: '#ec4899' }} />
+              <span>Background Audio</span>
+            </label>
             <select
               className="form-input"
-              value={voiceLanguage}
-              onChange={(e) => setVoiceLanguage(e.target.value)}
+              value={musicBed ? 'enabled' : 'disabled'}
+              onChange={(e) => setMusicBed(e.target.value === 'enabled')}
               disabled={isGenerating}
             >
-              <option value="English">English (US / Neutral)</option>
-              <option value="Spanish">Spanish (Español)</option>
-              <option value="French">French (Français)</option>
-              <option value="German">German (Deutsch)</option>
-              <option value="Hindi">Hindi (हिंदी)</option>
-              <option value="Portuguese">Portuguese (Português)</option>
+              <option value="enabled">🎵 Dynamic Ambient Bed (Ducked)</option>
+              <option value="disabled">🎙️ Clean Voice Only</option>
             </select>
           </div>
         </div>
@@ -336,27 +385,29 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
             disabled={isGenerating || !prompt.trim()}
             style={{
               width: '100%',
-              padding: '0.9rem',
-              fontSize: '1rem',
+              padding: '1rem',
+              fontSize: '1.05rem',
               fontWeight: 700,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '0.65rem',
+              gap: '0.75rem',
               background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)',
               border: 'none',
-              boxShadow: '0 4px 16px rgba(124, 58, 237, 0.35)'
+              borderRadius: 'var(--radius-sm)',
+              boxShadow: '0 4px 18px rgba(124, 58, 237, 0.4)',
+              cursor: isGenerating ? 'not-allowed' : 'pointer'
             }}
           >
             {isGenerating ? (
               <>
-                <Loader2 size={18} className="animate-spin" />
-                <span>Crafting AI Video from Prompt...</span>
+                <Loader2 size={20} className="animate-spin" />
+                <span>Directing & Rendering Multi-Scene Video...</span>
               </>
             ) : (
               <>
-                <Wand2 size={18} />
-                <span>Generate Video from Prompt (1-Click)</span>
+                <Wand2 size={20} />
+                <span>Create Video Now (1-Click)</span>
               </>
             )}
           </button>
@@ -375,7 +426,7 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#93c5fd' }}>
-                AI Video Production Pipeline in Progress:
+                AI Video Production Pipeline:
               </span>
               <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                 Step {activeStep} of 4
@@ -384,10 +435,10 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
               {[
-                { step: 1, title: 'Viral Script & Hook' },
+                { step: 1, title: 'Script & Scene Prompts' },
                 { step: 2, title: 'Neural Spoken Voice' },
-                { step: 3, title: 'B-Roll & Motion Canvas' },
-                { step: 4, title: 'Burn Captions & Compile' }
+                { step: 3, title: 'Multi-Scene 8K Visuals' },
+                { step: 4, title: 'Ken Burns & Subtitles' }
               ].map((s) => (
                 <div
                   key={s.step}
@@ -427,7 +478,7 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
             color: '#fca5a5',
             fontSize: '0.875rem'
           }}>
-            <strong>Generation Error:</strong> {generationError}
+            <strong>Generation Notice:</strong> {generationError}
           </div>
         )}
       </div>
@@ -436,28 +487,29 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
       {generatedClip && (
         <div className="card" style={{
           border: '1px solid #10b981',
-          background: 'linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, rgba(15, 23, 42, 0.6) 100%)',
+          background: 'linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.7) 100%)',
           display: 'flex',
           flexDirection: 'column',
-          gap: '1.25rem'
+          gap: '1.5rem',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               <div style={{
-                width: '32px',
-                height: '32px',
+                width: '36px',
+                height: '36px',
                 borderRadius: '50%',
-                backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                backgroundColor: 'rgba(16, 185, 129, 0.25)',
                 color: '#6ee7b7',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>
-                <Check size={18} />
+                <Check size={20} />
               </div>
               <div>
-                <h3 style={{ margin: 0, fontSize: '1.1rem' }}>AI Video Rendered Successfully!</h3>
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 700 }}>Your AI Video is Ready!</h3>
+                <span style={{ fontSize: '0.825rem', color: 'var(--text-secondary)' }}>
                   Duration: {generatedClip.duration}s • Format: {generatedClip.aspectRatio} • Virality Score: {generatedClip.viralityScore}/100
                 </span>
               </div>
@@ -474,23 +526,23 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.5rem',
-                padding: '0.55rem 1.15rem',
-                boxShadow: '0 4px 14px rgba(239, 68, 68, 0.35)'
+                padding: '0.6rem 1.25rem',
+                boxShadow: '0 4px 14px rgba(239, 68, 68, 0.4)'
               }}
             >
               <Upload size={16} />
-              <span style={{ fontWeight: 700 }}>Upload Directly to YouTube</span>
+              <span style={{ fontWeight: 700 }}>Upload to YouTube Shorts</span>
             </button>
           </div>
 
           {/* Details & Actions Grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '1.25rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '1.5rem',
             alignItems: 'center'
           }}>
-            {/* Left: Video Preview Mini Container */}
+            {/* Left: Video Player */}
             <div style={{
               display: 'flex',
               flexDirection: 'column',
@@ -498,58 +550,60 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
               backgroundColor: '#000000',
               borderRadius: 'var(--radius-sm)',
               overflow: 'hidden',
-              maxHeight: '360px',
+              maxHeight: '420px',
               border: '1px solid var(--border-color)',
-              position: 'relative'
+              boxShadow: '0 6px 20px rgba(0, 0, 0, 0.5)'
             }}>
               <video
                 src={generatedClip.urlPath}
                 controls
+                autoPlay
                 style={{
                   width: '100%',
-                  maxHeight: '340px',
+                  maxHeight: '400px',
                   objectFit: 'contain'
                 }}
               />
             </div>
 
             {/* Right: Script Breakdown & Actions */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   Video Title
                 </span>
-                <h4 style={{ margin: '0.15rem 0 0', fontSize: '1rem', color: '#ffffff' }}>
+                <h4 style={{ margin: '0.2rem 0 0', fontSize: '1.1rem', color: '#ffffff', fontWeight: 600 }}>
                   {generatedClip.title}
                 </h4>
               </div>
 
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  Spoken 3-Second Hook
+                  Spoken Hook
                 </span>
-                <p style={{ margin: '0.15rem 0 0', fontSize: '0.85rem', color: '#fef08a', fontStyle: 'italic' }}>
+                <p style={{ margin: '0.2rem 0 0', fontSize: '0.9rem', color: '#fef08a', fontStyle: 'italic', lineHeight: 1.4 }}>
                   "{generatedClip.hook}"
                 </p>
               </div>
 
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  YouTube Caption & Hashtags
+                  YouTube Description & Hashtags
                 </span>
-                <p style={{ margin: '0.15rem 0 0', fontSize: '0.825rem', color: 'var(--text-secondary)' }}>
+                <p style={{ margin: '0.2rem 0 0', fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
                   {generatedClip.suggestedCaption}
                 </p>
               </div>
 
               {/* Action Buttons Toolbar */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: '0.5rem' }}>
                 <button
                   type="button"
                   className="btn btn-secondary btn-sm"
                   onClick={() => onPreviewClip(generatedClip)}
+                  style={{ gap: '0.4rem' }}
                 >
-                  <Play size={13} />
+                  <Play size={14} />
                   <span>Full Screen Preview</span>
                 </button>
 
@@ -557,11 +611,21 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
                   href={generatedClip.urlPath}
                   download
                   className="btn btn-outline btn-sm"
-                  style={{ color: '#ffffff' }}
+                  style={{ color: '#ffffff', gap: '0.4rem' }}
                 >
-                  <Download size={13} />
+                  <Download size={14} />
                   <span>Download MP4</span>
                 </a>
+
+                <button
+                  type="button"
+                  className="btn btn-outline btn-sm"
+                  onClick={copyCaptionToClipboard}
+                  style={{ gap: '0.4rem', color: copiedCaption ? '#6ee7b7' : 'inherit' }}
+                >
+                  <Copy size={14} />
+                  <span>{copiedCaption ? 'Copied!' : 'Copy Caption'}</span>
+                </button>
               </div>
             </div>
           </div>

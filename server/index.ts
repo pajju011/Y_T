@@ -159,6 +159,7 @@ app.post('/api/generate-from-prompt', async (req, res) => {
       style = 'cinematic',
       captionStyle = 'bold-yellow',
       voiceLanguage = 'English',
+      voiceName = 'en-US-ChristopherNeural',
       musicBed = true
     } = req.body;
 
@@ -173,6 +174,7 @@ app.post('/api/generate-from-prompt', async (req, res) => {
       style,
       captionStyle,
       voiceLanguage,
+      voiceName,
       musicBed
     });
 

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
+import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 import { db } from './db.js';
 import { ffmpegService } from './ffmpeg.js';
 
@@ -12,9 +13,9 @@ export interface TTSResult {
 
 export class TextToSpeechService {
   /**
-   * Generates realistic spoken voiceover from text using configured provider
+   * Generates realistic spoken voiceover from text using Edge Neural, ElevenLabs, OpenAI, or Fallback
    */
-  public async generateSpeech(text: string, outputFilename: string): Promise<TTSResult> {
+  public async generateSpeech(text: string, outputFilename: string, requestedVoice?: string): Promise<TTSResult> {
     const settings = db.getSettings();
     const uploadsDir = path.resolve(process.cwd(), 'uploads', 'audio');
     if (!fs.existsSync(uploadsDir)) {
@@ -22,7 +23,7 @@ export class TextToSpeechService {
     }
     const outputPath = path.join(uploadsDir, outputFilename);
 
-    // 1. Try ElevenLabs
+    // 1. Try ElevenLabs (if configured)
     if (settings.elevenLabsApiKey && settings.elevenLabsApiKey.trim() !== '') {
       try {
         console.log('[TTS] Generating speech with ElevenLabs...');
@@ -48,16 +49,13 @@ export class TextToSpeechService {
           fs.writeFileSync(outputPath, Buffer.from(buffer));
           const meta = await ffmpegService.getMetadata(outputPath);
           return { audioPath: outputPath, duration: meta.duration || 30, provider: 'ElevenLabs' };
-        } else {
-          const errText = await response.text();
-          console.warn('[TTS] ElevenLabs responded with error:', errText);
         }
       } catch (err: any) {
         console.warn('[TTS] ElevenLabs failed:', err.message);
       }
     }
 
-    // 2. Try OpenAI TTS
+    // 2. Try OpenAI TTS (if configured)
     if (settings.openaiApiKey && settings.openaiApiKey.trim() !== '') {
       try {
         console.log('[TTS] Generating speech with OpenAI TTS...');
@@ -79,42 +77,45 @@ export class TextToSpeechService {
           fs.writeFileSync(outputPath, Buffer.from(buffer));
           const meta = await ffmpegService.getMetadata(outputPath);
           return { audioPath: outputPath, duration: meta.duration || 30, provider: 'OpenAI TTS' };
-        } else {
-          const errText = await response.text();
-          console.warn('[TTS] OpenAI TTS responded with error:', errText);
         }
       } catch (err: any) {
         console.warn('[TTS] OpenAI TTS failed:', err.message);
       }
     }
 
-    // 3. Try Deepgram Aura
-    if (settings.deepgramApiKey && settings.deepgramApiKey.trim() !== '') {
-      try {
-        console.log('[TTS] Generating speech with Deepgram Aura...');
-        const response = await fetch('https://api.deepgram.com/v1/speak?model=aura-asteria-en', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${settings.deepgramApiKey.trim()}`
-          },
-          body: JSON.stringify({ text })
-        });
+    // 3. Ultra High Quality Microsoft Edge Neural Voice (100% Free, Human-Sounding)
+    try {
+      const voice = requestedVoice || 'en-US-ChristopherNeural';
+      console.log(`[TTS] Generating realistic human voice with Microsoft Edge Neural (${voice})...`);
+      const tts = new MsEdgeTTS();
+      await tts.setMetadata(voice, OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
+      
+      const cleanText = text.replace(/[*_#~`]/g, '').trim();
+      const { audioStream } = tts.toStream(cleanText);
 
-        if (response.ok) {
-          const buffer = await response.arrayBuffer();
-          fs.writeFileSync(outputPath, Buffer.from(buffer));
-          const meta = await ffmpegService.getMetadata(outputPath);
-          return { audioPath: outputPath, duration: meta.duration || 30, provider: 'Deepgram Aura' };
-        }
-      } catch (err: any) {
-        console.warn('[TTS] Deepgram Aura failed:', err.message);
+      await new Promise<void>((resolve, reject) => {
+        const writeStream = fs.createWriteStream(outputPath);
+        audioStream.pipe(writeStream);
+        writeStream.on('finish', () => resolve());
+        writeStream.on('error', reject);
+        setTimeout(() => reject(new Error('Edge TTS stream timeout')), 18000);
+      });
+
+      if (fs.existsSync(outputPath) && fs.statSync(outputPath).size > 1000) {
+        const meta = await ffmpegService.getMetadata(outputPath);
+        return {
+          audioPath: outputPath,
+          duration: meta.duration || 30,
+          provider: `Microsoft Neural Voice (${voice.replace('en-US-', '').replace('Neural', '')})`
+        };
       }
+    } catch (edgeErr: any) {
+      console.warn('[TTS] Edge Neural Voice attempt notice:', edgeErr.message);
     }
 
-    // 4. Free Neural Voice Engine (Google Neural Voice - 100% Free, Zero API Keys)
+    // 4. Free Google Voice Fallback
     try {
-      console.log('[TTS] Generating speech with Free Google Neural Voice engine...');
+      console.log('[TTS] Falling back to Google Voice engine...');
       const speechBuffer = await this.fetchFreeGoogleTts(text);
       if (speechBuffer && speechBuffer.length > 1000) {
         fs.writeFileSync(outputPath, speechBuffer);
@@ -122,10 +123,10 @@ export class TextToSpeechService {
         return { audioPath: outputPath, duration: meta.duration || 30, provider: 'Google Neural Voice (Free)' };
       }
     } catch (err: any) {
-      console.warn('[TTS] Free Google Voice failed:', err.message);
+      console.warn('[TTS] Google Voice fallback failed:', err.message);
     }
 
-    // 5. Clean Ambient Audio Bed Fallback (Offline fallback)
+    // 5. Ambient Bed Fallback
     console.log('[TTS] Using ambient audio bed (Offline fallback)');
     return new Promise((resolve) => {
       const duration = 30;
@@ -136,9 +137,6 @@ export class TextToSpeechService {
     });
   }
 
-  /**
-   * Fetches realistic spoken voice chunks from free Google Voice API and concatenates into MP3
-   */
   private async fetchFreeGoogleTts(text: string): Promise<Buffer | null> {
     try {
       const rawSentences = text
