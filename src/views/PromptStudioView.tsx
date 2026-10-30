@@ -175,23 +175,23 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <h2 style={{ fontSize: '1.3rem', margin: 0, fontWeight: 700 }}>AI Prompt-to-Shorts Studio</h2>
+              <h2 style={{ fontSize: '1.3rem', margin: 0, fontWeight: 700 }}>AI Video Creator</h2>
               <span className="badge" style={{ backgroundColor: 'rgba(124, 58, 237, 0.25)', color: '#c4b5fd', borderColor: '#7c3aed' }}>
-                Multi-Scene Ken Burns Engine
+                B-Roll + Remotion Kinetic Captions
               </span>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0' }}>
-              Transform any idea into a vibrant, multi-scene viral video with AI visuals, neural voices, and kinetic captions.
+              Synthesizing MoneyPrinter (real B-roll clips), ShortGPT (smart scene pacing), and Remotion (kinetic animated typography).
             </p>
           </div>
         </div>
 
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <span className="badge" style={{ backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#6ee7b7', borderColor: '#10b981' }}>
-            Microsoft Neural Voice ($0)
+            Edge Neural Narration ($0)
           </span>
           <span className="badge" style={{ backgroundColor: 'rgba(59, 130, 246, 0.15)', color: '#93c5fd', borderColor: '#3b82f6' }}>
-            Cinematic Ken Burns
+            Real HD Video B-Roll
           </span>
         </div>
       </div>
@@ -435,10 +435,10 @@ export const PromptStudioView: React.FC<PromptStudioViewProps> = ({
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
               {[
-                { step: 1, title: 'Script & Scene Prompts' },
-                { step: 2, title: 'Neural Spoken Voice' },
-                { step: 3, title: 'Multi-Scene 8K Visuals' },
-                { step: 4, title: 'Ken Burns & Subtitles' }
+                { step: 1, title: 'Viral Hook & Script' },
+                { step: 2, title: 'Neural Voiceover' },
+                { step: 3, title: 'Real Video B-Roll' },
+                { step: 4, title: 'Remotion Kinetic Captions' }
               ].map((s) => (
                 <div
                   key={s.step}

@@ -1,15 +1,9 @@
 import React from 'react';
 import {
-  LayoutDashboard,
   Video,
   CheckSquare,
-  Calendar,
-  TrendingUp,
-  Share2,
   Settings,
-  ShieldCheck,
   HardDrive,
-  Sparkles,
   Wand2,
   Flame
 } from 'lucide-react';
@@ -48,7 +42,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       <nav className="sidebar-nav">
         {/* Core Studio Creators */}
-        <span className="nav-section-label">Creator Studio</span>
+        <span className="nav-section-label">Studio Engine</span>
         <button
           className={`nav-item ${activeTab === 'prompt-video' ? 'active' : ''}`}
           onClick={() => setActiveTab('prompt-video')}
@@ -56,109 +50,51 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <Wand2 size={17} style={{ color: '#a78bfa' }} />
           <span>AI Video Creator</span>
           <span className="badge" style={{ backgroundColor: 'rgba(124, 58, 237, 0.25)', color: '#c4b5fd', fontSize: '0.65rem', padding: '0.1rem 0.35rem', marginLeft: 'auto' }}>
-            Multi-Scene
+            B-Roll + Kinetic
           </span>
+        </button>
+
+        <button
+          className={`nav-item ${activeTab === 'approvals' ? 'active' : ''}`}
+          onClick={() => setActiveTab('approvals')}
+        >
+          <CheckSquare size={17} style={{ color: '#38bdf8' }} />
+          <span>Video Vault</span>
+          {metrics && metrics.totalClips > 0 && (
+            <span className="nav-item-count">{metrics.totalClips}</span>
+          )}
         </button>
 
         <button
           className={`nav-item ${activeTab === 'studio' ? 'active' : ''}`}
           onClick={() => setActiveTab('studio')}
         >
-          <Video size={17} />
+          <Video size={17} style={{ color: '#34d399' }} />
           <span>Long Video Clipper</span>
           {metrics && metrics.totalVideos > 0 && (
             <span className="nav-item-count">{metrics.totalVideos}</span>
           )}
         </button>
 
-        {/* Content & Intelligence */}
-        <span className="nav-section-label" style={{ marginTop: '0.75rem' }}>Content & Discovery</span>
-        <button
-          className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
-          onClick={() => setActiveTab('dashboard')}
-        >
-          <LayoutDashboard size={17} />
-          <span>Studio Hub</span>
-        </button>
-
-        <button
-          className={`nav-item ${activeTab === 'trends' ? 'active' : ''}`}
-          onClick={() => setActiveTab('trends')}
-        >
-          <TrendingUp size={17} />
-          <span>Live Trends Radar</span>
-          {metrics && metrics.liveTrendsCount && metrics.liveTrendsCount > 0 ? (
-            <span className="nav-item-count">{metrics.liveTrendsCount}</span>
-          ) : null}
-        </button>
-
-        <button
-          className={`nav-item ${activeTab === 'strategy' ? 'active' : ''}`}
-          onClick={() => setActiveTab('strategy')}
-        >
-          <Sparkles size={17} />
-          <span>Content Strategy</span>
-        </button>
-
-        {/* Publishing & Workflow */}
-        <span className="nav-section-label" style={{ marginTop: '0.75rem' }}>Publishing & Queue</span>
-        <button
-          className={`nav-item ${activeTab === 'approvals' ? 'active' : ''}`}
-          onClick={() => setActiveTab('approvals')}
-        >
-          <CheckSquare size={17} />
-          <span>Review & Approvals</span>
-          {metrics && metrics.inReviewClips > 0 && (
-            <span className="nav-item-count">{metrics.inReviewClips}</span>
-          )}
-        </button>
-
-        <button
-          className={`nav-item ${activeTab === 'calendar' ? 'active' : ''}`}
-          onClick={() => setActiveTab('calendar')}
-        >
-          <Calendar size={17} />
-          <span>Schedule & Calendar</span>
-          {metrics && metrics.scheduledClips > 0 && (
-            <span className="nav-item-count">{metrics.scheduledClips}</span>
-          )}
-        </button>
-
-        {/* Settings & Channels */}
-        <span className="nav-section-label" style={{ marginTop: '0.75rem' }}>Channels & Setup</span>
-        <button
-          className={`nav-item ${activeTab === 'integrations' ? 'active' : ''}`}
-          onClick={() => setActiveTab('integrations')}
-        >
-          <Share2 size={17} />
-          <span>Channel Connections</span>
-        </button>
-
+        {/* Configuration & Storage */}
+        <span className="nav-section-label" style={{ marginTop: '0.75rem' }}>Configuration</span>
         <button
           className={`nav-item ${activeTab === 'settings' ? 'active' : ''}`}
           onClick={() => setActiveTab('settings')}
         >
           <Settings size={17} />
-          <span>Studio Settings</span>
-        </button>
-
-        <button
-          className={`nav-item ${activeTab === 'legal' ? 'active' : ''}`}
-          onClick={() => setActiveTab('legal')}
-        >
-          <ShieldCheck size={17} />
-          <span>Policies & Compliance</span>
+          <span>Settings & Storage</span>
         </button>
       </nav>
 
       <div className="sidebar-footer">
         <div className="system-status-indicator">
           <span className="status-dot" style={{ backgroundColor: systemInfo?.ffmpeg.available ? 'var(--success)' : 'var(--warning)' }}></span>
-          <span>Engine: {systemInfo?.ffmpeg.available ? 'FFmpeg 8.1 Ready' : 'Initializing'}</span>
+          <span>Engine: {systemInfo?.ffmpeg.available ? 'FFmpeg Ready' : 'Initializing'}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
           <Flame size={13} style={{ color: '#f59e0b' }} />
-          <span>Neural Voice: Edge HD ($0)</span>
+          <span>Audio: Edge Neural HD</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
           <HardDrive size={13} />

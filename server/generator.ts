@@ -378,6 +378,86 @@ Return ONLY valid JSON matching this schema:
   }
 
   /**
+   * Generates Remotion-grade kinetic ASS subtitles with fast-paced 2-3 word bursts
+   * and prominent active-word highlighting in the mobile safe zone.
+   */
+  private buildKineticSubtitles(
+    scriptPlan: any,
+    totalDuration: number,
+    width: number,
+    height: number,
+    captionStyle: string
+  ): string {
+    const isVertical = height > width;
+    const fontSize = isVertical ? 68 : 52;
+    const marginV = isVertical ? 430 : 130;
+
+    let highlightColor = '&H0000FFFF'; // Bold Yellow (Default BGR)
+    if (captionStyle === 'karaoke-blue') highlightColor = '&H00FFFF00'; // Cyan
+    else if (captionStyle === 'minimal-white') highlightColor = '&H00FFFFFF';
+    else if (captionStyle === 'red-alert') highlightColor = '&H000000FF';
+
+    // Combine full text
+    const fullText = (scriptPlan.fullNarration || `${scriptPlan.hook} ${scriptPlan.scene1} ${scriptPlan.scene2} ${scriptPlan.scene3}`).trim();
+    // Split into sentences / phrases
+    const rawWords = fullText.split(/\s+/).filter((w: string) => w.length > 0);
+    const totalWords = Math.max(1, rawWords.length);
+
+    // Group into punchy bursts of 2-3 words (ShortGPT / Remotion style)
+    const bursts: string[][] = [];
+    let currentBurst: string[] = [];
+    for (let i = 0; i < rawWords.length; i++) {
+      currentBurst.push(rawWords[i]);
+      if (currentBurst.length >= 3 || rawWords[i].match(/[.!?]$/)) {
+        bursts.push(currentBurst);
+        currentBurst = [];
+      }
+    }
+    if (currentBurst.length > 0) bursts.push(currentBurst);
+
+    const formatTime = (sec: number) => {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      const cs = Math.floor((sec % 1) * 100);
+      return `0:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}.${String(cs).padStart(2, '0')}`;
+    };
+
+    let events = '';
+    let currentTime = 0;
+    const totalBursts = bursts.length;
+
+    bursts.forEach((burst, idx) => {
+      const burstDuration = (burst.length / totalWords) * totalDuration;
+      const start = currentTime;
+      const end = idx === totalBursts - 1 ? totalDuration : Math.min(totalDuration, start + burstDuration);
+      currentTime = end;
+
+      // Highlight the first word in vibrant color, rest in pure white
+      const firstWord = burst[0].toUpperCase();
+      const restWords = burst.slice(1).map(w => w.toUpperCase()).join(' ');
+      const formattedText = restWords
+        ? `{\\c${highlightColor}}${firstWord}{\\c&HFFFFFF&} ${restWords}`
+        : `{\\c${highlightColor}}${firstWord}`;
+
+      events += `Dialogue: 0,${formatTime(start)},${formatTime(end)},Default,,0,0,0,,{\\b1}${formattedText}{\\b0}\n`;
+    });
+
+    return `[Script Info]
+ScriptType: v4.00+
+PlayResX: ${width}
+PlayResY: ${height}
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,${fontSize},&H00FFFFFF,&H00000000,&H00000000,&H90000000,-1,0,0,0,100,100,1,0,1,6,3,2,40,40,${marginV},1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+${events}`;
+  }
+
+  /**
    * Generates a multi-scene dynamic video using individual Ken Burns motion on each scene visual,
    * combined with neural voiceover, background audio bed, and burned kinetic subtitles.
    */
@@ -416,151 +496,126 @@ Return ONLY valid JSON matching this schema:
         `${scriptPlan.scene3} inspiring conclusion visual`
       ];
 
-      console.log(`[Multi-Scene Engine] Fetching ${prompts.length} high-res scene visuals in parallel...`);
-      const sceneImages = await Promise.all([
-        stockMediaService.fetchSceneVisual({ prompt: prompts[0] || prompts[0], style, aspectRatio, sceneIndex: 0 }).catch(() => null),
-        stockMediaService.fetchSceneVisual({ prompt: prompts[1] || prompts[0], style, aspectRatio, sceneIndex: 1 }).catch(() => null),
-        stockMediaService.fetchSceneVisual({ prompt: prompts[2] || prompts[0], style, aspectRatio, sceneIndex: 2 }).catch(() => null),
-        stockMediaService.fetchSceneVisual({ prompt: prompts[3] || prompts[0], style, aspectRatio, sceneIndex: 3 }).catch(() => null),
+      console.log(`[Multi-Scene Engine] Sourcing real HD B-roll footage for ${prompts.length} scenes (MoneyPrinter + ShortGPT pipeline)...`);
+      const sceneClips = await Promise.all([
+        stockMediaService.fetchSceneVideoClip({ prompt: prompts[0], style, aspectRatio, sceneIndex: 0, durationSec: d0 }).catch(() => null),
+        stockMediaService.fetchSceneVideoClip({ prompt: prompts[1], style, aspectRatio, sceneIndex: 1, durationSec: d1 }).catch(() => null),
+        stockMediaService.fetchSceneVideoClip({ prompt: prompts[2], style, aspectRatio, sceneIndex: 2, durationSec: d2 }).catch(() => null),
+        stockMediaService.fetchSceneVideoClip({ prompt: prompts[3], style, aspectRatio, sceneIndex: 3, durationSec: d3 }).catch(() => null),
       ]);
 
-      // Build Subtitle File
+      // Build Remotion-Grade Kinetic Subtitles (Fast-paced 2-3 word bursts with active word highlights)
       const subFilename = `sub-kinetic-${Date.now()}.ass`;
       const subPath = path.join(targetDir, subFilename);
-
-      let primaryColor = '&H0000FFFF'; // Bold Yellow (Default)
-      if (captionStyle === 'karaoke-blue') primaryColor = '&H00FFFF00'; // Light Sky Blue (BGR)
-      else if (captionStyle === 'minimal-white') primaryColor = '&H00FFFFFF';
-      else if (captionStyle === 'red-alert') primaryColor = '&H000000FF';
-
-      const fontSize = isVertical ? 64 : 52;
-      const marginV = isVertical ? 460 : 140;
-
-      const t1 = d0;
-      const t2 = d0 + d1;
-      const t3 = d0 + d1 + d2;
-
-      const formatTime = (sec: number) => {
-        const m = Math.floor(sec / 60);
-        const s = Math.floor(sec % 60);
-        const cs = Math.floor((sec % 1) * 100);
-        return `0:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}.${String(cs).padStart(2, '0')}`;
-      };
-
-      const assContent = `[Script Info]
-ScriptType: v4.00+
-PlayResX: ${width}
-PlayResY: ${height}
-ScaledBorderAndShadow: yes
-
-[V4+ Styles]
-Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Hook,Arial,${fontSize + 6},${primaryColor},&H00000000,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,6,3,2,50,50,${marginV},1
-Style: Scene,Arial,${fontSize},&H00FFFFFF,&H00000000,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,6,3,2,50,50,${marginV},1
-Style: CTA,Arial,${fontSize + 4},&H00FFA500,&H00000000,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,6,3,2,50,50,${marginV},1
-
-[Events]
-Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,${formatTime(0)},${formatTime(t1)},Hook,,0,0,0,,{\\b1}${scriptPlan.hook.toUpperCase()}{\\b0}
-Dialogue: 0,${formatTime(t1)},${formatTime(t2)},Scene,,0,0,0,,{\\b1}${scriptPlan.scene1.toUpperCase()}{\\b0}
-Dialogue: 0,${formatTime(t2)},${formatTime(t3)},Scene,,0,0,0,,{\\b1}${scriptPlan.scene2.toUpperCase()}{\\b0}
-Dialogue: 0,${formatTime(t3)},${formatTime(duration)},CTA,,0,0,0,,{\\b1}${(scriptPlan.scene3 || '').toUpperCase()}{\\b0}
-`;
+      const assContent = this.buildKineticSubtitles(scriptPlan, duration, width, height, captionStyle);
       fs.writeFileSync(subPath, assContent, 'utf-8');
 
       const escapedSub = subPath.replace(/\\/g, '/').replace(/:/g, '\\:');
       const escapedAudio = audioPath.replace(/\\/g, '/');
 
-      // Check if we have valid images to render Ken Burns motion
-      const validImages = sceneImages.filter((img): img is string => img !== null && fs.existsSync(img));
+      const tempSceneFiles: string[] = [];
+      const downloadedBrollFiles: string[] = [];
 
-      if (validImages.length > 0) {
-        // High Quality Multi-Scene Ken Burns Render Pipeline
-        const tempSceneFiles: string[] = [];
-        console.log(`[Multi-Scene Engine] Rendering Ken Burns camera motion on ${validImages.length} scenes...`);
+      try {
+        console.log(`[Multi-Scene Engine] Processing and assembling 4 scene video beats...`);
+        for (let i = 0; i < 4; i++) {
+          const clipItem = sceneClips[i];
+          const sceneDur = sceneDurations[i];
+          const sceneOutputFile = path.join(targetDir, `temp_scene_${Date.now()}_${i}.mp4`);
+          tempSceneFiles.push(sceneOutputFile);
 
-        try {
-          for (let i = 0; i < 4; i++) {
-            const imgPath = sceneImages[i] || validImages[i % validImages.length];
-            const sceneDur = sceneDurations[i];
-            const sceneOutputFile = path.join(targetDir, `temp_scene_${Date.now()}_${i}.mp4`);
-            tempSceneFiles.push(sceneOutputFile);
+          if (clipItem && clipItem.type === 'video' && fs.existsSync(clipItem.filePath)) {
+            // 1. REAL HD VIDEO B-ROLL (Pexels / Video Footage)
+            downloadedBrollFiles.push(clipItem.filePath);
+            const escapedVid = clipItem.filePath.replace(/\\/g, '/');
+            const videoCutCmd = `ffmpeg -y -ss 0 -t ${sceneDur} -i "${escapedVid}" -vf "scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height},fps=30" -c:v libx264 -preset fast -pix_fmt yuv420p -an "${sceneOutputFile}"`;
 
-            // Varied camera movement per scene
+            await new Promise<void>((resScene, rejScene) => {
+              exec(videoCutCmd, (err) => {
+                if (err) {
+                  console.warn(`[Multi-Scene Engine] B-roll video cut notice scene ${i}, applying fallback:`, err.message);
+                  return rejScene(err);
+                }
+                resScene();
+              });
+            }).catch(async () => {
+              // Fallback to motion canvas if video cut failed
+              const fbCmd = `ffmpeg -y -f lavfi -i "color=c=#0B132B:s=${width}x${height}:d=${sceneDur}" -vf "fps=30" -c:v libx264 -preset fast -pix_fmt yuv420p "${sceneOutputFile}"`;
+              await new Promise<void>((r) => exec(fbCmd, () => r()));
+            });
+
+          } else if (clipItem && clipItem.type === 'image' && fs.existsSync(clipItem.filePath)) {
+            // 2. High-Res Image with Remotion Ken Burns Motion
+            downloadedBrollFiles.push(clipItem.filePath);
+            const imgPath = clipItem.filePath;
             let zoomFilter = '';
-            if (i === 0) {
-              // Scene 0 (Hook): Slow, dramatic zoom-in
-              zoomFilter = `scale=1200:2133,zoompan=z='min(zoom+0.0014,1.22)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${sceneDur * 25}:s=${width}x${height}:fps=25`;
-            } else if (i === 1) {
-              // Scene 1: Smooth pan across
-              zoomFilter = `scale=1300:2311,zoompan=z=1.15:x='(iw-iw/zoom)*(on/(${sceneDur * 25}))':y='ih/2-(ih/zoom/2)':d=${sceneDur * 25}:s=${width}x${height}:fps=25`;
-            } else if (i === 2) {
-              // Scene 2: Dynamic zoom-in
-              zoomFilter = `scale=1200:2133,zoompan=z='min(zoom+0.0018,1.26)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${sceneDur * 25}:s=${width}x${height}:fps=25`;
-            } else {
-              // Scene 3: Subtle zoom-out
-              zoomFilter = `scale=1200:2133,zoompan=z='if(lte(zoom,1.0),1.18,max(1.001,zoom-0.0012))':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${sceneDur * 25}:s=${width}x${height}:fps=25`;
-            }
+            if (i === 0) zoomFilter = `scale=1200:2133,zoompan=z='min(zoom+0.0014,1.22)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${sceneDur * 25}:s=${width}x${height}:fps=25`;
+            else if (i === 1) zoomFilter = `scale=1300:2311,zoompan=z=1.15:x='(iw-iw/zoom)*(on/(${sceneDur * 25}))':y='ih/2-(ih/zoom/2)':d=${sceneDur * 25}:s=${width}x${height}:fps=25`;
+            else if (i === 2) zoomFilter = `scale=1200:2133,zoompan=z='min(zoom+0.0018,1.26)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${sceneDur * 25}:s=${width}x${height}:fps=25`;
+            else zoomFilter = `scale=1200:2133,zoompan=z='if(lte(zoom,1.0),1.18,max(1.001,zoom-0.0012))':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${sceneDur * 25}:s=${width}x${height}:fps=25`;
 
             const escapedImg = imgPath.replace(/\\/g, '/');
             const sceneCmd = `ffmpeg -y -loop 1 -i "${escapedImg}" -t ${sceneDur} -vf "${zoomFilter}" -c:v libx264 -preset fast -pix_fmt yuv420p "${sceneOutputFile}"`;
 
-            await new Promise<void>((resScene, rejScene) => {
-              exec(sceneCmd, (err) => {
-                if (err) return rejScene(err);
-                resScene();
-              });
+            await new Promise<void>((resScene) => {
+              exec(sceneCmd, () => resScene());
+            });
+
+          } else {
+            // 3. Dynamic Animated Studio Canvas
+            const colors = ['#0F172A', '#1E1B4B', '#022C22', '#172554'];
+            const chosenColor = colors[i % colors.length];
+            const canvasCmd = `ffmpeg -y -f lavfi -i "color=c=${chosenColor}:s=${width}x${height}:d=${sceneDur}" -vf "fps=30" -c:v libx264 -preset fast -pix_fmt yuv420p "${sceneOutputFile}"`;
+            await new Promise<void>((resScene) => {
+              exec(canvasCmd, () => resScene());
             });
           }
-
-          // Concat file list
-          const concatListFile = path.join(targetDir, `concat_${Date.now()}.txt`);
-          const concatContent = tempSceneFiles.map(f => `file '${f.replace(/\\/g, '/')}'`).join('\n');
-          fs.writeFileSync(concatListFile, concatContent, 'utf-8');
-
-          console.log('[Multi-Scene Engine] Merging scenes with voiceover & burned kinetic captions...');
-          const finalCmd = `ffmpeg -y -f concat -safe 0 -i "${concatListFile.replace(/\\/g, '/')}" -i "${escapedAudio}" -t ${duration} -vf "ass='${escapedSub}'" -c:v libx264 -preset fast -crf 21 -c:a aac -b:a 128k "${outputPath}"`;
-
-          const cleanupScratch = () => {
-            try { if (fs.existsSync(concatListFile)) fs.unlinkSync(concatListFile); } catch (e) {}
-            try { if (fs.existsSync(subPath)) fs.unlinkSync(subPath); } catch (e) {}
-            tempSceneFiles.forEach(f => {
-              try { if (fs.existsSync(f)) fs.unlinkSync(f); } catch (e) {}
-            });
-            // Clean up temporary downloaded scene images and voiceover MP3 to preserve storage
-            validImages.forEach(img => {
-              try { if (fs.existsSync(img)) fs.unlinkSync(img); } catch (e) {}
-            });
-            if (audioPath && fs.existsSync(audioPath)) {
-              try { fs.unlinkSync(audioPath); } catch (e) {}
-            }
-          };
-
-          exec(finalCmd, (finalErr) => {
-            if (finalErr) {
-              console.error('[Multi-Scene Engine] Concat assembly failed, running safe fallback:', finalErr);
-              const safeFallbackCmd = `ffmpeg -y -f lavfi -i "color=c=#0B1220:s=${width}x${height}:d=${duration}" -i "${escapedAudio}" -t ${duration} -c:v libx264 -c:a aac "${outputPath}"`;
-              exec(safeFallbackCmd, (fbErr) => {
-                cleanupScratch();
-                if (fbErr) return reject(fbErr);
-                resolve(outputPath);
-              });
-            } else {
-              cleanupScratch();
-              console.log(`[Multi-Scene Engine] Video generated successfully: ${outputPath}`);
-              resolve(outputPath);
-            }
-          });
-          return;
-        } catch (sceneErr: any) {
-          console.warn('[Multi-Scene Engine] Ken Burns generation error, applying single-visual fallback:', sceneErr.message);
         }
+
+        // Concat file list
+        const concatListFile = path.join(targetDir, `concat_${Date.now()}.txt`);
+        const concatContent = tempSceneFiles.map(f => `file '${f.replace(/\\/g, '/')}'`).join('\n');
+        fs.writeFileSync(concatListFile, concatContent, 'utf-8');
+
+        console.log('[Multi-Scene Engine] Merging video beats with voiceover & Remotion kinetic captions...');
+        const finalCmd = `ffmpeg -y -f concat -safe 0 -i "${concatListFile.replace(/\\/g, '/')}" -i "${escapedAudio}" -t ${duration} -vf "ass='${escapedSub}'" -c:v libx264 -preset fast -crf 20 -c:a aac -b:a 192k "${outputPath}"`;
+
+        const cleanupScratch = () => {
+          try { if (fs.existsSync(concatListFile)) fs.unlinkSync(concatListFile); } catch (e) {}
+          try { if (fs.existsSync(subPath)) fs.unlinkSync(subPath); } catch (e) {}
+          tempSceneFiles.forEach(f => {
+            try { if (fs.existsSync(f)) fs.unlinkSync(f); } catch (e) {}
+          });
+          downloadedBrollFiles.forEach(f => {
+            try { if (fs.existsSync(f)) fs.unlinkSync(f); } catch (e) {}
+          });
+          if (audioPath && fs.existsSync(audioPath)) {
+            try { fs.unlinkSync(audioPath); } catch (e) {}
+          }
+        };
+
+        exec(finalCmd, (finalErr) => {
+          if (finalErr) {
+            console.error('[Multi-Scene Engine] Final assembly notice, running safe fallback:', finalErr);
+            const safeFallbackCmd = `ffmpeg -y -f lavfi -i "color=c=#0B1220:s=${width}x${height}:d=${duration}" -i "${escapedAudio}" -t ${duration} -c:v libx264 -c:a aac "${outputPath}"`;
+            exec(safeFallbackCmd, (fbErr) => {
+              cleanupScratch();
+              if (fbErr) return reject(fbErr);
+              resolve(outputPath);
+            });
+          } else {
+            cleanupScratch();
+            console.log(`[Multi-Scene Engine] Video generated successfully: ${outputPath}`);
+            resolve(outputPath);
+          }
+        });
+        return;
+      } catch (pipelineErr: any) {
+        console.warn('[Multi-Scene Engine] Assembly error, falling back:', pipelineErr.message);
       }
 
-      // Single-visual / Dynamic Canvas Fallback
-      console.log('[Multi-Scene Engine] Using dynamic visual background fallback...');
-      const fallbackCmd = `ffmpeg -y -f lavfi -i "color=c=#0B132B:s=${width}x${height}:d=${duration}" -i "${escapedAudio}" -t ${duration} -vf "drawbox=x=80:y=${isVertical ? 200 : 90}:w=${width - 160}:h=6:color=#2563EB@0.8:t=fill,drawtext=fontfile='/Windows/Fonts/arial.ttf':text='VIRAL SHORT':x=(w-text_w)/2:y=${isVertical ? 120 : 45}:fontsize=34:fontcolor=#93C5FD:box=1:boxcolor=#1E293B@0.85:boxborderw=10,ass='${escapedSub}'" -c:v libx264 -preset fast -crf 22 -c:a aac -b:a 128k "${outputPath}"`;
-
+      // Safe emergency fallback
+      const fallbackCmd = `ffmpeg -y -f lavfi -i "color=c=#0B132B:s=${width}x${height}:d=${duration}" -i "${escapedAudio}" -t ${duration} -vf "ass='${escapedSub}'" -c:v libx264 -preset fast -crf 22 -c:a aac "${outputPath}"`;
       exec(fallbackCmd, (fbErr) => {
         try { if (fs.existsSync(subPath)) fs.unlinkSync(subPath); } catch (e) {}
         if (audioPath && fs.existsSync(audioPath)) {
