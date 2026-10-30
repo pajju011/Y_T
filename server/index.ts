@@ -365,6 +365,12 @@ app.delete('/api/videos/:id', (req, res) => {
     try { fs.unlinkSync(video.filePath); } catch (e) {}
   }
 
+  // Also clean up thumbnail
+  const thumbPath = path.join(uploadsDir, 'thumbnails', `thumb-${video.id}.jpg`);
+  if (fs.existsSync(thumbPath)) {
+    try { fs.unlinkSync(thumbPath); } catch (e) {}
+  }
+
   db.deleteVideo(req.params.id);
   res.json({ success: true, id: req.params.id });
 });
@@ -643,8 +649,26 @@ app.delete('/api/clips/:id', (req, res) => {
     try { fs.unlinkSync(clip.filePath); } catch (e) {}
   }
 
+  // Also clean up thumbnail
+  if (clip.thumbnailUrl) {
+    const thumbPath = path.resolve(process.cwd(), clip.thumbnailUrl.replace(/^\//, ''));
+    if (fs.existsSync(thumbPath)) {
+      try { fs.unlinkSync(thumbPath); } catch (e) {}
+    }
+  }
+
   db.deleteClip(req.params.id);
   res.json({ success: true, id: req.params.id });
+});
+
+// Storage Garbage Collection (Clean orphan and cache files)
+app.post('/api/storage/clean', (req, res) => {
+  try {
+    const result = db.cleanStorage();
+    res.json({ success: true, ...result });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Purge Demo Data

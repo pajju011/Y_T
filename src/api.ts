@@ -585,6 +585,12 @@ export const api = {
     return res.json();
   },
 
+  async cleanStorage(): Promise<{ success: boolean; removedFiles: number; reclaimedBytes: number; reclaimedFormatted: string }> {
+    const res = await fetch(`${API_BASE}/storage/clean`, { method: 'POST' });
+    if (!res.ok) throw new Error('Failed to clean storage');
+    return res.json();
+  },
+
   async resetWorkspace(): Promise<{ success: boolean; message: string }> {
     const res = await fetch(`${API_BASE}/workspace/reset`, { method: 'POST' });
     if (!res.ok) throw new Error('Failed to reset workspace');

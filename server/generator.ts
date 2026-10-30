@@ -521,22 +521,32 @@ Dialogue: 0,${formatTime(t3)},${formatTime(duration)},CTA,,0,0,0,,{\\b1}${(scrip
           console.log('[Multi-Scene Engine] Merging scenes with voiceover & burned kinetic captions...');
           const finalCmd = `ffmpeg -y -f concat -safe 0 -i "${concatListFile.replace(/\\/g, '/')}" -i "${escapedAudio}" -t ${duration} -vf "ass='${escapedSub}'" -c:v libx264 -preset fast -crf 21 -c:a aac -b:a 128k "${outputPath}"`;
 
-          exec(finalCmd, (finalErr) => {
-            // Clean up temporary files
-            try { fs.unlinkSync(concatListFile); } catch (e) {}
-            try { fs.unlinkSync(subPath); } catch (e) {}
+          const cleanupScratch = () => {
+            try { if (fs.existsSync(concatListFile)) fs.unlinkSync(concatListFile); } catch (e) {}
+            try { if (fs.existsSync(subPath)) fs.unlinkSync(subPath); } catch (e) {}
             tempSceneFiles.forEach(f => {
-              try { fs.unlinkSync(f); } catch (e) {}
+              try { if (fs.existsSync(f)) fs.unlinkSync(f); } catch (e) {}
             });
+            // Clean up temporary downloaded scene images and voiceover MP3 to preserve storage
+            validImages.forEach(img => {
+              try { if (fs.existsSync(img)) fs.unlinkSync(img); } catch (e) {}
+            });
+            if (audioPath && fs.existsSync(audioPath)) {
+              try { fs.unlinkSync(audioPath); } catch (e) {}
+            }
+          };
 
+          exec(finalCmd, (finalErr) => {
             if (finalErr) {
               console.error('[Multi-Scene Engine] Concat assembly failed, running safe fallback:', finalErr);
               const safeFallbackCmd = `ffmpeg -y -f lavfi -i "color=c=#0B1220:s=${width}x${height}:d=${duration}" -i "${escapedAudio}" -t ${duration} -c:v libx264 -c:a aac "${outputPath}"`;
               exec(safeFallbackCmd, (fbErr) => {
+                cleanupScratch();
                 if (fbErr) return reject(fbErr);
                 resolve(outputPath);
               });
             } else {
+              cleanupScratch();
               console.log(`[Multi-Scene Engine] Video generated successfully: ${outputPath}`);
               resolve(outputPath);
             }
@@ -552,7 +562,10 @@ Dialogue: 0,${formatTime(t3)},${formatTime(duration)},CTA,,0,0,0,,{\\b1}${(scrip
       const fallbackCmd = `ffmpeg -y -f lavfi -i "color=c=#0B132B:s=${width}x${height}:d=${duration}" -i "${escapedAudio}" -t ${duration} -vf "drawbox=x=80:y=${isVertical ? 200 : 90}:w=${width - 160}:h=6:color=#2563EB@0.8:t=fill,drawtext=fontfile='/Windows/Fonts/arial.ttf':text='VIRAL SHORT':x=(w-text_w)/2:y=${isVertical ? 120 : 45}:fontsize=34:fontcolor=#93C5FD:box=1:boxcolor=#1E293B@0.85:boxborderw=10,ass='${escapedSub}'" -c:v libx264 -preset fast -crf 22 -c:a aac -b:a 128k "${outputPath}"`;
 
       exec(fallbackCmd, (fbErr) => {
-        try { fs.unlinkSync(subPath); } catch (e) {}
+        try { if (fs.existsSync(subPath)) fs.unlinkSync(subPath); } catch (e) {}
+        if (audioPath && fs.existsSync(audioPath)) {
+          try { fs.unlinkSync(audioPath); } catch (e) {}
+        }
         if (fbErr) return reject(fbErr);
         resolve(outputPath);
       });

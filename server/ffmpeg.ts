@@ -349,7 +349,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
   }
 
   /**
-   * Ingest video directly from YouTube URL via yt-dlp
+   * Ingest video directly from YouTube URL via yt-dlp with storage safety controls
    */
   public async downloadYouTubeVideo(url: string, targetDir: string): Promise<{ filePath: string; title: string }> {
     return new Promise((resolve, reject) => {
@@ -360,23 +360,37 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
       const uniqueId = 'yt-' + Date.now();
       const outputTemplate = path.join(targetDir, `${uniqueId}.%(ext)s`);
 
+      // Cleanup helper for partial/interrupted files
+      const cleanupPartials = () => {
+        try {
+          if (fs.existsSync(targetDir)) {
+            const leftoverFiles = fs.readdirSync(targetDir).filter(f => f.startsWith(uniqueId) && (f.includes('.part') || f.includes('.ytdl')));
+            leftoverFiles.forEach(f => {
+              try { fs.unlinkSync(path.join(targetDir, f)); } catch {}
+            });
+          }
+        } catch {}
+      };
+
       // First get video title
       const titleCmd = `${this.ytDlpBin} --get-title --no-playlist "${url}"`;
       exec(titleCmd, (titleErr, titleStdout) => {
         const videoTitle = (!titleErr && titleStdout.trim()) ? titleStdout.trim() : 'YouTube Ingested Video';
 
-        // Download best mp4 stream
-        const dlCmd = `${this.ytDlpBin} -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --no-playlist -o "${outputTemplate}" "${url}"`;
+        // Download optimized 1080p/720p mp4 stream to avoid multi-gigabyte bloat
+        const dlCmd = `${this.ytDlpBin} -f "bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][ext=mp4]/best[height<=1080]/best" --no-keep-fragments --no-playlist -o "${outputTemplate}" "${url}"`;
         exec(dlCmd, (dlErr) => {
           if (dlErr) {
+            cleanupPartials();
             console.error('[yt-dlp] Download error:', dlErr);
             return reject(new Error('Failed to download YouTube video: ' + dlErr.message));
           }
 
           // Locate downloaded file with extension
           const files = fs.readdirSync(targetDir);
-          const downloaded = files.find(f => f.startsWith(uniqueId));
+          const downloaded = files.find(f => f.startsWith(uniqueId) && !f.endsWith('.part') && !f.endsWith('.ytdl'));
           if (!downloaded) {
+            cleanupPartials();
             return reject(new Error('Downloaded video file not found on disk.'));
           }
 

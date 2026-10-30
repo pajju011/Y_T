@@ -10,7 +10,8 @@ import {
   Loader2,
   CheckCircle,
   Cloud,
-  Trash2
+  Trash2,
+  HardDrive
 } from 'lucide-react';
 import type { SettingsData, SystemInfo } from '../api';
 import { api } from '../api';
@@ -70,8 +71,23 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
   const [isPurging, setIsPurging] = useState<boolean>(false);
+  const [isCleaningStorage, setIsCleaningStorage] = useState<boolean>(false);
   const [isResetting, setIsResetting] = useState<boolean>(false);
   const [dataActionMsg, setDataActionMsg] = useState<string | null>(null);
+
+  const handleCleanStorage = async () => {
+    setIsCleaningStorage(true);
+    try {
+      const res = await api.cleanStorage();
+      setDataActionMsg(`Storage cleaned: removed ${res.removedFiles} orphan/cache files and freed ${res.reclaimedFormatted}.`);
+      if (onRefreshAll) await onRefreshAll();
+      setTimeout(() => setDataActionMsg(null), 4000);
+    } catch (err: any) {
+      alert(`Storage clean failed: ${err.message}`);
+    } finally {
+      setIsCleaningStorage(false);
+    }
+  };
 
   const handlePurgeDemoData = async () => {
     setIsPurging(true);
@@ -798,6 +814,17 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           )}
 
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={handleCleanStorage}
+              disabled={isCleaningStorage}
+              style={{ gap: '0.4rem', borderColor: 'var(--accent-primary)', color: 'var(--accent-primary)' }}
+            >
+              <HardDrive size={14} />
+              <span>{isCleaningStorage ? 'Scanning & Cleaning...' : 'Clean Storage & Cache (Free Disk)'}</span>
+            </button>
+
             <button
               type="button"
               className="btn btn-secondary btn-sm"

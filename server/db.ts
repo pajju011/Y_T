@@ -310,7 +310,8 @@ export class Database {
     try {
       if (fs.existsSync(DB_FILE)) {
         const raw = fs.readFileSync(DB_FILE, 'utf-8');
-        const parsed = JSON.parse(raw);
+        const cleanRaw = raw.replace(/^\uFEFF/, '').trim();
+        const parsed = JSON.parse(cleanRaw);
 
         // Merge initial integrations if missing (e.g. google_drive)
         const loadedIntegrations: IntegrationRecord[] = parsed.integrations || [];
@@ -498,7 +499,7 @@ export class Database {
     return this.data.auditLogs || [];
   }
 
-  // Real Metrics
+  // Real Metrics (Calculates true on-disk storage usage from uploads directory)
   public getMetrics() {
     const totalVideos = this.data.videos.length;
     const totalClips = this.data.clips.length;
@@ -508,9 +509,25 @@ export class Database {
     const publishedClips = this.data.clips.filter(c => c.status === 'published').length;
 
     let totalStorageBytes = 0;
-    this.data.videos.forEach(v => {
-      totalStorageBytes += v.fileSize || 0;
-    });
+    const uploadsPath = path.resolve(process.cwd(), 'uploads');
+    if (fs.existsSync(uploadsPath)) {
+      const getDirSize = (dir: string): number => {
+        let size = 0;
+        try {
+          const files = fs.readdirSync(dir, { withFileTypes: true });
+          for (const f of files) {
+            const p = path.join(dir, f.name);
+            if (f.isDirectory()) {
+              size += getDirSize(p);
+            } else if (f.isFile()) {
+              try { size += fs.statSync(p).size; } catch {}
+            }
+          }
+        } catch {}
+        return size;
+      };
+      totalStorageBytes = getDirSize(uploadsPath);
+    }
 
     const platformDistribution = {
       youtube: this.data.clips.filter(c => c.platforms.includes('youtube')).length,
@@ -531,6 +548,80 @@ export class Database {
       platformDistribution,
       connectedIntegrationsCount: this.data.integrations.filter(i => i.status === 'connected').length,
       liveTrendsCount: (this.data.liveTrends || []).length
+    };
+  }
+
+  /**
+   * Scans uploads folder for unlinked orphan files (partial downloads, temporary stock photos,
+   * unreferenced audio, deleted video thumbnails) and purges them to reclaim disk space.
+   */
+  public cleanStorage(): { removedFiles: number; reclaimedBytes: number; reclaimedFormatted: string } {
+    const uploadsPath = path.resolve(process.cwd(), 'uploads');
+    if (!fs.existsSync(uploadsPath)) {
+      return { removedFiles: 0, reclaimedBytes: 0, reclaimedFormatted: '0.0 MB' };
+    }
+
+    // Known referenced file paths
+    const referencedPaths = new Set<string>();
+    this.data.videos.forEach(v => {
+      if (v.filePath) referencedPaths.add(path.resolve(v.filePath).toLowerCase());
+      const thumb = path.resolve(uploadsPath, 'thumbnails', `thumb-${v.id}.jpg`).toLowerCase();
+      referencedPaths.add(thumb);
+    });
+
+    this.data.clips.forEach(c => {
+      if (c.filePath) referencedPaths.add(path.resolve(c.filePath).toLowerCase());
+      if (c.thumbnailUrl) {
+        const thumb = path.resolve(process.cwd(), c.thumbnailUrl.replace(/^\//, '')).toLowerCase();
+        referencedPaths.add(thumb);
+      }
+    });
+
+    let removedFiles = 0;
+    let reclaimedBytes = 0;
+
+    const sweepFolder = (subfolder: string, removeAll: boolean = false) => {
+      const dir = path.join(uploadsPath, subfolder);
+      if (!fs.existsSync(dir)) return;
+
+      try {
+        const items = fs.readdirSync(dir);
+        for (const item of items) {
+          const itemPath = path.join(dir, item);
+          try {
+            const stat = fs.statSync(itemPath);
+            if (stat.isFile()) {
+              const normalized = path.resolve(itemPath).toLowerCase();
+              const isOrphan = removeAll || !referencedPaths.has(normalized) || item.includes('.part') || item.includes('.ytdl');
+              if (isOrphan) {
+                reclaimedBytes += stat.size;
+                fs.unlinkSync(itemPath);
+                removedFiles++;
+              }
+            }
+          } catch {}
+        }
+      } catch {}
+    };
+
+    // Clean videos that are not in db.videos, and any .part/.ytdl files
+    sweepFolder('videos', false);
+    // Clean clips that are not in db.clips
+    sweepFolder('clips', false);
+    // Clean thumbnails that are not in db
+    sweepFolder('thumbnails', false);
+    // Audio and stock folders only contain intermediate generation scratch files
+    sweepFolder('audio', true);
+    sweepFolder('stock', true);
+
+    const reclaimedFormatted = (reclaimedBytes / (1024 * 1024)).toFixed(1) + ' MB';
+    this.addAuditLog('storage_cleaned', `Storage cleanup completed: removed ${removedFiles} orphan/cache files, freed ${reclaimedFormatted}.`);
+    this.save();
+
+    return {
+      removedFiles,
+      reclaimedBytes,
+      reclaimedFormatted
     };
   }
 
